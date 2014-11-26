@@ -1,0 +1,280 @@
+<div class="line-big">
+    <div class="xm12">
+        <div class="alert alert-yellow"><strong>提示：</strong>尊敬的Life(管理员)，欢迎您的登录，您的上次登录时间为 2014-10-1 18:00:00 <a href="#">点击查看登录记录</a>。</div>
+    </div>
+</div>
+<div class="line-big">
+    <div class="xm3">
+        <div class="panel dux-box">
+            <div class="panel-body clearfix">
+                <div class="media media-x">
+                    <div id="chart" class="float-left js-chart" data-percent="86">
+                        <span class="percent">86%</span>
+                    </div>
+                    <div class="media-body">
+                        <h2><strong>35%</strong></h2>
+                        站点整体安全测试
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+    </div>
+    <div class="xm3">
+        <div class="panel dux-box">
+            <div class="panel-body clearfix">
+                <div class="media media-x">
+                    <div class="float-left js-chart" data-percent="60">
+                        <span class="percent">86%</span>
+                    </div>
+                    <div class="media-body">
+                        <h2><strong>2000</strong></h2>
+                        今日网站访问次数
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+    </div>
+    <div class="xm3">
+        <div class="panel dux-box">
+            <div class="panel-body clearfix">
+                <div class="media media-x">
+                    <div class="float-left js-chart" data-percent="60">
+                        <span class="percent">86%</span>
+                    </div>
+                    <div class="media-body">
+                        <h2><strong>35%</strong></h2>
+                        今日网站蜘蛛访问次数
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+    </div>
+    <div class="xm3">
+        <div class="panel dux-box">
+            <div class="panel-body clearfix">
+                <div class="media media-x">
+                    <div class="float-left js-chart" data-percent="60">
+                        <span class="percent">86</span>
+                    </div>
+                    <div class="media-body">
+                        <h2><strong>35%</strong></h2>
+                        网站碎片使用总数
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+</div>
+
+<div class="line-big">
+    <div class="xm9">
+        <div class="panel dux-box">
+            <div class="panel-head"><strong>系统信息</strong>
+            </div>
+            <div class="table-responsive">
+                <table class="table">
+                    <tbody>
+                        <tr>
+                            <td width="100" align="right">站点名称：</td>
+                            <td>{C('SITE_TITLE')}</td>
+                            <td width="100" align="right">网站域名：</td>
+                            <td><a href="http://{$_SERVER.SERVER_NAME}" target="_blank">http://{$_SERVER.SERVER_NAME}</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="right">程序版本：</td>
+                            <td><?php echo DUX_VER; ?> (<?php echo DUX_TIME; ?>)</td>
+                            <td align="right">最新版本：</td>
+                            <td><a href="javajscript:alert('没有发现升级版本');">检查版本</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="right">服务器IP：</td>
+                            <td>{$_SERVER.SERVER_ADDR}:{$_SERVER.SERVER_PORT}</td>
+                            <td align="right">服务器时间：</td>
+                            <td>{date('Y-m-d H:i:s')} {date_default_timezone_get()}</td>
+
+                        </tr>
+                        <tr>
+                            <td align="right">PHP版本：</td>
+                            <td>{phpversion()}</td>
+                            <td align="right">上传目录：</td>
+                            <td><?php echo APP_PATH; ?>upload</td>
+                        </tr>
+                        <tr>
+                            <td align="right">URL路径：</td>
+                            <td>__ROOT__/</td>
+                            <td align="right">物理路径：</td>
+                            <td>{dirname(THINK_PATH)}</td>
+                        </tr>
+                        <tr>
+                            <td align="right">脚本超时：</td>
+                            <td>
+                                <?php echo get_cfg_var( "max_execution_time") ; ?>秒</a>
+                            </td>
+                            <td align="right">上传大小：</td>
+                            <td>
+                                <?php echo get_cfg_var( "upload_max_filesize")?get_cfg_var( "upload_max_filesize"): "不允许上传文件" ; ?>
+                            </td>
+
+                        </tr>
+
+                        <tr>
+                            <td align="right">屏蔽函数：</td>
+                            <td colspan="3">
+                                <?php echo get_cfg_var( "disable_functions")?get_cfg_var( "disable_functions"): "无" ; ?>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="right">商业授权：</td>
+                            <td colspan="3">未取得商业授权，您可以继续按照约定免费使用，您也可以购买网站商业授权来使用</td>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <br>
+        <div class="line-big">
+            <div class="xb6">
+                <div class="panel dux-box">
+                    <div class="panel-head"><strong>操作记录</strong>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table">
+                            <tbody>
+                                <tr>
+                                    <td><span class="tag bg-main">Life</span> 于 <span class="tag bg-dot">2014年10月1日 19：00</span> 进行 <span class="tag bg-sub">文章添加</span> 
+                                    </td>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><span class="tag bg-main">Life</span> 于 <span class="tag bg-dot">2014年10月1日 19：00</span> 进行 <span class="tag bg-sub">文章添加</span> 
+                                    </td>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><span class="tag bg-main">Life</span> 于 <span class="tag bg-dot">2014年10月1日 19：00</span> 进行 <span class="tag bg-sub">文章添加</span> 
+                                    </td>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><span class="tag bg-main">Life</span> 于 <span class="tag bg-dot">2014年10月1日 19：00</span> 进行 <span class="tag bg-sub">文章添加</span> 
+                                    </td>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><span class="tag bg-main">Life</span> 于 <span class="tag bg-dot">2014年10月1日 19：00</span> 进行 <span class="tag bg-sub">文章添加</span> 
+                                    </td>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <br>
+            </div>
+
+            <div class="xb6">
+                <div class="panel dux-box">
+                    <div class="panel-head"><strong>关于我们</strong>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table">
+                            <tbody>
+                                <tr>
+                                    <td width="110" align="right">程序支持：</td>
+                                    <td><a href="http://www.duxcms.com" target="_blank">duxcms官网</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="right">开发团队：</td>
+                                    <td><a href="http://www.duxcms.com" target="_blank">独享网络组 (DUX Group)</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="right">文档中心：</td>
+                                    <td><a href="http://doc.duxcms.com" target="_blank">DUX文档中心</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="right">QQ互助群：</td>
+                                    <td>131331864</td>
+                                </tr>
+                                <tr>
+                                    <td align="right">其他：</td>
+                                    <td><a href="#">捐赠支持</a>  <a href="#">使用协议</a>
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+    </div>
+    <div class="xm3">
+        <div class="panel dux-box">
+            <div class="panel-head">网站近期访问情况</div>
+            <div class="panel-body">
+                <div id="myChart"></div>
+            </div>
+        </div>
+        <br>
+        <div class="panel dux-box">
+            <div class="panel-head"><strong>站点统计</strong>
+            </div>
+            <ul class="list-group">
+                <li><span class="float-right badge bg-red">88</span><span class="icon-user"></span> 栏目</li>
+                <li><span class="float-right badge bg-main">828</span><span class="icon-file"></span> 内容</li>
+                <li><span class="float-right badge bg-main">828</span><span class="icon-shopping-cart"></span> 碎片</li>
+                <li><span class="float-right badge bg-main">828</span><span class="icon-file-text"></span> 会员</li>
+                <li><span class="float-right badge bg-main">检测</span><span class="icon-database"></span> 数据库</li>
+            </ul>
+        </div>
+    </div>
+</div>
+<!--[if lte IE 8]>
+<script src="__PUBLIC__/js/chart/excanvas.compiled.js"></script>
+<script>
+	// IE function.bind polyfill
+	if (!Function.prototype.bind) {
+		Function.prototype.bind = function (oThis) {
+			if (typeof this !== "function") {
+				// closest thing possible to the ECMAScript 5 internal IsCallable function
+				throw new TypeError("Function.prototype.bind - what is trying to be bound is not callable");
+			}
+			var aArgs = Array.prototype.slice.call(arguments, 1),
+				fToBind = this,
+				fNOP = function () {},
+				fBound = function () {
+					return fToBind.apply(this instanceof fNOP && oThis ? this : oThis,
+				aArgs.concat(Array.prototype.slice.call(arguments)));
+			};
+			fNOP.prototype = this.prototype;
+			fBound.prototype = new fNOP();
+			return fBound;
+		};
+	}
+</script>
+<![endif]-->
+<script>
+Do.ready('chart', function() {
+	$('.js-chart').easyPieChart({
+        barColor: '#7ea568',
+        trackColor: '#f2f2f2',
+        scaleColor: '#dfe0e0',
+        scaleColor: false,
+        lineCap: 'butt',
+        lineWidth: 8,
+        animate: 1000,
+        size: 60
+    });
+});
+</script> 

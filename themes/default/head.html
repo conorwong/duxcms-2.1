@@ -1,0 +1,29 @@
+<div class="g-hd">
+	<div class="m-logo"></div>
+	<div class="m-sch">
+		<!--{*文章搜索标签*}-->
+		<form action="{:U('Article/Search/index')}" method="get">
+		<input name="m" type="hidden" value="Article">
+        <input name="c" type="hidden" value="Search">
+        <input name="a" type="hidden" value="index">
+		<div class="select">
+			<select name="model">
+				<option value="0">标题</option>
+				<option value="1">全文</option>
+			</select>
+		</div>
+		<input name="keyword" type="text" maxlength="20">
+		<button>搜索</button>
+		</form>
+	</div>
+</div>
+<div class="m-nav">
+	<ul>
+		<li><a <!--{if condition="!$topCategoryInfo['class_id']"}--> class="u-crt" <!--{/if}-->  href="__ROOT__/">网站首页</a></li>
+        <!--{dux:list app="DuxCms" label="categoryList" limit="5" parent_id="0" item="list" }-->
+           <li> <a href="{$list.curl}" <!--{if condition="$list['class_id']==$topCategoryInfo['class_id']"}--> class="u-crt" <!--{/if}-->  >{$list.name}</a></li>
+        <!--{/dux:list}-->
+		<li><a href='{:U("DuxCms/Form/index",array("name"=>'guestbook'))}'>留言板</a></li>
+		
+	</ul>
+</div>
