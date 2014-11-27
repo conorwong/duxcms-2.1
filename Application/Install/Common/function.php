@@ -30,7 +30,6 @@ function check_env(){
 		$items['gd'][3] = $tmp['GD Version'];
 	}
 	unset($tmp);
-
 	return $items;
 }
 
@@ -85,13 +84,13 @@ function check_func(){
 		array('mysql',     '支持', 'success'),
 		array('file_get_contents', '支持', 'success'),
 		array('mb_strlen',		   '支持', 'success'),
+		array('eval',		   '支持', 'success'),
 	);
 
 	foreach ($items as &$val) {
 		if(!function_exists($val[0])){
 			$val[1] = '不支持';
 			$val[2] = 'error';
-			$val[3] = '开启';
 			session('error', true);
 		}
 	}
