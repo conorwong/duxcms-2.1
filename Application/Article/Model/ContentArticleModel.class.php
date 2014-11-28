@@ -17,7 +17,7 @@ class ContentArticleModel extends Model {
     public function loadList($where = array(), $limit = 0, $order = 'A.time desc,A.content_id desc'){
         $where['C.app'] = 'Article';
         $pageList = $this->table("__CONTENT__ as A")
-                    ->join('__CONTENT_NEWS__ as B ON A.content_id = B.content_id')
+                    ->join('__CONTENT_ARTICLE__ as B ON A.content_id = B.content_id')
                     ->join('__CATEGORY__ as C ON A.class_id = C.class_id')
                     ->join('LEFT JOIN __TEA_BRAND__ as D ON B.brand = D.id')
                     ->field('A.*,B.*,C.name as class_name,C.app,C.urlname as class_urlname,C.image as class_image,D.name as brand_name')
@@ -60,7 +60,7 @@ class ContentArticleModel extends Model {
     public function countList($where = array()){
         $where['C.app'] = 'Article';
         return $this->table("__CONTENT__ as A")
-                    ->join('__CONTENT_NEWS__ as B ON A.content_id = B.content_id')
+                    ->join('__CONTENT_ARTICLE__ as B ON A.content_id = B.content_id')
                     ->join('__CATEGORY__ as C ON A.class_id = C.class_id')
                     ->where($where)
                     ->order($order)
@@ -91,7 +91,7 @@ class ContentArticleModel extends Model {
     public function getWhereInfo($where,$order = '')
     {
         return $this->table("__CONTENT__ as A")
-                    ->join('__CONTENT_NEWS__ as B ON A.content_id = B.content_id')
+                    ->join('__CONTENT_ARTICLE__ as B ON A.content_id = B.content_id')
                     ->join('__CATEGORY__ as C ON A.class_id = C.class_id')
                     ->field('A.*,B.content,C.name as class_name,C.app,C.urlname as class_urlname,C.image as class_image')
                     ->where($where)
