@@ -57,7 +57,7 @@ class FunctionsController extends AdminController {
         //更新配置
         $config = array();
         $config['APP_STATE'] = $data;
-        $file = './Application/'. $app .'/Conf/config.php';
+        $file = APP_PATH.'/'. $app .'/Conf/config.php';
         $info = load_config($file);
         if($info['APP_SYSTEM']){
             $this->error('系统应用无法禁用！');
@@ -78,7 +78,7 @@ class FunctionsController extends AdminController {
         //更新配置
         $config = array();
         $config['APP_STATE'] = $data;
-        $file = './Application/'. $app .'/Conf/config.php';
+        $file = APP_PATH.'/'. $app .'/Conf/config.php';
         $info = load_config($file);
         if($info['APP_SYSTEM']){
             $this->error('系统应用无法禁用！');

@@ -17,11 +17,15 @@ function getAllService($name,$method,$vars=array()){
     foreach ($apiList as $value) {
         $path = substr($value, $appPathStr,-10);
         $path = str_replace('\\', '/',  $path);
-        $AppName = explode('/', $path);
-        $AppName = $AppName[0];
-        $class = A($AppName.'/'.$name,'Service');
+        $appName = explode('/', $path);
+        $appName = $appName[0];
+        $config = load_config(APP_PATH . '/'. $appName .'/Conf/config.php');
+        if(!$config['APP_SYSTEM'] &&( !$config['APP_STATE'] || !$config['APP_INSTALL'])){
+            continue;
+        }
+        $class = A($appName.'/'.$name,'Service');
         if(method_exists($class,$method)){
-            $data[$AppName] = $class->$method($vars);
+            $data[$appName] = $class->$method($vars);
         }
     }
     return $data;
@@ -32,8 +36,12 @@ function getAllService($name,$method,$vars=array()){
  * @param string $name 指定Service名
  * @return Service
  */
-function service($AppName,$name,$method,$vars=array()){
-    $class = A($AppName.'/'.$name,'Service');
+function service($appName,$name,$method,$vars=array()){
+    $config = load_config(APP_PATH . '/'. $appName .'/Conf/config.php');
+    if(!$config['APP_SYSTEM'] &&( !$config['APP_STATE'] || !$config['APP_INSTALL'])){
+        return;
+    }
+    $class = A($appName.'/'.$name,'Service');
     if(method_exists($class,$method)){
         return $class->$method($vars);
     }
@@ -44,9 +52,13 @@ function service($AppName,$name,$method,$vars=array()){
  * @param string $api
  * @return Api
  */
-function api($module,$api,$method,$vars=array())
+function api($appName,$api,$method,$vars=array())
 {
-    return A("$module/$api","Api")->$method($vars);
+    $config = load_config(APP_PATH . '/'. $appName .'/Conf/config.php');
+    if(!$config['APP_SYSTEM'] &&( !$config['APP_STATE'] || !$config['APP_INSTALL'])){
+        return;
+    }
+    return A("$appName/$api","Api")->$method($vars);
 }
 
 /**
