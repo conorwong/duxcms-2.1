@@ -24,8 +24,10 @@ class AdminController extends BaseController {
         $config = load_config(APP_PATH . 'Common/Conf/admin.php');
         C($config);
         //判断模块是否开启
-        if (1 != C('APP_STATE') || 1 != C('APP_INSTALL')) {
-            $this->error('该应用尚未开启!', false);
+        if(!C('APP_SYSTEM')){
+            if (1 != C('APP_STATE') || 1 != C('APP_INSTALL')) {
+                $this->error('该应用尚未开启!', false);
+            }
         }
         //设置登录用户信息
         $this->loginUserInfo = D('Admin/AdminUser')->getInfo(ADMIN_ID);

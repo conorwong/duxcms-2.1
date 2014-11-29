@@ -91,13 +91,13 @@ $.ajaxSetup({
                     obj,
                     url,
                     function () {
-                        var success = $('obj').attr(success);
+                        var success = $(obj).attr('success');
                         if (success) {
                             eval(success);
                         }
                     },
                     function () {
-                        var failure = $('obj').attr(failure);
+                        var failure = $(obj).attr('failure');
                         if (failure) {
                             eval(failure);
                         }
@@ -108,12 +108,12 @@ $.ajaxSetup({
                 Do.ready('tips', 'dialog', function () {
                     var text = $(obj).attr('title');
                     var dialog = layer.confirm('你确认执行' + text + '操作？', function () {
-                        var Dload = layer.load('操作执行中，请稍候...');
+                        var dload = layer.load('操作执行中，请稍候...');
                         $.post(url, {
                                 data: $(obj).attr('data')
                             },
                             function (json) {
-                                layer.close(Dload);
+                                layer.close(dload);
                                 layer.close(dialog);
                                 if (json.status) {
                                     toastr.success(json.info);

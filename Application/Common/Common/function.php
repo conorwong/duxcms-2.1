@@ -115,53 +115,6 @@ function write_config($file, $config){
 }
 
 /**
- * 保存配置文件 重新写入
- * @param  array $config 配置信息
- */
-function save_config($file, $newConfig)
-{
-    if (is_file($file)) {
-        $config = require($file);
-        $config = array_merge_multi($config, $newConfig);
-    } else {
-        $config = $newConfig;
-    }
-    $content = var_export($config, true);
-    if (file_put_contents($file, "<?php \r\nreturn " . $content . ';')) {
-        return true;
-    }
-    return false;
-}
-
-/**
- * 合并多维数组
- */
-function array_merge_multi() {
-    $args = func_get_args();
-    
-    if ( !isset( $args[0] ) && !array_key_exists( 0, $args ) ) {
-        return array();
-    }
-    
-    $arr = array();
-    foreach ( $args as $key => $value ) {
-        if ( is_array( $value ) ) {
-            foreach ( $value as $k => $v ) {
-                if ( is_array( $v ) ) {
-                    if ( !isset( $arr[$k] ) && !array_key_exists( $k, $arr ) ) {
-                        $arr[$k] = array();
-                    }
-                    $arr[$k] = array_merge_multi( $arr[$k], $v );
-                } else {
-                    $arr[$k] = $v;
-                }
-            }
-        }
-    }
-    return $arr;
-} 
-
-/**
  * 遍历删除目录和目录下所有文件
  * @param string $dir 路径
  * @return bool

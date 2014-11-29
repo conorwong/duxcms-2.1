@@ -2,34 +2,34 @@
 namespace Admin\Model;
 use Think\Model;
 /**
- * 操作记录
+ * 应用操作
  */
-class AdminLogModel extends Model {
-    //完成
-    protected $_auto = array (
-        array('time','time',1,'function'),
-        array('ip','get_client_ip',1,'function'),
-        array('app',MODULE_NAME,1,'string'),
-        array('user_id','1',1,'string'),
-        
-     );
+class FunctionsModel extends Model {
 
     /**
      * 获取列表
      * @return array 列表
      */
-    public function loadList($where = array(), $limit = 0){
-        $data   = $this->table("__ADMIN_LOG__ as A")
-                    ->join('__ADMIN_USER__ as B ON B.user_id = B.user_id')
-                    ->field('A.*,B.username')
-                    ->where($where)
-                    ->limit($limit)
-                    ->order('A.log_id desc')
-                    ->select();
-        return $data;
+    public function loadList(){
+        $list = glob('./Application/*/Conf/config.php');
+        $configArray = array();
+        foreach ($list as $file) {
+            //解析模块名
+            $fileName = explode('/', $file);
+            $fileName = $fileName[2];
+            $info = load_config($file,'php');
+            $configArray[$fileName] = $info;
+            $configArray[$fileName]['APP'] = $fileName;
+            $configArray[$fileName]['APP_DIR'] = './Application/'.$fileName;
+            if($info['APP_SYSTEM']){
+                $configArray[$fileName]['APP_STATE'] = 1;
+                $configArray[$fileName]['APP_INSTALL'] = 1;
+            }
+        }
+        $configArray = array_order($configArray,'APP_SYSTEM');
+        return $configArray;
 
     }
-
     /**
      * 获取数量
      * @return int 数量

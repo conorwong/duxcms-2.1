@@ -6,4 +6,6 @@ return array(
     'LOAD_EXT_CONFIG' => 'performance,shield,db',
     'VAR_SESSION_ID' => 'session_id',
 	'SITE_URL' => '',
+	'APP_SYSTEM' => 1,
+	'APP_NAME' => '基础应用',
 	);

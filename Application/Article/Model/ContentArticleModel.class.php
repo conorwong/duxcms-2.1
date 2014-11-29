@@ -19,8 +19,7 @@ class ContentArticleModel extends Model {
         $pageList = $this->table("__CONTENT__ as A")
                     ->join('__CONTENT_ARTICLE__ as B ON A.content_id = B.content_id')
                     ->join('__CATEGORY__ as C ON A.class_id = C.class_id')
-                    ->join('LEFT JOIN __TEA_BRAND__ as D ON B.brand = D.id')
-                    ->field('A.*,B.*,C.name as class_name,C.app,C.urlname as class_urlname,C.image as class_image,D.name as brand_name')
+                    ->field('A.*,B.*,C.name as class_name,C.app,C.urlname as class_urlname,C.image as class_image')
                     ->where($where)
                     ->order($order)
                     ->select();
@@ -31,20 +30,7 @@ class ContentArticleModel extends Model {
             foreach ($pageList as $key=>$value) {
                 $list[$key]=$value;
                 $list[$key]['aurl'] = D('Article/ContentArticle')->getUrl($value);
-                switch ($value['class_id']) {
-                    case 4:
-                        $list[$key]['curl'] = U('Article/Category/index');
-                        break;
-                    default:
-                        $list[$key]['curl'] = D('Article/CategoryArticle')->getUrl($value);
-                        break;
-                }
-                //获取栏目路径
-                $dir = ' <a href="'. U('Article/Category/index') .'">[资讯]</a> ';
-                if($value['class_id'] <> 4){
-                    $dir .= ' - <a href="'. D('Article/CategoryArticle')->getUrl($value) .'">['. $value['class_name'] .']</a> ';
-                }
-                $list[$key]['dir'] = $dir;
+                $list[$key]['curl'] = D('Article/CategoryArticle')->getUrl($value);
                 $list[$key]['i'] = $i++;
             }
         }

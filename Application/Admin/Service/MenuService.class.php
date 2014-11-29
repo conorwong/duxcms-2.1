@@ -39,6 +39,12 @@ class MenuService{
                         'divider' => true,
                     ),
                     array(
+                        'name' => '应用管理',
+                        'url' => U('Admin/Functions/index'),
+                        'order' => 4,
+                        'divider' => true,
+                    ),
+                    array(
                         'name' => '安全记录',
                         'url' => U('Admin/AdminLog/index'),
                         'order' => 5
