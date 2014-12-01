@@ -17,49 +17,30 @@ class FunctionsModel extends Model {
             //解析模块名
             $fileName = explode('/', $file);
             $fileName = $fileName[2];
-            $info = load_config($file,'php');
-            $configArray[$fileName] = $info;
-            $configArray[$fileName]['APP'] = $fileName;
-            $configArray[$fileName]['APP_DIR'] = './Application/'.$fileName;
-            if($info['APP_SYSTEM']){
-                $configArray[$fileName]['APP_STATE'] = 1;
-                $configArray[$fileName]['APP_INSTALL'] = 1;
-            }
+            $configArray[$fileName] = $this->getInfo($fileName);
         }
         $configArray = array_order($configArray,'APP_SYSTEM');
         return $configArray;
 
     }
-    /**
-     * 获取数量
-     * @return int 数量
-     */
-    public function countList($where = array()){
-        return $this->table("__ADMIN_LOG__ as A")
-                    ->join('__ADMIN_USER__ as B ON B.user_id = B.user_id')
-                    ->where($where)
-                    ->count();
-    }
 
     /**
-     * 添加信息
-     * @param string $log 增加数据
-     * @return bool 更新状态
+     * 添加APP信息
+     * @param string $app 应用名
      */
-    public function addData($log){
-        $data = array();
-        $data['content'] = $log;
-        if(empty($data)){
-            return false;
+    public function getInfo($app){
+        $file = APP_PATH.'/'. $app .'/Conf/config.php';
+        $info = load_config($file);
+        if(empty($info)){
+            return ;
         }
-        //只保留500条数据
-        $count = $this->countList();
-        if($count>500){
-            $this->order('log_id asc')->limit('1')->delete();
+        $info['APP'] = $app;
+        $info['APP_DIR'] = APP_PATH.$app;
+        if($info['APP_SYSTEM']){
+            $info['APP_STATE'] = 1;
+            $info['APP_INSTALL'] = 1;
         }
-        //增加记录
-        $this->create($data);
-        return $this->add();
+        return $info;
     }
 
 }

@@ -33,11 +33,9 @@
                        <a class="button bg-blue button-small icon-cog" href="{U($vo['APP_SETTING'])}" title="设置"></a>
                        <!--{/if}-->
                        <!--if{$vo['APP_INSTALL']}-->
-                       <!--if{$vo['APP_INSTALL']}-->
-                       <a class="button bg-red button-small icon-trash-o" href="javascript:;" data="{$vo.id}" title="卸载"></a>
+                       <a class="button bg-red button-small icon-trash-o js-action" url="{U('uninstall')}" href="javascript:;" data="{$vo.APP}" success=" window.location.reload();" title="卸载"></a>
                        <!--{else}-->
-                       <a class="button bg-green button-small icon-trash-o js-del" href="javascript:;" data="{$vo.id}" title="安装"></a>
-                       <!--{/if}-->
+                       <a class="button bg-green button-small icon-download js-action" url="{U('install')}" href="javascript:;" data="{$vo.APP}" success=" window.location.reload();" title="安装"></a>
                        <!--{/if}-->
                     </td>
                 </tr>

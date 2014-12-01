@@ -76,7 +76,7 @@ class IndexController extends Controller {
         $db = \Think\Db::getInstance($DB);
         $sql = "CREATE DATABASE IF NOT EXISTS `{$data['DB_NAME']}` DEFAULT CHARACTER SET utf8";
         if(!$db->execute($sql)){
-        	$this->error($db->getError());
+            show_msg('数据库创建失败，已存在数据库或数据库帐号密码错误！');
         }
         $this->display();
         show_msg('数据库检测完成...');
