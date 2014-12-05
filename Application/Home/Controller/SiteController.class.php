@@ -23,55 +23,21 @@ class SiteController extends BaseController {
     }
 
     /**
-     * 前台模板显示 调用内置的模板引擎显示方法
+     * 前台模板显示 调用内置的模板引擎
      * @access protected
      * @param string $name 模板名
      * @param bool $type 模板输出
      * @return void
      */
     protected function siteDisplay($name='',$type = true) {
-        C('TAGLIB_PRE_LOAD','Dux');
-        C('TAGLIB_BEGIN','<!--{');
-        C('TAGLIB_END','}-->');
         C('VIEW_PATH','./themes/');
-        $data = $this->view->fetch(C('TPL_NAME').'/'.$name);
-        $this->incTpl($data);
-        $data = $this->tplData;
-        //替换资源路径
-        $tplReplace=array(
-            //普通转义
-            'search' => array(
-                //转义路径
-                "/<(.*?)(src=|href=|value=|background=)[\"|\'](images\/|img\/|css\/|js\/|style\/)(.*?)[\"|\'](.*?)>/",
-            ),
-            'replace' => array(
-                "<$1$2\"".__ROOT__."/themes/".C('TPL_NAME')."/"."$3$4\"$5>",
-            ),      
-        );
-        $data = preg_replace( $tplReplace['search'] , $tplReplace['replace'] , $data);
+        $tpl = C('TPL_NAME').'/'.$name;
         if($type){
-            echo $data;
+            $this->display($tpl);
         }else{
-            return $data;
+            return $this->view->fetch($tpl);
         }
         
-    }
-
-    protected function incTpl($data)
-    {
-        //模板包含
-        if(preg_match_all('/<!--#include\s*file=[\"|\'](.*)[\"|\']-->/', $data, $matches)){
-            foreach ($matches[1] as $k => $v) {
-                $ext=explode('.', $v);
-                $ext=end($ext);
-                $file=substr($v, 0, -(strlen($ext)+1));
-                $phpText = $this->view->fetch(C('TPL_NAME').'/'.$file);
-                $data = str_replace($matches[0][$k], $phpText, $data);
-            }
-            $this->incTpl($data);
-        }else{
-            $this->tplData = $data;
-        }
     }
 
     /**

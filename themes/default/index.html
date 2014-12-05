@@ -19,32 +19,32 @@
             <div id="m-sld" class="m-sld s-box">
                     <div class="hd">
                         <ul>
-                        <!--{dux:list app="DuxCms" label="contentList" limit="5" item="list" image="true" }-->
+                        <!--list{app="DuxCms" label="contentList" limit=5 image=true }-->
                         <li>{$list.i}</li>
-                        <!--{/dux:list}-->
+                        <!--{/list}-->
                         </ul>
                     </div>
                     <div class="bd">
                         <ul>
-                        	<!--{dux:list app="DuxCms" label="contentList" limit="5" item="list" image="true" }-->
+                        	<!--list{app="DuxCms" label="contentList" limit=5 image=true }-->
                             <li><a href="{$list.aurl}" target="_blank"><img src="{$list.image}" width="270" height="270"   /></a></li>
-                            <!--{/dux:list}-->
+                            <!--{/list}-->
                         </ul>
                     </div>
                 </div>
                 
 			<div class="m-top-new s-box">
-            	<!--{dux:list app="DuxCms" label="contentList" limit="1" item="list" pos_id="1" }-->
+            	<!--list{app="DuxCms" label="contentList" limit=1 pos_id=1 }-->
 				<div class="m-hot">
 					<div class="tt"><a href="{$list.aurl}">{$list.title}</a> <span>推荐置顶</span></div>
 					<div class="dsc">{$list.description}</div>
 				</div>	
-                <!--{/dux:list}-->
+                <!--{/list}-->
 				<div class="m-hot-lst">
 					<ul>
-                        <!--{dux:list app="DuxCms" label="contentList" limit="1,5" item="list" pos_id="1" }-->
-						<li><a href="{$list.aurl}">{$list.title}</a><span>{$list.time|format_time='Y-m-d'}</span></li>
-						<!--{/dux:list}-->
+                        <!--list{app="DuxCms" label="contentList" limit="1,5" pos_id=1 }-->
+						<li><a href="{$list.aurl}">{$list.title}</a><span>{date('Y-m-d',$list['time'])}</span></li>
+						<!--{/list}-->
 					</ul>
 				</div>
 			</div>
@@ -53,30 +53,30 @@
 		<div class="u-sep10"></div>
 		<div class="m-ad"><img src="images/ad-1.jpg" width="670" height="90"></div>
 		<div class="g-md">
-            <!--{dux:list app="Article" label="categoryList" limit="4" type="1" item="class" }-->
+            <!--class{app="Article" label="categoryList" limit="4" type="1"  }-->
 			<div class="m-news">
 				<div class="tt"><a href="{$class.curl}">{$class.name} </a><span><a href="{$class.curl}">more</a></span></div>                
-                <!--{dux:list app="DuxCms" label="contentList" limit="1" image="true"  class_id="$class['class_id']" item="list" }-->
+                <!--list{ app="DuxCms" label="contentList" limit="1" image="true"  class_id=$class['class_id']  }-->
 				<div class="hot"><a href="{$list.aurl}"><img src="{$list.image}" width="70" height="48" alt="{$list.aurl}"></a><a href="{$list.aurl}">{$list.title}</a>
 					<div class="f-cb"></div>
 				</div>
-				<!--{/dux:list}-->
+				<!--{/list}-->
 				<div class="lst">
 					<ul>
-                        <!--{dux:list app="DuxCms" label="contentList" limit="5" class_id="$class['class_id']" item="list" }-->
-						<li><a href="{$list.aurl}">{$list.title}</a><span>{$list.time|format_time='m-d'}</span></li>
-						<!--{/dux:list}-->
+                        <!--list{app="DuxCms" label="contentList" limit="5" class_id=$class['class_id']}-->
+						<li><a href="{$list.aurl}">{$list.title}</a><span>{date('Y-m-d',$list['time'])}</span></li>
+						<!--{/list}-->
 					</ul>
 				</div>
 			</div>
-            <!--{/dux:list}-->
+            <!--{/class}-->
 			<div class="f-cb"></div>
 		</div>
 	</div>
 	<div class="g-sd">
 		<div class="m-sdc">
 			<div class="tt">模板说明</div>
-			<div class="ct"><!--{dux:echo app="DuxCms" label="fragment" mark="info" /}--></div>
+			<div class="ct"><!--echo{ app="DuxCms" label="fragment" mark="info" }--></div>
 		</div>
 		<!--#include file="sidebar.html"-->
 	</div>

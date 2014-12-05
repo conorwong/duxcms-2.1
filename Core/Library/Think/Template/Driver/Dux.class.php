@@ -14,7 +14,7 @@ class Dux {
     public function fetch($templateFile,$var) {
         extract($var, EXTR_OVERWRITE);
         if(is_file($templateFile)) {
-            \Think\Storage::load($this->template($templateFile),$var,null,'tpl');
+            \Think\Storage::load(\Think\Template\Driver\Dux :: template($templateFile),$var,null,'tpl');
         }else{
             $tmplContent =  $templateFile;
             vendor('Dux.template#class');
@@ -43,7 +43,7 @@ class Dux {
     
     public function template($templateFile) {
         $cachefile = C('CACHE_PATH') . str_replace('/', '_', substr($templateFile, strlen(THEME_PATH))) . C('TMPL_CACHFILE_SUFFIX');
-        $this->checkTplRefresh($templateFile, $templateFile, @filemtime($cachefile), $cachefile);
+        \Think\Template\Driver\Dux :: checkTplRefresh($templateFile, $templateFile, @filemtime($cachefile), $cachefile);
         return $cachefile;
     }
 }

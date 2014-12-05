@@ -16,12 +16,12 @@
 		<div class="m-crumb">
 			<ul class="f-cb">
 				<li><a href="__ROOT__/">首页</a></li>
-				<!--{foreach name="pageList" item="vo" }--> 
+				<!--foreach{$crumb as $vo}--> 
 				<li><i>&gt;</i><a href="{$vo.url}">{$vo.name}</a></li>
-				<!--{/loop}-->
+				<!--{/foreach}-->
 			</ul>
 		</div>
-		<!--{foreach name="pageList" item="vo" }--> 
+		<!--foreach{$pageList as $vo}--> 
 		<div class="m-tag-lst">
 			<ul>
 				<li><a href="{$vo.url}">{$vo.name}</a></li>

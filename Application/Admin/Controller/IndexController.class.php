@@ -11,13 +11,6 @@ class IndexController extends AdminController {
      */
 	protected function _infoModule(){
 		return array(
-            'menu' => array(
-            		array(
-	                    'name' => '管理首页',
-	                    'url' => U('Index/index'),
-	                    'icon' => 'dashboard',
-                    )
-                ),
             'info' => array(
                     'name' => '管理首页',
                     'description' => '站点运行信息',

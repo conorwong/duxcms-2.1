@@ -3,12 +3,8 @@ Do.add('base', {
     path: baseDir + 'base/base.js'
 });
 //图表
-Do.add('flotSrc', {
-    path: baseDir + 'chart/jquery.flot.min.js'
-});
-Do.add('flot', {
-    path: baseDir + 'chart/jquery.flot.resize.min.js',
-    requires : ['flotSrc']
+Do.add('chartJs', {
+    path: baseDir + 'chart/Chart.min.js',
 });
 Do.add('chart', {
     path: baseDir + 'chart/jquery.easypiechart.min.js'

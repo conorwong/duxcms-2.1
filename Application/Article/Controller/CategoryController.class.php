@@ -12,59 +12,42 @@ class CategoryController extends SiteController {
      */
     public function index(){
     	$classId = I('get.class_id',0,'intval');
-        $brand = I('get.brand',0,'intval');
-
-        //位置导航
-        $crumb = array(
-            array('name'=>'资讯','url'=>U('Article/Category/index')),
-            );
-
+        $urlName = I('get.urlname');
+        if (empty($classId)&&empty($urlName)) {
+            $this->error404();
+        }
+        //获取栏目信息
+        $model = D('CategoryArticle');
         if(!empty($classId)){
-            //获取栏目信息
-            $model = D('CategoryArticle');
             $categoryInfo=$model->getInfo($classId);
-            $classId = $categoryInfo['class_id'];
-            //信息判断
-            if (!is_array($categoryInfo)){
-                $this->error404();
-            }
-            if($categoryInfo['app']<>MODULE_NAME){
-                $this->error404();
-            }
-            //设置查询条件
-            $where= array();
-            if ($categoryInfo['type'] == 0) {
-                $classId = D('DuxCms/Category')->getSubClassId($classId);
-            }
-            if(empty($classId)){
-                $classId = $categoryInfo['class_id'];
-            }
-            $where['A.status'] = 1;
-            $where['C.class_id'] = array('in',$classId);
-
-            //位置导航
-            $crumb[] = array('name' => $categoryInfo['name'], 'url'=>U('Article/Category/index',array('class_id'=>$categoryInfo['class_id'])));
-
-            //查询上级栏目信息
-            $parentCategoryInfo = $model->getInfo($categoryInfo['parent_id']);
-            //获取顶级栏目信息
-            $topCategoryInfo = $model->getInfo($crumb[0]['class_id']);
-
-            //MEDIA信息
-            $media = $this->getMedia($categoryInfo['name'],$categoryInfo['keywords'],$categoryInfo['description']);
-
+        }else if(!empty($urlName)){
+            $map = array();
+            $map['urlname'] = $urlName;
+            $categoryInfo=$model->getWhereInfo($map);
         }else{
-            //设置查询条件
-            $where = array();
-            $where['A.status'] = 1;
-            //位置导航
+            $this->error404();
         }
-        if($brand){
-            $where['B.brand'] = $brand;
-            $brandInfo = D('Tea/TeaBrand')->getInfo($brand);
-            $crumb[] = array('name' => $brandInfo['name'], 'url'=>U('Article/Category/index',array('brand'=>$brand)));
+        $classId = $categoryInfo['class_id'];
+        //信息判断
+        if (!is_array($categoryInfo)){
+            $this->error404();
         }
-        
+        if($categoryInfo['app']<>MODULE_NAME){
+            $this->error404();
+        }
+        //位置导航
+        $crumb = D('DuxCms/Category')->loadCrumb($classId);
+        //设置查询条件
+        $where='';
+        if ($categoryInfo['type'] == 0) {
+            $classId = D('DuxCms/Category')->getSubClassId($classId);
+        }
+        if(empty($classId)){
+            $classId = $categoryInfo['class_id'];
+        }
+        $where['A.status'] = 1;
+        $where['C.class_id'] = array('in',$classId);
+
         //分页参数
         $size = intval($categoryInfo['page']); 
         if (empty($size)) {
@@ -87,6 +70,12 @@ class CategoryController extends SiteController {
         $pageMaps['urlname'] = $urlName;
         //获取分页
         $page = $this->getPageShow($pageMaps);
+        //查询上级栏目信息
+        $parentCategoryInfo = $model->getInfo($categoryInfo['parent_id']);
+        //获取顶级栏目信息
+        $topCategoryInfo = $model->getInfo($crumb[0]['class_id']);
+        //MEDIA信息
+        $media = $this->getMedia($categoryInfo['name'],$categoryInfo['keywords'],$categoryInfo['description']);
         //模板赋值
         $this->assign('categoryInfo', $categoryInfo);
         $this->assign('parentCategoryInfo', $parentCategoryInfo);
@@ -97,10 +86,6 @@ class CategoryController extends SiteController {
         $this->assign('page', $page);
         $this->assign('media', $media);
         $this->assign('pageMaps', $pageMaps);
-        if(!empty($classId)){
-            $this->siteDisplay('news_list');
-        }else{
-            $this->siteDisplay('news_list');
-        }
+        $this->siteDisplay($categoryInfo['class_tpl']);
     }
 }

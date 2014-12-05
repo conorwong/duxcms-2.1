@@ -16,14 +16,14 @@
 		<div class="m-crumb">
 			<ul class="f-cb">
 				<li><a href="__ROOT__/">首页</a></li>
-				<!--{foreach name="crumb" item="vo" }--> 
+				<!--foreach{$crumb as $vo}--> 
 				<li><i>&gt;</i><a href="{$vo.url}">{$vo.name}</a></li>
 				<!--{/foreach}-->
 			</ul>
 		</div>
 		
 		<div class="m-pg-tt">{$contentInfo.title}</div>
-		<div class="m-pg-info"><span>{$contentInfo.time|format_time='Y-m-d H:i:s'}</span>　<span>来源：{$contentInfo.copyfrom}</span>　<span>浏览：{$contentInfo.views}</span> </div>
+		<div class="m-pg-info"><span>{date('Y-m-d H:i:s',$contentInfo['time'])}</span>　<span>来源：{$contentInfo.copyfrom}</span>　<span>浏览：{$contentInfo.views}</span> </div>
 		<div class="m-pg-bd">
 			{$contentInfo.content}
 		</div>
@@ -38,9 +38,9 @@
 		</div>
 		<div class="m-pg-rlt">
 			<div class="tt">关键词：
-            <!--{dux:list app="DuxCms" label="tagsList" limit="15" name="$contentInfo['keywords']" item="list" }-->
+            <!--list{ app="DuxCms" label="tagsList" limit=15 name=$contentInfo['keywords']}-->
             <span><a href="{$list.url}">{$list.name}</a> </span>
-            <!--{/dux:list}-->
+            <!--{/list}-->
 			</div>
 		</div>
 	</div>

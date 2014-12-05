@@ -3,12 +3,12 @@
 	<div class="tt">最新图文</div>
 	<div class="pl">
 		<ul>
-        	<!--{dux:list app="DuxCms" label="contentList" image="true" limit="5" item="list" }-->
+        	<!--list{app="DuxCms" label="contentList" image="true" limit="5"}-->
 			<li>
 				<div class="pic"><img src="{$list.image}" width="65" height="43"></div>
 				<div class="info"><a href="{$list.aurl}">{$list.title}</a></div>
 			</li>
-			<!--{/dux:list}-->
+			<!--{/list}-->
 		</ul>
 	</div>
 </div>
@@ -16,9 +16,9 @@
 <div class="m-sdc">
 	<div class="tt">最新TAG</div>
 	<div class="tag"> 
-    	<!--{dux:list app="DuxCms" label="tagsList" limit="5" item="list" }-->
+    	<!--list{ app="DuxCms" label="tagsList" limit="5" }-->
 		<a href="{$list.url}">{$list.name}</a> 
-        <!--{/dux:list}-->
+        <!--{/list}-->
 	</div>
 </div>
 <div class="u-sep10"></div>
@@ -26,9 +26,9 @@
 	<div class="tt">友情链接</div>
 	<div class="link">
 		<ul>
-        	<!--{dux:list app="DuxCms" label="formList" table="link" limit="5" item="list" }-->
+        	<!--list{ app="DuxCms" label="formList" table="link" limit="5" }-->
 			<li><a href="{$list.url}" target="_blank">{$list.name}</a></li>
-			<!--{/dux:list}-->
+			<!--{/list}-->
 		</ul>
 	</div>
 	<div class="f-cb"></div>

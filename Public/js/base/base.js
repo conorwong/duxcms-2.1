@@ -443,6 +443,25 @@ $.ajaxSetup({
             });
         });
     };
+    
+    //图表插件
+    $.fn.duxChart = function (options) {
+        var defaults = {
+            data: []
+        }
+        var options = $.extend(defaults, options);
+        var chartObj = this;
+        Do.ready('chartJs', function () {
+            var ctx = $(chartObj).get(0).getContext("2d");
+            var chartOptions = {
+                responsive: true,
+                maintainAspectRatio: false,
+                animation: false,
+                multiTooltipTemplate: "<%= value %>",
+            };
+            var myLineChart = new Chart(ctx).Line(options.data, chartOptions);
+        });
+    };      
 
     //表单页面处理
     $.fn.duxFormPage = function (options) {

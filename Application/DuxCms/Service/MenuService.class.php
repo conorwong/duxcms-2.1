@@ -40,36 +40,49 @@ class MenuService{
                 'order' => 2,
                 'menu' => $formMenu,
             ),
+            'index' => array(
+                'menu' => array(
+                    array(
+                        'name' => '站点统计',
+                        'url' => U('DuxCms/AdminStatistics/index'),
+                        'order' => 1
+                    ),
+                    array(
+                        'name' => '安全中心',
+                        'url' => U('DuxCms/AdminSafe/index'),
+                        'order' => 2
+                    ), 
+                )
+            ),
             'Function' => array(
                 'name' => '功能',
                 'icon' => 'home',
                 'order' => 3,
-                'menu' => array(
-                    
+                'menu' => array(    
                     array(
                         'name' => '碎片管理',
                         'url' => U('DuxCms/AdminFragment/index'),
-                        'order' => 0
+                        'order' => 1
                     ),
                     array(
                         'name' => '推荐位管理',
                         'url' => U('DuxCms/AdminPosition/index'),
-                        'order' => 1
+                        'order' => 2
                     ),
                     array(
                         'name' => '扩展模型管理',
                         'url' => U('DuxCms/AdminExpand/index'),
-                        'order' => 2
+                        'order' => 3
                     ),
                     array(
                         'name' => '表单管理',
                         'url' => U('DuxCms/AdminForm/index'),
-                        'order' => 3
+                        'order' => 4
                     ),
                     array(
                         'name' => 'TAG管理',
                         'url' => U('DuxCms/AdminTags/index'),
-                        'order' => 4
+                        'order' => 5
                     ),
                 )
             ),
