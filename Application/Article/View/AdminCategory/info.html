@@ -220,6 +220,28 @@
                             <div class="input-note">栏目的内容列表下文章的顺序</div>
                         </div>
                     </div>
+                    
+                    <div class="form-group">
+                        <div class="label">
+                            <label>绑定字段集</label>
+                        </div>
+                        <div class="field">
+                            <select class="input" name="fieldset_id">
+                               <option value="0">==不绑定==</option>
+                                <!--loop{$expandList as $vo}-->
+                                <!--if{$info['fieldset_id'] == $vo['fieldset_id']}-->
+                                <option value="{$vo.fieldset_id}" selected>
+                                    <!--{else}-->
+                                    <option value="{$vo.fieldset_id}">
+                                        <!--{/if}-->
+                                        {$vo.name}</option>
+                                    <!--{/loop}-->
+                            </select>
+                            <div class="input-note">绑定后添加内容时可使用扩展字段</div>
+                        </div>
+                    </div>
+                    
+                    
                 </div>
             </div>
             <div class="panel-foot">
