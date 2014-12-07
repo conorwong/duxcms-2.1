@@ -80,7 +80,6 @@ class LabelService{
         }
         //其他属性
         $where['status'] = 1;
-        $model = D('DuxCms/Content');
         return D('DuxCms/Content')->loadList($where,$data['limit'],$data['order']);
     }
 

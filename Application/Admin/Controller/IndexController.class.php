@@ -24,6 +24,8 @@ class IndexController extends AdminController {
     	//设置目录导航
     	$breadCrumb = array('首页'=>U('Index/index'));
         $this->assign('breadCrumb',$breadCrumb);
+        //设置其他调用
+        $this->assign('chartArray',D('DuxCms/TotalVisitor')->getJson(7,'day','m-d'));
         $this->adminDisplay();
     }
 }

@@ -436,6 +436,39 @@ CREATE TABLE IF NOT EXISTS `dux_tags_has` (
   KEY `tid` (`tag_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='TAG关系';
 
+
+-- ----------------------------
+-- Table structure for dux_total_spider
+-- ----------------------------
+DROP TABLE IF EXISTS `dux_total_spider`;
+CREATE TABLE IF NOT EXISTS `dux_total_spider` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `time` int(10) DEFAULT NULL,
+  `baidu` int(10) DEFAULT '0',
+  `google` int(10) DEFAULT '0',
+  `soso` int(10) DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='蜘蛛统计';
+
+-- ----------------------------
+-- Records of dux_total_spider
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for dux_total_visitor
+-- ----------------------------
+DROP TABLE IF EXISTS `dux_total_visitor`;
+CREATE TABLE IF NOT EXISTS `dux_total_visitor` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `time` int(10) DEFAULT NULL,
+  `count` int(10) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='访客统计';
+
+-- ----------------------------
+-- Records of dux_total_visitor
+-- ----------------------------
+
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
