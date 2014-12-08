@@ -101,17 +101,4 @@ class AdminController extends BaseController {
         $tpl = $this->fetch($templateFile);
         echo str_replace('<!--common-->', $tpl, $common);
     }
-
-    /**
-     * 后台框架显示 调用内置的模板引擎显示方法，
-     * @access protected
-     * @param string $templateFile 指定要调用的模板文件
-     * @return void
-     */
-    protected function frameDisplay($templateFile='') {
-        $common = $this->fetch(APP_PATH.'Admin/View/commonFrame.html');
-        $tpl = $this->fetch($templateFile);
-        echo str_replace('<!--common-->', $tpl, $common);
-
-    }
 }
