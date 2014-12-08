@@ -36,16 +36,13 @@ body {
     color: #ddd;
     font-weight: normal;
 }
-.dux-head .nav-inline .nav-avatar {
-    padding-right: 0px;
+.dux-head .nav-inline li .dux-logout {
+    background-color: #e33;
+    color: #fff;
 }
-.dux-head .nav-inline .nav-img {
-    position: relative;
-    top: 0;
-    max-height: 40px;
-    margin-top: -10px;
-    margin-bottom: -10px;
-    margin-left: 10px;
+.dux-head .nav-inline li .dux-logout:hover {
+    background-color: #c72525;
+    color: #fff;
 }
 .dux-head .nav-tool {
     float: right;

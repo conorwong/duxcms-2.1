@@ -43,14 +43,9 @@
                <!--{/loop}-->
             </ul>
             <ul class="nav  nav-navicon nav-menu nav-inline admin-nav nav-tool">
-                <li> <a href="#" class="icon-file nav-avatar"> {$loginUserInfo.username} <span class="arrow"></span> <img src="__PUBLIC__/admin/images/face.jpg" alt="..." class="nav-img"></a>
-                    <ul class="drop-menu">
-                        <li><a href="{U('Admin/AdminUser/edit',array('user_id'=>$loginUserInfo['user_id']))}">修改资料</a>
-                        </li>
-                        <li><a href="{U('Admin/Login/logout')}">安全退出</a>
-                        </li>
-                    </ul>
-                </li>
+               <li> <a href="__ROOT__/" target="_blank" class="icon-home"></a></li>
+                <li> <a href="{U('Admin/AdminUser/edit',array('user_id'=>$loginUserInfo['user_id']))}" class="icon-user"></a></li>
+                <li> <a href="{U('Admin/Login/logout')}" class="dux-logout bg-red icon-power-off"></a></li>
             </ul>
         </div>
     </div>
