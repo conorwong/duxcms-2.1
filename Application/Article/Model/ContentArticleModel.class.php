@@ -22,6 +22,7 @@ class ContentArticleModel extends Model {
                     ->field('A.*,B.*,C.name as class_name,C.app,C.urlname as class_urlname,C.image as class_image')
                     ->where($where)
                     ->order($order)
+                    ->limit($limit)
                     ->select();
         //处理数据类型
         $list=array();
