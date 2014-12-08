@@ -23,63 +23,37 @@ class TotalSpiderModel extends Model {
     }
 
     /**
-     * 获取信息
-     * @param int $fragmentId ID
-     * @return array 信息
+     * 判断蜘蛛爬行
      */
-    public function getInfo($fragmentId)
-    {
-        $map = array();
-        $map['fragment_id'] = $fragmentId;
-        return $this->getWhereInfo($map);
-    }
-
-    /**
-     * 获取信息
-     * @param array $where 条件
-     * @return array 信息
-     */
-    public function getWhereInfo($where)
-    {
-        return $this->where($where)->find();
-    }
-
-    /**
-     * 更新信息
-     * @param string $type 更新类型
-     * @return bool 更新状态
-     */
-    public function saveData($type = 'add'){
-        $data = $this->create();
-        if(!$data){
-            return false;
+    public function addData(){
+        $agent = $_SERVER['HTTP_USER_AGENT'];
+        if(strpos($tmp, 'Googlebot') !== false){
+            $boot = 'google';
         }
-        if($type == 'add'){
-            return $this->add();
+        if(strpos($tmp, 'Baiduspider') !== false){
+            $boot = 'baidu';
         }
-        if($type == 'edit'){
-            if(empty($data['fragment_id'])){
-                return false;
-            }
-            $status = $this->save();
-            if($status === false){
-                return false;
-            }
-            return true;
+        if(strpos($tmp, 'Sosospider') !== false){
+            $boot = 'soso';
         }
-        return false;
-    }
-
-    /**
-     * 删除信息
-     * @param int $fragmentId ID
-     * @return bool 删除状态
-     */
-    public function delData($fragmentId)
-    {
-        $map = array();
-        $map['fragment_id'] = $fragmentId;
-        return $this->where($map)->delete();
+        if(empty($boot)){
+            return ;
+        }
+        //当天时间
+        $time = strtotime(date('Y-m-d'));
+        $where = array();
+        $where['time'] = $time;
+        $info = $this->where($where)->find();
+        if($info){
+            $where = array();
+            $where['id'] = $info['id'];
+            $this->where($where)->setInc($boot);
+        }else{
+            $data = array();
+            $data['time'] = $time;
+            $data[$boot] = 1;
+            $this->add($data);
+        }
     }
 
     /**

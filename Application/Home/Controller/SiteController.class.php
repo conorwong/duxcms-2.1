@@ -20,6 +20,10 @@ class SiteController extends BaseController {
         if(MOBILE){
             C('TPL_NAME' , C('MOBILE_TPL'));
         }
+        //访问统计
+        D('DuxCms/TotalVisitor')->addData();
+        //蜘蛛爬行统计
+        D('DuxCms/TotalSpider')->addData();
     }
 
     /**
