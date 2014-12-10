@@ -433,22 +433,24 @@ class FieldModel extends Model {
                 break;
             case 'imagesUpload':
                 $html .= '
-                    <a class="button bg-blue button-small js-file-upload" data="'.$config['name'].'" id="'.$config['name'].'_button" href="javascript:;" ><span class="icon-upload"> 上传</span></a>
+                    <div>
+                    <a class="button bg-blue button-small js-multi-upload" data="'.$config['name'].'" id="'.$config['name'].'_button" href="javascript:;" ><span class="icon-upload"> 上传</span></a>
                     <span class="suffix">上传后可拖动图片进行排序</span>
-                    <div class="m-multi-image f-cb" id="'.$config['name'].'">';
+                    </div>
+                    <br>
+                    <div class="media-inline  clearfix dux-multi-image" id="'.$config['name'].'">';
                     if(!empty($config['value'])){
                         $list = unserialize($config['value']);
                         if(is_array($list)&&!empty($list)){
                             foreach ($list as $value) {
                                 $html.='
-                                <li>
-                                    <a class="close" href="javascript:;">×</a>
-                                    <div class="img"><span class="pic"><img src="'.$value['url'].'" width="80" height="80" /></span></div>
-                                    <div class="title">
-                                        <input name="'.$config['name'].'[url][]" type="hidden" value="'.$value['url'].'" />
-                                        <input name="'.$config['name'].'[title][]" type="text" value="'.$value['title'].'" />
+                                <div class="media radius clearfix">
+                                    <a class="del" href="javascript:;" alt="删除"><img src="'.$value['url'].'" ></a>
+                                    <div class="media-body">
+                                        <input name="'.$config['name'].'[url][]" type="hidden" class="input" value="'.$value['url'].'" />
+                                        <input name="'.$config['name'].'[title][]" type="text" class="input" value="'.$value['title'].'" />
                                     </div>
-                                </li>
+                                </div>
                                 ';
                             }
                         }

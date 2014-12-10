@@ -384,7 +384,7 @@ $.ajaxSetup({
                 //上传开始
                 uploader.on('uploadStart', function (file) {
                     upButton.attr('disabled', true);
-                    upButton.find('.webuploader-pick span').text(' 上传中...');
+                    upButton.find('.webuploader-pick span').text(' 等待');
                 });
                 //上传完毕
                 uploader.on('uploadSuccess', function (file, data) {
@@ -402,8 +402,9 @@ $.ajaxSetup({
                 });
                 uploader.on('uploadComplete', function (file) {
                     //图片排序
-                    div.sortable().on('sortupdate');
+                    div.sortable();
                 });
+                /*
                 //处理图片预览
                 function zoomPic() {
                     xOffset = 10;
@@ -423,21 +424,23 @@ $.ajaxSetup({
                     });
                 }
                 zoomPic();
-                div.sortable().on('sortupdate');
+                */
+                //div.sortable().on('sortupdate');
                 //处理上传列表
                 function htmlList(file) {
-                    var html = '<li>\
-                    <a class="close" href="javascript:;">×</a>\
-                    <div class="img"><span class="pic"><img src="' + file.url + '" width="80" height="80" /></span></div>\
-                    <div class="title">\
-                    <input name="' + dataName + '[url][]" type="hidden" value="' + file.url + '" />\
-                    <input name="' + dataName + '[title][]" type="text" value="' + file.title + '" />\
+                    var html ='<div class="media radius clearfix">\
+                    <a class="del" href="javascript:;" alt="删除"><img src="' + file.url + '" ></a>\
+                    <div class="media-body">\
+                    <input name="' + dataName + '[url][]" type="hidden" class="input" value="' + file.url + '" />\
+                    <input name="' + dataName + '[title][]" type="text" class="input" value="' + file.title + '" />\
                     </div>\
-                    </li>';
+                    </div>\
+                    ';
                     div.append(html);
                 }
                 //处理删除
-                div.on('click', '.close', function () {
+                div.on('click', '.del', function () {
+                    debug('xxxxxx');
                     $(this).parent().remove();
                 });
             });

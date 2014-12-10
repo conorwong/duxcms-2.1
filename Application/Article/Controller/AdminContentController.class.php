@@ -134,7 +134,6 @@ class AdminContentController extends AdminController {
             $this->adminDisplay('info');
         }else{
             if(D('ContentArticle')->saveData('edit')){
-                D('Member/UserContent')->addContentInt();
                 $this->success('文章修改成功！');
             }else{
                 $msg = D('ContentArticle')->getError();

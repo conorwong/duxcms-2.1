@@ -328,4 +328,24 @@ body {
         padding-right: 20px;
     }
 }
+.dux-multi-image .sortable-placeholder {
+    display: inline-block;
+    width: 110px;
+    height: 147px;
+    border: 1px dashed #ccc;
+    margin-right: 15px;
 }
+.dux-multi-image .sortable-dragging {
+    display: inline-block;
+}
+.dux-multi-image .media {
+    background-color: #f1f1f1;
+    border: 1px solid #ddd;
+    padding: 5px;
+}
+.dux-multi-image .media img {
+    width: 100px;
+    height: 100px;
+}
+.dux-multi-image .media .input {
+width: 100px;}
