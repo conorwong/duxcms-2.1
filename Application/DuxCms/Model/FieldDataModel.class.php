@@ -68,12 +68,12 @@ class FieldDataModel extends Model {
         if(!$data){
             return false;
         }
+        $data['data_id'] = I('post.data_id');
         if($type == 'add'){
             $this->tableName = $this->tableName;
             return $this->add($data);
         }
         if($type == 'edit'){
-            $data['data_id'] = I('post.data_id');
             if(empty($data['data_id'])){
                 return false;
             }
