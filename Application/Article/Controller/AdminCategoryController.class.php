@@ -12,8 +12,8 @@ class AdminCategoryController extends AdminController {
         $menu = A('DuxCms/AdminCategory');
         $menu = $menu->infoModule;
         $menu['cutNav'] = array(
-                'url' => 'DuxCms/AdminCategory',
-                'complete' => true,
+                'url' => U('DuxCms/AdminCategory/index'),
+                'complete' => false,
                 );
         return $menu;
         

@@ -107,6 +107,9 @@ class AdminFormDataController extends AdminController {
             foreach ($fieldList as $value) {
                 $html .= D('Field')->htmlFieldFull($value);
             }
+            if(empty($html)){
+                $this->error('请先添加字段！');
+            }
             ob_start();
             $this->show($html);
             $html = ob_get_clean();
@@ -116,6 +119,7 @@ class AdminFormDataController extends AdminController {
             $this->assign('name', '添加');
             $this->assign('formInfo', $this->formInfo);
             $this->assign('html', $html);
+
             $this->adminDisplay('info');
         }else{
             if ($model->saveData('add',$_POST['fieldset_id'])){
@@ -160,6 +164,9 @@ class AdminFormDataController extends AdminController {
             $html='';
             foreach ($fieldList as $value) {
                 $html .= D('Field')->htmlFieldFull($value,$info[$value['field']]);
+            }
+            if(empty($html)){
+                $this->error('请先添加字段！');
             }
             ob_start();
             $this->show($html);

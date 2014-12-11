@@ -250,13 +250,9 @@ a:focus,a:hover{color:#09c;} /*链接-悬浮颜色*/
 /* 覆盖类 */
 
 .drop-menu {
-    border-color: #ccc !important;
-    border-radius: 0 !important;
-    box-shadow: none !important;
 }
 .panel-head {
     background-color: #f9fafc;
-    border-radius: 0;
 }
 .panel-foot {
     background-color: #f9fafc;
@@ -284,7 +280,6 @@ a:focus,a:hover{color:#09c;} /*链接-悬浮颜色*/
 }
 .alert {
     margin-bottom: 20px;
-    border-radius: 0;
 }
 .button.bg-main {
     background-color: #0081e6;
@@ -317,13 +312,11 @@ a:focus,a:hover{color:#09c;} /*链接-悬浮颜色*/
     border-bottom: 1px solid #ddd;
 }
 .table-foot .input {
-    border-radius: 0;
     padding: 4px;
     height: 30px;
 }
 .dux-box {
     background-color: #fff;
-    border-radius: 0;
 }
 .dux-panel {
     margin-left: -20px;
