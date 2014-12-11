@@ -66,6 +66,11 @@ class ContentController extends SiteController {
         D('DuxCms/Content')->editData($viewsData);
         //内容处理
         $contentInfo['content'] = html_out($contentInfo['content']);
+        //扩展模型
+        if($categoryInfo['fieldset_id']){
+            $extInfo = D('DuxCms/FieldsetExpand')->getDataInfo($categoryInfo['fieldset_id'],$contentId);
+            $contentInfo = array_merge($contentInfo , $extInfo);
+        }
         //上一篇
         $prevWhere = array();
         $prevWhere['A.status'] = 1;

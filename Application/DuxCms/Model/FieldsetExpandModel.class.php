@@ -21,13 +21,13 @@ class FieldsetExpandModel extends Model {
 
     /**
      * 获取信息
-     * @param int $FieldsetId ID
+     * @param int $fieldsetId ID
      * @return array 信息
      */
-    public function getInfo($FieldsetId)
+    public function getInfo($fieldsetId)
     {
         $map = array();
-        $map['A.fieldset_id'] = $FieldsetId;
+        $map['A.fieldset_id'] = $fieldsetId;
         return $this->getWhereInfo($map);
     }
 
@@ -94,7 +94,7 @@ class FieldsetExpandModel extends Model {
 
     /**
      * 删除信息
-     * @param int $FieldsetId ID
+     * @param int $fieldsetId ID
      * @return bool 删除状态
      */
     public function delData($fieldsetId)
@@ -117,6 +117,40 @@ class FieldsetExpandModel extends Model {
             $this->rollback();
         }
         return $status;
+    }
+
+    /**
+     * 获取还原后扩展数据
+     * @param int $fieldsetId 字段集ID
+     * @param int $dataId 数据ID
+     * @return array 数据
+     */
+    public function getDataInfo($fieldsetId,$dataId)
+    {
+        //获取模型信息
+        $fieldsetInfo = D('DuxCms/FieldsetExpand')->getInfo($fieldsetId);
+        if(empty($fieldsetInfo)){
+            return ;
+        }
+        //获取字段内容
+        D('DuxCms/FieldData')->setTable($fieldsetInfo['table']);
+        $extInfo = D('DuxCms/FieldData')->getInfo($dataId);
+        if(empty($extInfo)){
+            return ;
+        }
+        //获取字段列表
+        $where = array();
+        $where['A.fieldset_id'] = $fieldsetId;
+        $fieldList = D('DuxCms/FieldExpand')->loadList($where); 
+        if(empty($fieldList)){
+            return ;
+        }
+        $extArray = array();
+        foreach ($fieldList as $value) {
+            $extArray[$value['field']] = D('DuxCms/FieldData')->revertField($extInfo[$value['field']],$value['type'],$value['config']);
+        }
+        return $extArray;
+
     }
 
 }

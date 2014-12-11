@@ -63,7 +63,8 @@ class CategoryController extends SiteController {
 
             $categoryInfo['content_order'] = $categoryInfo['content_order'].',';
         }
-        $pageList = $modelContent->loadList($where,$limit,$categoryInfo['content_order'].'A.time desc,A.content_id desc');
+        $pageList = $modelContent->loadList($where,$limit,$categoryInfo['content_order'].'A.time desc,A.content_id desc',$categoryInfo['fieldset_id']);
+        
         //URL参数
         $pageMaps = array();
         $pageMaps['class_id'] = $classId;

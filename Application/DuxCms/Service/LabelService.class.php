@@ -41,7 +41,7 @@ class LabelService{
             $where['A.class_id'] = array('in',$data['class_id']);
         }
         //指定栏目下子栏目内容
-        if ($data['type']=='sub'&&!empty($data['class_id'])) {
+        if ($data['sub']&&!empty($data['class_id'])) {
             $classIds = D('DuxCms/Category')->getSubClassId($data['class_id']);
             $where['A.class_id'] = array('in',$classIds);
         }

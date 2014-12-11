@@ -14,30 +14,52 @@ class ContentArticleModel extends Model {
      * 获取列表
      * @return array 列表
      */
-    public function loadList($where = array(), $limit = 0, $order = 'A.time desc,A.content_id desc'){
+    public function loadList($where = array(), $limit = 0, $order = 'A.time desc,A.content_id desc', $fieldsetId = 0){
+        //基础条件
         $where['C.app'] = 'Article';
-        $pageList = $this->table("__CONTENT__ as A")
+        $model =  $this->table("__CONTENT__ as A")
                     ->join('__CONTENT_ARTICLE__ as B ON A.content_id = B.content_id')
-                    ->join('__CATEGORY__ as C ON A.class_id = C.class_id')
-                    ->field('A.*,B.*,C.name as class_name,C.app,C.urlname as class_urlname,C.image as class_image')
+                    ->join('__CATEGORY__ as C ON A.class_id = C.class_id');
+        $field = 'A.*,B.*,C.name as class_name,C.app,C.urlname as class_urlname,C.image as class_image';
+        //查询扩展信息
+        if(!empty($fieldsetId)){
+            $fieldsetInfo = D('DuxCms/FieldsetExpand')->getInfo($fieldsetId);
+            if(!empty($fieldsetInfo)){
+                //设置查询
+                $model = $model->join('__EXT_'.strtoupper($fieldsetInfo['table']).'__ as D ON A.content_id = D.data_id' , 'LEFT');
+                $field .= ',D.*';
+                //获取字段列表
+                $whereExt = array();
+                $whereExt['A.fieldset_id'] = $fieldsetId;
+                $fieldList = D('DuxCms/FieldExpand')->loadList($whereExt);
+            }
+        }
+        //获取最终结果
+        $pageList = $model->field($field)
                     ->where($where)
                     ->order($order)
                     ->limit($limit)
                     ->select();
-        //处理数据类型
+
+        //处理数据结果
         $list=array();
         if(!empty($pageList)){
             $i = 0;
             foreach ($pageList as $key=>$value) {
+                //处理基础
                 $list[$key]=$value;
                 $list[$key]['aurl'] = D('Article/ContentArticle')->getUrl($value);
                 $list[$key]['curl'] = D('Article/CategoryArticle')->getUrl($value);
                 $list[$key]['i'] = $i++;
+                //处理扩展字段
+                if(!empty($fieldList)){
+                    foreach ($fieldList as $v) {
+                        $list[$key][$v['field']] = D('DuxCms/FieldData')->revertField($value[$v['field']],$v['type'],$v['config']);
+                    }
+                }
             }
         }
-       
         return $list;
-
     }
 
     /**
