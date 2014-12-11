@@ -15,6 +15,10 @@ class AdminController extends BaseController {
      * 后台控制器初始化
      */
     protected function _initialize(){
+        //强制后台入口登录
+        if (!defined('ADMIN_STATUS')) { 
+            $this->error('请从后台入口重新登录！', false);
+        }
         // 检测用户登录
         define('ADMIN_ID',$this->isLogin());
         if( !ADMIN_ID && ( MODULE_NAME <> 'Admin' || CONTROLLER_NAME <> 'Login' )){
