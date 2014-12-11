@@ -927,6 +927,7 @@ function U($url='',$vars='',$suffix=true,$domain=false) {
                 $url  .=  '.'.ltrim($suffix,'.');
             }
         }
+
     }
     if(isset($anchor)){
         $url  .= '#'.$anchor;

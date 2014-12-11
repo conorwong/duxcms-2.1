@@ -21,8 +21,8 @@ class AdminController extends BaseController {
             $this->redirect('Admin/Login/index');
         }
         // 读取后台配置
-        $config = load_config(APP_PATH . 'Common/Conf/admin.php');
-        C($config);
+        //$config = load_config(APP_PATH . 'Common/Conf/admin.php');
+        //C($config);
         //判断模块是否开启
         if(!C('APP_SYSTEM')){
             if (1 != C('APP_STATE') || 1 != C('APP_INSTALL')) {

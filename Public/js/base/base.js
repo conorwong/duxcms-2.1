@@ -244,7 +244,7 @@ $.ajaxSetup({
     //编辑器调用
     $.fn.duxEditor = function (options) {
         var defaults = {
-            uploadUrl: rootUrl + 'index.php?m=DuxCms&c=AdminUpload&a=editor',
+            uploadUrl: appUrl + 'DuxCms/AdminUpload/editor',
             uploadParams: function () {},
             config: {}
         }
@@ -292,7 +292,7 @@ $.ajaxSetup({
     //上传调用
     $.fn.duxFileUpload = function (options) {
         var defaults = {
-            uploadUrl: rootUrl + 'index.php?m=DuxCms&c=AdminUpload&a=upload',
+            uploadUrl: appUrl + 'DuxCms/AdminUpload/upload',
             type: '',
             uploadParams: function () {},
             complete: function () {}
@@ -356,7 +356,7 @@ $.ajaxSetup({
     //多图上传
     $.fn.duxMultiUpload = function (options) {
         var defaults = {
-            uploadUrl: rootUrl + 'index.php?m=DuxCms&c=AdminUpload&a=upload',
+            uploadUrl: appUrl + 'DuxCms/AdminUpload/upload',
             uploadParams: function () {},
             complete: function () {},
             type: ''
@@ -469,8 +469,8 @@ $.ajaxSetup({
     //表单页面处理
     $.fn.duxFormPage = function (options) {
         var defaults = {
-            uploadUrl: rootUrl + 'index.php?m=DuxCms&c=AdminUpload&a=upload',
-            editorUploadUrl: rootUrl + 'index.php?m=DuxCms&c=AdminUpload&a=editor',
+            uploadUrl: appUrl + 'DuxCms/AdminUpload/upload',
+            editorUploadUrl: appUrl + 'DuxCms/AdminUpload/editor',
             uploadComplete: function () {},
             uploadParams: function () {},
             uploadType: [],
