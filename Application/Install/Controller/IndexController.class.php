@@ -100,7 +100,7 @@ class IndexController extends Controller {
         //安装完毕
         show_msg('安装程序执行完毕！后台默认帐号密码均为：admin');
         $homeUrl = U('Home/Index/index');
-        $adminUrl = U('Admin/Index/index');
+        $adminUrl = __ROOT__.'/admin.php';
         echo "<script type=\"text/javascript\">insok(\"{$homeUrl}\",\"{$adminUrl}\")</script>";
     }
 
