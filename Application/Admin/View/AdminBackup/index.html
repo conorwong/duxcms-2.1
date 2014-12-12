@@ -10,7 +10,7 @@
                 <!--loop{$list as $vo}-->
                 <tr>
                   <td>{$vo.name}</td>
-                  <td> <a class="button bg-blue button-small icon-share-square-o js-action" url="{:U('import')}" href="javascript:;" data="{$vo.time}"  title="还原"></a>
+                  <td> <a class="button bg-blue button-small icon-share-square-o js-action" url="{U('import')}" href="javascript:;" data="{$vo.time}"  title="还原"></a>
                        <a class="button bg-red button-small icon-trash-o js-del" href="javascript:;" data="{$vo.id}" title="删除"></a></td>
                 </tr>
                 <!--{/loop}-->

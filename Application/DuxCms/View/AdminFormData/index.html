@@ -20,7 +20,7 @@
                     <!--{/loop}-->
                     <td>
                         <a class="button bg-blue button-small icon-pencil" href="{U('edit',array('data_id'=>$vo['data_id'],'fieldset_id'=>$formInfo['fieldset_id']))}" title="修改"></a>
-                        <a class="button bg-red button-small icon-trash-o js-del" href="javascript:;" url="{:U('del',array('fieldset_id'=>$formInfo['fieldset_id']))}" data="{$vo.data_id}" title="删除"></a>
+                        <a class="button bg-red button-small icon-trash-o js-del" href="javascript:;" url="{U('del',array('fieldset_id'=>$formInfo['fieldset_id']))}" data="{$vo.data_id}" title="删除"></a>
                     </td>
                 </tr>
                 <!--{/loop}-->
