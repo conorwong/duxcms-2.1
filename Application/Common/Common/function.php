@@ -301,7 +301,7 @@ function msubstr($str, $length, $charset="utf-8", $suffix=true){
 function len($str, $len=0)
 {
     if(!empty($len)){
-        return msubstr($str, 0, $len);
+        return msubstr($str, $len);
     }else{
         return $str;
     }
