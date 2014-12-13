@@ -244,7 +244,7 @@ function not_empty($data)
 }
 
  //中文字符串截取
-function msubstr($str, $start=0, $length, $charset="utf-8", $suffix=true){
+function msubstr($str, $length, $charset="utf-8", $suffix=true){
     if(empty($str)){
         return;
     }
