@@ -46,7 +46,7 @@ class AdminContentController extends AdminController {
             $where['A.title'] = array('like','%'.$keyword.'%');
         }
         if(!empty($classId)){
-            $where['B.class_id'] = $classId;
+            $where['C.class_id'] = $classId;
         }
         if(!empty($positionId)){
             $where['_string'] = 'find_in_set('.$positionId.',position) ';

@@ -23,7 +23,7 @@
                               <option value="0">选择栏目</option>
                                <!--loop{$categoryList as $vo}-->
                                <option value="{$vo.class_id}" 
-                               <!--if{$pageMaps['parent_id'] == $vo['class_id']}-->
+                               <!--if{$pageMaps['class_id'] == $vo['class_id']}-->
                                selected="selected"
                                <!--{/if}-->
                                <!--if{$vo['type'] == 0 || $vo['app'] != MODULE_NAME}-->
