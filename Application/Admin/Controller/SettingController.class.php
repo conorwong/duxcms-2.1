@@ -33,11 +33,6 @@ class SettingController extends AdminController {
                         'icon' => 'eye',
                     ),
                     array(
-                        'name' => '上传设置',
-                        'url' => U('Setting/upload'),
-                        'icon' => 'upload',
-                    ),
-                    array(
                         'name' => '性能设置',
                         'url' => U('Setting/performance'),
                         'icon' => 'dashboard',
@@ -103,23 +98,6 @@ class SettingController extends AdminController {
                 $this->success('模板配置成功！');
             }else{
                 $this->error('模板配置失败');
-            }
-        }
-    }
-    /**
-     * 上传设置
-     */
-    public function upload(){
-        if(!IS_POST){
-            $breadCrumb = array('站点信息'=>U());
-            $this->assign('breadCrumb',$breadCrumb);
-            $this->assign('info',D('Config')->getInfo());
-            $this->adminDisplay();
-        }else{
-            if(D('Config')->saveData()){
-                $this->success('上传配置成功！');
-            }else{
-                $this->error('上传配置失败');
             }
         }
     }

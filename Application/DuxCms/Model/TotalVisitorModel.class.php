@@ -44,6 +44,18 @@ class TotalVisitorModel extends Model {
     }
 
     /**
+     * 查询当天访问量
+     */
+    public function curNum(){
+        $date =  strtotime(date('Y-m-d 0:0:0'));
+        $where = array();
+        $where['time'] = $date;
+        $info = $this->where($where)->find();
+        return $info['count'];
+        
+    }
+
+    /**
      * 生成时间数据
      * @param int $num 数量
      * @param int $type 类型

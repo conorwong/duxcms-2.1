@@ -30,6 +30,8 @@ class AdminCategoryController extends AdminController {
             $this->assign('categoryList',D('DuxCms/Category')->loadList());
             $this->assign('tplList',D('Admin/Config')->tplList());
             $this->assign('expandList',D('DuxCms/FieldsetExpand')->loadList());
+            $this->assign('uploadList',D('Admin/ConfigUpload')->loadList());
+            $this->assign('default_config',current_config());
             $this->adminDisplay('info');
         }else{
             $_POST['app'] = MODULE_NAME;
@@ -67,6 +69,8 @@ class AdminCategoryController extends AdminController {
             $this->assign('categoryList',D('DuxCms/Category')->loadList());
             $this->assign('tplList',D('Admin/Config')->tplList());
             $this->assign('expandList',D('DuxCms/FieldsetExpand')->loadList());
+            $this->assign('uploadList',D('Admin/ConfigUpload')->loadList());
+            $this->assign('default_config',current_config());
             $this->assign('info',$info);
             $this->adminDisplay('info');
         }else{

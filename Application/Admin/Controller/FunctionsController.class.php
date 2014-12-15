@@ -19,7 +19,7 @@ class FunctionsController extends AdminController {
             'menu' => array(
                     array(
                         'name' => '应用列表',
-                        'url' => U('index'),
+                        'url' => U('Admin/Functions/index'),
                         'icon' => 'exclamation-circle',
                     ),
                 )

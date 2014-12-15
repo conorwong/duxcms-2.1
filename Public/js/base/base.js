@@ -328,11 +328,11 @@ $.ajaxSetup({
                     accept: {
                         title: '指定格式文件',
                         extensions: options.type
-                    },
-                    formData: options.uploadParams()
+                    }
                 });
                 //上传开始
                 uploader.on('uploadStart', function (file) {
+                    uploader.option('formData' , $.extend(options.uploadParams(), {'class_id':$('#class_id').val()}));
                     upButton.attr('disabled', true);
                     upButton.find('.webuploader-pick span').text(' 等待');
                 });
@@ -378,11 +378,11 @@ $.ajaxSetup({
                     accept: {
                         title: '指定格式文件',
                         extensions: options.type
-                    },
-                    formData: options.uploadParams()
+                    }
                 });
                 //上传开始
                 uploader.on('uploadStart', function (file) {
+                    uploader.option('formData' , $.extend(options.uploadParams(), {'class_id':$('#class_id').val()}));
                     upButton.attr('disabled', true);
                     upButton.find('.webuploader-pick span').text(' 等待');
                 });
@@ -425,7 +425,7 @@ $.ajaxSetup({
                 }
                 zoomPic();
                 */
-                //div.sortable().on('sortupdate');
+                div.sortable();
                 //处理上传列表
                 function htmlList(file) {
                     var html ='<div class="media radius clearfix">\
@@ -521,7 +521,8 @@ $.ajaxSetup({
             //编辑器
             if (form.find(".js-editor").length > 0) {
                 form.find('.js-editor').duxEditor({
-                    uploadUrl: options.editorUploadUrl
+                    uploadUrl: options.editorUploadUrl,
+                    uploadParams: options.uploadParams
                 });
             }
             //时间选择

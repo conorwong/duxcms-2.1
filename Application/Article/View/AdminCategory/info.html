@@ -69,7 +69,7 @@
                             <label>内容分页数</label>
                         </div>
                         <div class="field">
-                            <input type="number" class="input" id="page" name="page" size="60" datatype="n" value="{default_data($info['page'],20)}">
+                            <input type="number" class="input" id="page" name="page" size="60" datatype="n" value="{default_data($info['page'],$default_config['ARTICLE_PAGE'])}">
                             <div class="input-note">当前栏目的内容列表下文章每页显示数量</div>
                         </div>
                     </div>
@@ -87,7 +87,7 @@
                             <label for="sitename">栏目模板</label>
                         </div>
                         <div class="field">
-                            <input type="text" class="input" id="class_tpl" name="class_tpl" size="20" datatype="*" value="{default_data($info['class_tpl'],'list')}">
+                            <input type="text" class="input" id="class_tpl" name="class_tpl" size="20" datatype="*" value="{default_data($info['class_tpl'],$default_config['ARTICLE_CLASS_TPL'])}">
                             <select class="input js-assign" target="#class_tpl">
                                 <option value="">请选择</option>
                                 <!--loop{$tplList as $vo}-->
@@ -103,7 +103,7 @@
                             <label for="sitename">内容模板</label>
                         </div>
                         <div class="field">
-                            <input type="text" class="input" id="content_tpl" name="content_tpl" size="20" datatype="*" value="{default_data($info['content_tpl'],'content')}">
+                            <input type="text" class="input" id="content_tpl" name="content_tpl" size="20" datatype="*" value="{default_data($info['content_tpl'],$default_config['ARTICLE_CONTENT_TEL'])}">
                             <select class="input js-assign" target="#content_tpl">
                                 <option value="">请选择</option>
                                 <!--loop{$tplList as $vo}-->
@@ -238,6 +238,25 @@
                                     <!--{/loop}-->
                             </select>
                             <div class="input-note">绑定后添加内容时可使用扩展字段</div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <div class="label">
+                            <label>绑定上传配置</label>
+                        </div>
+                        <div class="field">
+                            <select class="input" name="upload_config">
+                                <!--loop{$uploadList as $vo}-->
+                                <!--if{$info['upload_config'] == $vo['id']}-->
+                                <option value="{$vo.id}" selected>
+                                    <!--{else}-->
+                                    <option value="{$vo.id}">
+                                        <!--{/if}-->
+                                        {$vo.name}</option>
+                                    <!--{/loop}-->
+                            </select>
+                            <div class="input-note">选择栏目后上传将会使用绑定配置</div>
                         </div>
                     </div>
                     

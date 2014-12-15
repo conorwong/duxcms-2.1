@@ -12,8 +12,16 @@ class AdminUploadController extends AdminController
     public function upload()
     {
         $return = array('status' => 1, 'info' => '上传成功', 'data' => '');
-        $file = D('File');
-        $info = $file->uploadData($_FILES);
+        $file = D('Admin/File');
+        $configId = 1;
+        $classId = I('post.class_id');
+        if(!empty($classId)){
+            $classInfo = D('DuxCms/Category')->getInfo($classId);
+            if(!empty($classInfo['upload_config'])){
+                $configId = $classInfo['upload_config'];
+            }
+        }
+        $info = $file->uploadData($_FILES , $configId);
         if ($info)
         {
             $return['data'] = $info;
@@ -31,7 +39,8 @@ class AdminUploadController extends AdminController
      */
     public function editor()
     {
-        $file = D('File');
+        //编辑器无法动态获取参数，使用默认配置
+        $file = D('Admin/File');
         $info = $file->uploadData($_FILES);
         if ($info){
             $return = array(

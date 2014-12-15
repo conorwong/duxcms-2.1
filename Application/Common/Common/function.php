@@ -95,6 +95,15 @@ function array_order($array, $key, $type = 'asc', $reset = false)
 }
 
 /**
+ * 读入当前模块配置文件
+ * @param  array $config 配置信息
+ */
+function current_config(){
+    $file = MODULE_PATH . 'Conf/config.php';
+    return load_config($file);
+}
+
+/**
  * 写入配置文件
  * @param  array $config 配置信息
  */
@@ -227,7 +236,6 @@ function random_str()
     substr(time(),-5).substr(microtime(),2,5).sprintf('d',rand(0,99));
     return $order_sn;
 }
-
 
 /**
  * 判断不为空
@@ -410,8 +418,6 @@ function authcode($string, $operation = 'DECODE', $key = '', $expiry = 0) {
     }
 }
 
-
-
 //文本输入
 function text_in($str){
     $str=strip_tags($str,'<br>');
@@ -458,5 +464,4 @@ function default_data($data,$var){
     }else{
         return $data;
     }
-
 }

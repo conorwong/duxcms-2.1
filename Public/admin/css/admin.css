@@ -84,6 +84,8 @@ body {
 }
 .dux-sidebar .nav li a::before {
     margin-right: 5px;
+    width: 15px;
+    text-align: center;
 }
 .dux-sidebar .nav li a:hover,
 .dux-sidebar .nav .active a {

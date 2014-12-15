@@ -23,6 +23,22 @@ class TotalSpiderModel extends Model {
     }
 
     /**
+     * 查询当天访问量
+     */
+    public function curNum(){
+        $date =  strtotime(date('Y-m-d 0:0:0'));
+        $where = array();
+        $where['time'] = $date;
+        $info = $this->where($where)->find();
+        $num = 0;
+        $num = $num + $info['google'];
+        $num = $num + $info['baidu'];
+        $num = $num + $info['soso'];
+        return $num;
+        
+    }
+
+    /**
      * 判断蜘蛛爬行
      */
     public function addData(){

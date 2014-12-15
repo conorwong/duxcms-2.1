@@ -114,6 +114,7 @@ CREATE TABLE IF NOT EXISTS `dux_category` (
   `class_tpl` varchar(250) DEFAULT NULL,
   `keywords` varchar(250) DEFAULT NULL,
   `description` varchar(250) DEFAULT NULL,
+  `upload_config` int(10) DEFAULT '1',
   PRIMARY KEY (`class_id`),
   UNIQUE KEY `urlname` (`urlname`) USING BTREE,
   KEY `pid` (`parent_id`),
@@ -180,19 +181,37 @@ INSERT INTO `dux_config` (`name`, `data`) VALUES
 ('tpl_index', 'index'),
 ('tpl_search', 'search'),
 ('tpl_tags', 'tag'),
-('upload_size', '10'),
-('upload_exts', 'jpg,gif,png,bmp'),
-('upload_replace', '1'),
-('thumb_status', '0'),
-('water_status', '0'),
-('thumb_type', '3'),
-('thumb_width', '500'),
-('thumb_height', '500'),
-('water_image', 'logo.png'),
-('water_position', '2'),
 ('mobile_status', '0'),
-('mobile_tpl', 'mobile'),
-('mobile_domain', '');
+('mobile_tpl', 'mobile'), ('mobile_domain', '');
+
+-- --------------------------------------------------------
+
+--
+-- 表的结构 `dux_config_upload`
+--
+
+CREATE TABLE IF NOT EXISTS `dux_config_upload` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `name` varchar(250) DEFAULT NULL,
+  `upload_size` int(10) NOT NULL,
+  `upload_exts` varchar(250) DEFAULT NULL,
+  `upload_replace` tinyint(1) DEFAULT NULL,
+  `thumb_status` tinyint(1) DEFAULT NULL,
+  `water_status` tinyint(1) DEFAULT NULL,
+  `thumb_type` tinyint(1) DEFAULT NULL,
+  `thumb_width` int(10) DEFAULT NULL,
+  `thumb_height` int(10) DEFAULT NULL,
+  `water_image` varchar(250) DEFAULT NULL,
+  `water_position` int(10) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='网站配置' AUTO_INCREMENT=2 ;
+
+--
+-- 转存表中的数据 `dux_config_upload`
+--
+
+INSERT INTO `dux_config_upload` (`id`, `name`, `upload_size`, `upload_exts`, `upload_replace`, `thumb_status`, `water_status`, `thumb_type`, `thumb_width`, `thumb_height`, `water_image`, `water_position`) VALUES
+(1, '默认', 10, 'jpg,gif,bmp,png', 0, 0, 0, 1, 800, 800, 'logo.jpg', 1);
 
 -- --------------------------------------------------------
 

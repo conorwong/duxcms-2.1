@@ -40,7 +40,10 @@
                <!--{else}-->
                <li>
                <!--{/if}-->
+               <!--if{$vo['url']}-->
                <a href="{$vo.url}" class="icon-{$vo.icon}"> {$vo.name}</a></li>
+               <!--{/if}-->
+               
                <!--{/loop}-->
             </ul>
             <ul class="nav  nav-navicon nav-menu nav-inline admin-nav nav-tool">

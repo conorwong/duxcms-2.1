@@ -13,6 +13,7 @@ class MenuService{
                 'menu' => array(
                     array(
                         'name' => '文章管理',
+                        'icon' => 'reorder',
                         'url' => U('Article/AdminContent/index'),
                         'order' => 1
                     )

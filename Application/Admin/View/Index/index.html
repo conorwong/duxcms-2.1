@@ -31,7 +31,7 @@
                         <div class="txt dashboard-head radius-small bg-yellow icon-bar-chart-o"></div>
                     </div>
                     <div class="media-body text-center">
-                        <h2><strong>2000</strong></h2>
+                        <h2><strong><?php echo D('DuxCms/TotalVisitor')->curNum(); ?></strong></h2>
                         今日网站访问
                     </div>
                 </div>
@@ -47,7 +47,7 @@
                         <div class="txt dashboard-head radius-small bg-blue icon-paw"></div>
                     </div>
                     <div class="media-body text-center">
-                        <h2><strong>2000</strong></h2>
+                        <h2><strong><?php echo D('DuxCms/TotalSpider')->curNum(); ?></strong></h2>
                         今日蜘蛛访问
                     </div>
                 </div>
@@ -63,7 +63,7 @@
                         <div class="txt dashboard-head radius-small bg-green icon-puzzle-piece"></div>
                     </div>
                     <div class="media-body text-center">
-                        <h2><strong>2000</strong></h2>
+                        <h2><strong><?php echo D('DuxCms/Fragment')->countList(); ?></strong></h2>
                         碎片使用数量
                     </div>
                 </div>

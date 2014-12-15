@@ -69,7 +69,7 @@ class AdminContentController extends AdminController {
         $pageMaps['position_id'] = $positionId;
         //查询数据
         $count = D('ContentArticle')->countList($where);
-        $limit = $this->getPageLimit($count,2);
+        $limit = $this->getPageLimit($count,30);
         $list = D('ContentArticle')->loadList($where,$limit);
         //位置导航
         $breadCrumb = array('文章列表'=>U());
@@ -94,6 +94,7 @@ class AdminContentController extends AdminController {
             $this->assign('categoryList',D('CategoryArticle')->loadList());
             $this->assign('tplList',D('Admin/Config')->tplList());
             $this->assign('positionList',D('DuxCms/Position')->loadList());
+            $this->assign('default_config',current_config());
             $this->adminDisplay('info');
         }else{
             if(D('ContentArticle')->saveData('add')){

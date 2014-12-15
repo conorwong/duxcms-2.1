@@ -157,11 +157,13 @@ class LabelService{
         //解析TAG文字
         if(!empty($data['name'])){
             $name = explode(',', $data['name']);
-            $whereName = array();
-            foreach ($name as $value) {
-                $whereName[] = array('eq', $value);
+            $nameArray = array();
+            foreach ($name as $key => $value) {
+                $nameArray[$key]['name'] = $value;
+                $nameArray[$key]['url'] = U('DuxCms/TagsContent/index',array('name' =>$value));
+                $nameArray[$key]['i'] = $key;
             }
-            $where['name'] = array_merge($whereName, array('and'));
+            return $nameArray;
         }
         //数量
         if(empty($data['limit'])){

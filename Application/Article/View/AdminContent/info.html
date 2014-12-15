@@ -70,9 +70,19 @@
                             <label>内容功能</label>
                         </div>
                         <div class="field">
-                              <label><input name="get_image" id="get_image" type="checkbox" value="1">
+                              <label>
+                              <?php if($default_config['ARTICLE_TOPIC']){ ?>
+                              <input name="get_image" id="get_image" type="checkbox" value="1" checked>
+                              <?php }else{ ?>
+                              <input name="get_image" id="get_image" type="checkbox" value="1">
+                              <?php } ?>
                               提取第 <input type="number" class="input" id="get_image_num" name="get_image_num" size="1" value="1"> 张图片作封面</label> 
-                              <label><input name="get_description" id="get_description" type="checkbox" value="1">
+                              <label>
+                              <?php if($default_config['ARTICLE_DESCRIPTION']){ ?>
+                              <input name="get_description" id="get_description" type="checkbox" value="1" checked>
+                              <?php }else{ ?>
+                              <input name="get_description" id="get_description" type="checkbox" value="1">
+                              <?php } ?>
                               提取文章描述</label>
                            
                         </div>
@@ -93,6 +103,7 @@
                         </div>
                         <div class="field">
                             <input type="text" class="input" id="keywords" name="keywords" size="50" value="{$info.keywords}">
+                            <?php if(!isset($info['taglink'])){ $info['taglink'] = $default_config['ARTICLE_TAGLINK']; }; ?>
                             <select class="input" name="taglink" id="taglink">
                                 <option  value="0"
                                 <!--if{$info['taglink'] == '0'}-->
@@ -256,8 +267,14 @@
                             <label>来源</label>
                         </div>
                         <div class="field">
-                            <input type="text" class="input" id="copyfrom" name="copyfrom" size="60" value="{default_data($info.copyfrom,'本站')}">
-                            <div class="input-note">当然内容来源</div>
+                           <?php $copyfrom = explode(',', $default_config['ARTICLE_COPYFROM']); ?>
+                            <input type="text" class="input" id="copyfrom" name="copyfrom" size="48" value="{default_data($info.copyfrom,$copyfrom[0])}">
+                            <select class="input js-assign" target="#copyfrom">
+                                <!--loop{$copyfrom as $vo}-->
+                                <option value="{$vo}">{$vo}</option>
+                                <!--{/loop}-->
+                            </select>
+                            <div class="input-note">当前内容来源</div>
                         </div>
                     </div>
                     
