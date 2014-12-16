@@ -19,7 +19,7 @@ ie8+ chrome firefox
 #说明
 
 默认后台帐号密码为：admin
-默认后台地址为：http://域名/index.php?m=admin
+默认后台地址为：http://域名/admin.php
 
 ----
 
