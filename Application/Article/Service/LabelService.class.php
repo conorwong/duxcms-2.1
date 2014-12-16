@@ -20,9 +20,9 @@ class LabelService{
         //栏目属性
         if(isset($data['type'])){
             if($data['type']){
-                $where['B.type'] = 1;
+                $where['A.type'] = 1;
             }else{
-                $where['B.type'] = 0;
+                $where['A.type'] = 0;
             }
         }
         //其他条件
