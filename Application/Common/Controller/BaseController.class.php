@@ -20,8 +20,8 @@ class BaseController extends Controller {
     protected function setCont(){
         // 读取站点配置
         $siteConfig = D('Admin/Config')->getInfo();
+        $this->sys = $siteConfig;
         C($siteConfig);
-
         //设置站点
         $url = $_SERVER['HTTP_HOST'];
         $detect = new \Common\Util\Mobile_Detect();
