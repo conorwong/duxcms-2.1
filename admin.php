@@ -17,7 +17,7 @@ define('RUNTIME_PATH','./Runtime/');
 //定义网站物理路径
 define('ROOT_PATH', dirname(__FILE__).DIRECTORY_SEPARATOR);
 
-$_GET['m'] = 'Admin'; 
+$_GET['m'] = 'Admin';
 
 //定义后台配置
 $GLOBALS['config'] = array (
