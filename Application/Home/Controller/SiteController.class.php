@@ -34,7 +34,7 @@ class SiteController extends BaseController {
      * @return void
      */
     protected function siteDisplay($name='',$type = true) {
-        C('VIEW_PATH','./themes/');
+        C('VIEW_PATH','./Themes/');
         $tpl = C('TPL_NAME').'/'.$name;
         if($type){
             $this->display($tpl);

@@ -48,7 +48,7 @@ class ConfigModel extends Model {
     public function tplList()
     {
         $config = $this->getInfo();
-        $tplDir=realpath('./themes/'.$config['tpl_name']);
+        $tplDir=realpath('./Themes/'.$config['tpl_name']);
         if(!is_dir($tplDir)){
             return false;
         }
@@ -71,7 +71,7 @@ class ConfigModel extends Model {
      */
     public function themesList()
     {
-        $tplDir=realpath('./themes');
+        $tplDir=realpath('./Themes');
         if(!is_dir($tplDir)){
             return false;
         }
