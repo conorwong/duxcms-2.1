@@ -156,6 +156,34 @@ function del_dir($dir){
     }
 }
 
+
+//复制目录
+function copy_dir($sourceDir,$aimDir){
+        $succeed = true;
+        if(!file_exists($aimDir)){
+            if(!mkdir($aimDir,0777)){
+                return false;
+            }
+        }
+        $objDir = opendir($sourceDir);
+        while(false !== ($fileName = readdir($objDir))){
+            if(($fileName != ".") && ($fileName != "..")){
+                if(!is_dir("$sourceDir/$fileName")){
+                    if(!copy("$sourceDir/$fileName","$aimDir/$fileName")){
+                        $succeed = false;
+                        break;
+                    }
+                }
+                else{
+                    copy_dir("$sourceDir/$fileName","$aimDir/$fileName");
+                }
+            }
+        }
+        closedir($objDir);
+        return $succeed;
+}
+
+
 /**
  * 获取文件或文件大小
  * @param string $directoty 路径

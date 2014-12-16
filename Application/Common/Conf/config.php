@@ -4,6 +4,7 @@ $dir = dirname(__FILE__);
 $performance = include $dir.'/performance.php';
 $shield = include $dir.'/shield.php';
 $db = include $dir.'/db.php';
+$ver = include $dir.'/ver.php';
 $config = array(
 	//'配置项'=>'配置值'
 	'TMPL_ENGINE_TYPE' => 'Dux',
@@ -14,5 +15,5 @@ $config = array(
 	'APP_SYSTEM' => 1,
 	'APP_NAME' => '基础应用',
 	);
-$config = array_merge($performance,$shield,$db,$config,(array)$GLOBALS['config']);
+$config = array_merge($performance,$shield,$db,$ver,$config,(array)$GLOBALS['config']);
 return $config;

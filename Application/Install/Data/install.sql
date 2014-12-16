@@ -107,6 +107,7 @@ CREATE TABLE IF NOT EXISTS `dux_category` (
   `app` varchar(20) DEFAULT NULL,
   `show` tinyint(1) unsigned DEFAULT '1',
   `sequence` int(10) DEFAULT '0',
+  `type` int(10) NOT NULL DEFAULT '1',
   `name` varchar(250) DEFAULT NULL,
   `urlname` varchar(250) DEFAULT NULL,
   `subname` varchar(250) DEFAULT NULL,
@@ -132,7 +133,6 @@ DROP TABLE IF EXISTS `dux_category_article`;
 CREATE TABLE IF NOT EXISTS `dux_category_article` (
   `class_id` int(10) NOT NULL,
   `fieldset_id` int(10) NOT NULL,
-  `type` int(10) NOT NULL DEFAULT '1',
   `content_tpl` varchar(250) NOT NULL,
   `config_upload` text NOT NULL,
   `content_order` varchar(250) NOT NULL,

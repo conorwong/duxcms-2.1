@@ -54,6 +54,12 @@ class MenuService{
                         'icon' => 'shield',
                         'url' => U('DuxCms/AdminSafe/index'),
                         'order' => 2
+                    ),
+                    array(
+                        'name' => '系统更新',
+                        'icon' => 'bug',
+                        'url' => U('DuxCms/AdminUpdate/index'),
+                        'order' => 3
                     ), 
                 )
             ),
