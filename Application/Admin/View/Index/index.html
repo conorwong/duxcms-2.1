@@ -157,12 +157,12 @@
                         </tr>
                         <tr>
                             <td align="right">最新版本：</td>
-                            <td><a href="javajscript:alert('没有发现升级版本');">检查版本</a>
+                            <td><a href="{U('DuxCms/AdminUpdate/index')}">检查版本</a>
                             </td>
                         </tr>
                         <tr>
                             <td align="right">商业授权：</td>
-                            <td colspan="3">未取得商业授权，您可以继续按照约定免费使用，您也可以购买网站商业授权来使用</td>
+                            <td colspan="3" id="authorize"> <a id="checkAuthorize" class=" badge bg-main" href="javascript:;">查询授权</a></td>
                         </tr>
                         <tr>
                             <td width="110" align="right">程序支持：</td>
@@ -185,7 +185,7 @@
                         </tr>
                         <tr>
                             <td align="right">其他：</td>
-                            <td><a href="#">捐赠支持</a>  <a href="#">使用协议</a>
+                            <td><a href="http://www.duxcms.com">捐赠支持</a>  <a href="http://www.duxcms.com">使用协议</a>
                             </td>
                         </tr>
 
@@ -202,6 +202,13 @@
         $("#chart").duxChart({
             data: data
         });
+        $('#checkAuthorize').click(function(){
+            $.post('http://www.duxcms.com/index.php?s=Service/Authorize/index',{},function(data){
+                if(data != ''){
+                $('#authorize').html(data);
+                }
+            },'html');
+        })
     });
 </script>
 
