@@ -495,10 +495,22 @@ function default_data($data,$var){
 }
 
 //图片裁剪
-function cut_image($data,$var){
-    if(empty($data)){
-        return $var;
-    }else{
-        return $data;
+function cut_image($img, $width, $height, $type = 3)
+{
+    if(empty($width)&&empty($height)){
+        return $img;
     }
+    $imgDir = realpath(ROOT_PATH.$img);
+    if(!is_file($imgDir)){
+        return $img;
+    }
+    $image = new \Think\Image();
+    $image->open($imgDir);
+    $imgInfo = pathinfo($img);
+    $newImg = $imgInfo['dirname'].'/cut_'.$width.'_'.$height.'_'.$imgInfo["basename"];
+    $newImgDir = ROOT_PATH.$newImg;
+    if(!is_file($newImgDir)){
+        $image->thumb($width, $height,$type)->save($newImgDir);
+    }
+    return $newImg;
 }

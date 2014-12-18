@@ -20,7 +20,7 @@ class ContentArticleModel extends Model {
         $model =  $this->table("__CONTENT__ as A")
                     ->join('__CONTENT_ARTICLE__ as B ON A.content_id = B.content_id')
                     ->join('__CATEGORY__ as C ON A.class_id = C.class_id');
-        $field = 'A.*,B.*,C.name as class_name,C.app,C.urlname as class_urlname,C.image as class_image,B.parent_id';
+        $field = 'A.*,B.*,C.name as class_name,C.app,C.urlname as class_urlname,C.image as class_image,C.parent_id';
         //查询扩展信息
         if(!empty($fieldsetId)){
             $fieldsetInfo = D('DuxCms/FieldsetExpand')->getInfo($fieldsetId);

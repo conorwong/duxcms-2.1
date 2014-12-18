@@ -326,7 +326,7 @@ class ContentModel extends Model {
         $image = I('post.image');
         $content = I('post.content');
         //处理数据
-        if(empty($content)){
+        if($image){
             return $image;
         }
         if(!$getImageStatus||empty($content)||empty($getImageNum)){

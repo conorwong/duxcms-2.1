@@ -27,9 +27,10 @@
                     <div class="bd">
                         <ul>
                         	<!--list{app="DuxCms" label="contentList" limit=5 image=true }-->
-                            <li><a href="{$list.aurl}" target="_blank"><img src="{$list.image}" width="270" height="270"   /></a></li>
+                            <li><a href="{$list.aurl}" target="_blank"><img src="{cut_image($list.image,270,270)}" width="270" height="270"   /></a></li>
                             <!--{/list}-->
                         </ul>
+                        
                     </div>
                 </div>
                 
