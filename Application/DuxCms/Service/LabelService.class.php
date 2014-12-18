@@ -17,6 +17,14 @@ class LabelService{
         if(!empty($data['class_id'])){
             $where['class_id'] = array('in',$data['class_id']);
         }
+        //栏目属性
+        if(isset($data['type'])){
+            if($data['type']){
+                $where['type'] = 1;
+            }else{
+                $where['type'] = 0;
+            }
+        }
         //其他条件
         if(!empty($data['where'])){
             $where['_string'] = $data['where'];

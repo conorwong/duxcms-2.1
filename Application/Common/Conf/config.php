@@ -14,6 +14,12 @@ $config = array(
 	'SITE_URL' => '',
 	'APP_SYSTEM' => 1,
 	'APP_NAME' => '基础应用',
+	'URL_404_REDIRECT'      =>  'http://www.baidu.com',
 	);
+
 $config = array_merge($performance,$shield,$db,$ver,$config,(array)$GLOBALS['config']);
+//设置404页面
+if(!$config['SHOW_ERROR_MSG']){
+	$config['TMPL_EXCEPTION_FILE'] = ROOT_PATH.'Themes/Common/404.html';
+}
 return $config;

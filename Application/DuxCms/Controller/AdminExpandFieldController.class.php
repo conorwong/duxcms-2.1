@@ -33,8 +33,8 @@ class AdminExpandFieldController extends AdminController
                     ),
                 ),
             'cutNav' => array(
-                'url' => 'DuxCms/AdminExpand',
-                'complete' => true,
+                'url' => U('DuxCms/AdminExpand/index'),
+                'complete' => false,
                 )
             );
         return $data;

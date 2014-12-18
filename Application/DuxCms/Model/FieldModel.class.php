@@ -473,33 +473,35 @@ class FieldModel extends Model {
                 $html .= '</select>';
                 break;
             case 'radio':
-                $html .= '<div class="button-group button-group-small radio">';
+                $html .= '<div class="padding-top">';
                 $list = explode(',', $config['config']);
                 $i = 0;
                 foreach ($list as $vo) {
                     $i++;
+                    $html .= ' <label>';
                     if($i == $config['value']){
-                        $html .= '<label class="button active"><input name="'.$config['name'].'" value="'.$i.'" checked="checked" type="radio">';
+                        $html .= '<input name="'.$config['name'].'" value="'.$i.'" checked="checked" type="radio">';
                     }else{
-                        $html .= '<label class="button"><input name="'.$config['name'].'" value="'.$i.'" type="radio">';
+                        $html .= '<input name="'.$config['name'].'" value="'.$i.'" type="radio">';
                     }
-                    $html .= '<span class="icon icon-check"></span> '.$vo.'</label>';
+                    $html .= ' '.$vo.'</label> ';
                 }
                 $html .= '</div>';
                 break;
             case 'checkbox':
-                $html .= '<div class="button-group button-group-small checkbox">';
+                $html .= '<div class="padding-top">';
                 $list = explode(',', $config['config']);
                 $val = explode(',', $config['value']);
                 $i = 0;
                 foreach ($list as $vo) {
                     $i++;
+                    $html .= ' <label>';
                     if(in_array($i,$val)){
-                        $html .= '<label class="button active"><input name="'.$config['name'].'[]" value="'.$i.'" checked="checked" type="radio">';
+                        $html .= '<input name="'.$config['name'].'[]" value="'.$i.'" checked="checked" type="checkbox">';
                     }else{
-                        $html .= '<label class="button"><input name="'.$config['name'].'[]" value="'.$i.'" type="radio">';
+                        $html .= '<input name="'.$config['name'].'[]" value="'.$i.'" type="checkbox">';
                     }
-                    $html .= '<span class="icon icon-check"></span> '.$vo.'</label>';
+                    $html .= ' '.$vo.'</label> ';
                 }
                 $html .= '</div>';
                 break;
@@ -508,7 +510,7 @@ class FieldModel extends Model {
                     $config['value'] = date('Y/m/d H:i:s',$config['value']);
                 }
                 $html .= '
-                    <input type="text" class="input" id="'.$config['name'].'" name="'.$config['name'].'" size="60" '.$verifyHtml.' value="'.$config['value'].'">
+                    <input type="text" class="input  js-time" id="'.$config['name'].'" name="'.$config['name'].'" size="60" '.$verifyHtml.' value="'.$config['value'].'">
                 ';
                 break;
             case 'currency':

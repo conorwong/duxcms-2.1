@@ -22,6 +22,7 @@ class BaseController extends Controller {
         $siteConfig = D('Admin/Config')->getInfo();
         $this->sys = $siteConfig;
         C($siteConfig);
+        
         //设置站点
         $url = $_SERVER['HTTP_HOST'];
         $detect = new \Common\Util\Mobile_Detect();
