@@ -15,7 +15,7 @@ class LabelService{
         }
         //指定栏目
         if(!empty($data['class_id'])){
-            $where['A.class_id'] = array('in',$data['class_id']);
+            $where['A.class_id'] = array('in',(string)$data['class_id']);
         }
         //栏目属性
         if(isset($data['type'])){
@@ -46,12 +46,12 @@ class LabelService{
         $where=array();
         //指定栏目内容
         if(!empty($data['class_id'])){
-            $where['A.class_id'] = array('in',$data['class_id']);
+            $where['A.class_id'] = array('in',(string)$data['class_id']);
         }
         //指定栏目下子栏目内容
         if ($data['sub']&&!empty($data['class_id'])) {
             $classIds = D('DuxCms/Category')->getSubClassId($data['class_id']);
-            $where['A.class_id'] = array('in',$classIds);
+            $where['A.class_id'] = array('in',(string)$classIds);
         }
         //是否带形象图
         if (isset($data['image'])) {
@@ -64,7 +64,7 @@ class LabelService{
         }
         //排除ID
         if(!empty($data['not_id'])){
-            $where['A.content_id'] = array('not in',$data['not_id']);
+            $where['A.content_id'] = array('not in',(string)$data['not_id']);
         }
         //调用推荐位
         if(!empty($data['pos_id'])){
