@@ -504,12 +504,12 @@ function cut_image($img, $width, $height, $type = 3)
     if(!is_file($imgDir)){
         return $img;
     }
-    $image = new \Think\Image();
-    $image->open($imgDir);
     $imgInfo = pathinfo($img);
     $newImg = $imgInfo['dirname'].'/cut_'.$width.'_'.$height.'_'.$imgInfo["basename"];
     $newImgDir = ROOT_PATH.$newImg;
     if(!is_file($newImgDir)){
+        $image = new \Think\Image();
+        $image->open($imgDir);
         $image->thumb($width, $height,$type)->save($newImgDir);
     }
     return $newImg;
