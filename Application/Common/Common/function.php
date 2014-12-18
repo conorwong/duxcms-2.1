@@ -493,3 +493,12 @@ function default_data($data,$var){
         return $data;
     }
 }
+
+//图片裁剪
+function cut_image($data,$var){
+    if(empty($data)){
+        return $var;
+    }else{
+        return $data;
+    }
+}

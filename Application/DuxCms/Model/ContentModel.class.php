@@ -40,7 +40,7 @@ class ContentModel extends Model {
     public function loadList($where = array(), $limit = 50, $order = 'A.time desc,A.content_id desc'){
         $pageList = $this->table("__CONTENT__ as A")
                     ->join('__CATEGORY__ as B ON A.class_id = B.class_id')
-                    ->field('A.*,B.name as class_name,B.app,B.urlname as class_urlname')
+                    ->field('A.*,B.name as class_name,B.app,B.urlname as class_urlname,B.parent_id')
                     ->where($where)
                     ->limit($limit)
                     ->order($order)
