@@ -40,13 +40,13 @@ class CategoryController extends SiteController {
         //设置查询条件
         $where='';
         if ($categoryInfo['type'] == 0) {
-            $classId = D('DuxCms/Category')->getSubClassId($classId);
+            $classIds = D('DuxCms/Category')->getSubClassId($classId);
         }
-        if(empty($classId)){
-            $classId = $categoryInfo['class_id'];
+        if(empty($classIds)){
+            $classIds = $categoryInfo['class_id'];
         }
         $where['A.status'] = 1;
-        $where['C.class_id'] = array('in',$classId);
+        $where['C.class_id'] = array('in',$classIds);
 
         //分页参数
         $size = intval($categoryInfo['page']); 
