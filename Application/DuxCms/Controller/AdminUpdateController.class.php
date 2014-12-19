@@ -138,5 +138,14 @@ class AdminUpdateController extends AdminController {
         
     }
 
+    /**
+     * 查询授权
+     */
+    public function Authorize(){
+        $url = 'http://www.duxcms.com/index.php?s=Service/Authorize/index';
+        $info = \Common\Util\Http::doGet($url,30);
+        echo $info;
+    }
+
 }
 

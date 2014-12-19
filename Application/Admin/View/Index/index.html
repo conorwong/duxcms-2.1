@@ -203,9 +203,11 @@
             data: data
         });
         $('#checkAuthorize').click(function(){
-            $.post('http://www.duxcms.com/index.php?s=Service/Authorize/index',{},function(data){
+            $.post('{U("DuxCms/AdminUpdate/Authorize")}',{},function(data){
                 if(data != ''){
-                $('#authorize').html(data);
+                    $('#authorize').html(data);
+                }else{
+                    $('#authorize').html('授权服务器连接失败，请稍后再试！');
                 }
             },'html');
         })

@@ -73,6 +73,7 @@ class Http
 	{
 		$header=empty($header)?self::defaultHeader():$header;
 		$ch = curl_init();
+		curl_setopt($ch,CURLOPT_REFERER,$_SERVER['HTTP_HOST']);
 		curl_setopt($ch, CURLOPT_URL, $url);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 		curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
@@ -88,6 +89,7 @@ class Http
 		$header=empty($header)?'':$header;
 		$post_string = http_build_query($post_data);  
 		$ch = curl_init();
+		curl_setopt($ch,CURLOPT_REFERER,$_SERVER['HTTP_HOST']);
 		curl_setopt($ch, CURLOPT_POST, true);
 		curl_setopt($ch, CURLOPT_POSTFIELDS, $post_string);
 		curl_setopt($ch, CURLOPT_URL, $url);
