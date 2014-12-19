@@ -44,11 +44,11 @@ class SearchController extends SiteController {
             switch ($model) {
                 //全文
                 case '1':
-                    $where['_string'] = ' (A.title = "'.$keyword.'") OR  (A.keywords = "'.$keyword.'")  OR  (A.description = "'.$keyword.'")   OR  (B.content = "'.$keyword.'") ';
+                    $where['_string'] = ' (A.title like "%'.$keyword.'%") OR  (A.keywords like "%'.$keyword.'%")  OR  (A.description like "%'.$keyword.'%")   OR  (B.content like "%'.$keyword.'%") ';
                     break;
                 //标题
                 default:
-                    $where['_string'] = ' (A.title = "'.$keyword.'") OR  (A.keywords = "'.$keyword.'")  OR  (A.description = "'.$keyword.'") ';
+                    $where['_string'] = ' (A.title like "%'.$keyword.'%") OR  (A.keywords like "%'.$keyword.'%")  OR  (A.description like "%'.$keyword.'%") ';
                     break;
             }
         }
@@ -72,7 +72,7 @@ class SearchController extends SiteController {
         //模板赋值
         $this->assign('crumb',$crumb);
         $this->assign('media', $media);
-        $this->assign('pageList',$data);
+        $this->assign('pageList',$list);
         $this->assign('page',$this->getPageShow());
         $this->assign('count', $count);
         $this->assign('keyword', $keyword);
