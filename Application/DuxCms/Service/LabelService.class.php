@@ -165,7 +165,10 @@ class LabelService{
         $where = array();
         //解析TAG文字
         if(!empty($data['name'])){
-            $name = explode(',', $data['name']);
+            $str = $data['name'];
+            $str = str_replace('，', ',', $str);
+            $str = str_replace(' ', ',', $str);
+            $name = explode(',', $str);
             $nameArray = array();
             foreach ($name as $key => $value) {
                 $nameArray[$key]['name'] = $value;

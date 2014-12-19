@@ -34,6 +34,7 @@ class ContentArticleModel extends Model {
                 $fieldList = D('DuxCms/FieldExpand')->loadList($whereExt);
             }
         }
+        
         //获取最终结果
         $pageList = $model->field($field)
                     ->where($where)

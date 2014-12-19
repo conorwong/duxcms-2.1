@@ -134,8 +134,16 @@ function create_tables($db, $prefix = ''){
  * 及时显示提示信息
  * @param  string $msg 提示信息
  */
-function show_msg($msg, $class = ''){
-	echo "<script type=\"text/javascript\">showmsg(\"{$msg}\", \"{$class}\")</script>";
+function show_msg($msg, $class = true){
+	if($class){
+		$js = "<script type=\"text/javascript\">showmsg(\"{$msg}\")</script>";
+	}else{
+		$js = "<script type=\"text/javascript\">showmsg(\"{$msg}\", \"error\")</script>";
+	}
+	echo $js;
 	flush();
 	ob_flush();
+	if(!$class){
+		exit;
+	}
 }

@@ -45,41 +45,58 @@ class IndexController extends Controller {
      * 开始安装
      */
     public function setup3(){
+        $this->display();
         //检测信息
         $data = I('post.');
         if(!$data['DB_HOST']){
-        	$this->error('请填写数据库地址！');
+        	show_msg('请填写数据库地址！',false);
         }
         if(!$data['DB_PORT']){
-        	$this->error('请填写数据库端口！');
+        	show_msg('请填写数据库端口！',false);
         }
         if(!$data['DB_NAME']){
-        	$this->error('请填写数据库名称！');
+        	show_msg('请填写数据库名称！',false);
         }
         if(!$data['DB_USER']){
-        	$this->error('请填写数据库用户名！');
+        	show_msg('请填写数据库用户名！',false);
         }
         if(!$data['DB_PREFIX']){
-        	$this->error('请填写数据表前缀！');
+        	show_msg('请填写数据表前缀！',false);
         }
         if(!$data['SAFE_KEY']){
-        	$this->error('请填写安全加密码！');
+        	show_msg('请填写安全加密码！',false);
         }
         if(!$data['COOKIE_PREFIX']){
-        	$this->error('请填写COOKIE前缀！');
+        	show_msg('请填写COOKIE前缀！',false);
         }
+        //检查数据库
+        $link = @mysql_connect($data['DB_HOST'] . ':' . $data['DB_PORT'], $data['DB_USER'], $data['DB_PWD']);
+        if (!$link) {
+             show_msg('数据库连接失败，请检查连接信息是否正确！',false);
+             exit;
+        }
+        $mysqlInfo = mysql_get_server_info($link);
+        if ($mysqlInfo < '5.1.0') {
+            show_msg('mysql版本低于5.1，无法继续安装！',false);
+            exit;
+        }
+        $status = @mysql_select_db($data['DB_NAME'], $link);
+        if (!$status) {
+            //尝试创建数据库
+            $sql = "CREATE DATABASE IF NOT EXISTS `{$data['DB_NAME']}` DEFAULT CHARACTER SET utf8";
+            if (!mysql_query($sql, $link)){
+                show_msg('数据库'. $data['DB_NAME'].'自动创建失败，请手动建立数据库！',false);
+                exit;
+            }
+        }
+        show_msg('数据库检查创建完成...');
         //测试数据库
         $data['DB_TYPE'] = 'mysql';
 		$dbArray = array($data['DB_TYPE'],$data['DB_HOST'],$data['DB_NAME'],$data['DB_USER'],$data['DB_PWD'],$data['DB_PORT'],$data['DB_PREFIX']);
 		$DB = array();
 		list($DB['DB_TYPE'], $DB['DB_HOST'], $DB['DB_NAME'], $DB['DB_USER'], $DB['DB_PWD'],$DB['DB_PORT'], $DB['DB_PREFIX']) = $dbArray;
         $db = \Think\Db::getInstance($DB);
-        $sql = "CREATE DATABASE IF NOT EXISTS `{$data['DB_NAME']}` DEFAULT CHARACTER SET utf8";
-        if(!$db->execute($sql)){
-            show_msg('数据库创建失败，已存在数据库或数据库帐号密码错误！');
-        }
-        $this->display();
-        show_msg('数据库检测完成...');
+
         create_tables($db, $data['DB_PREFIX']);
         //修改数据库文件
         $file = APP_PATH . 'Common/Conf/db.php';
