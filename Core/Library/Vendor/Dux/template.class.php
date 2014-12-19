@@ -58,6 +58,9 @@ class template {
         //替换通用循环
         $template = preg_replace_callback('/' . $this->__ltag . '(\w+){([^"].*)}' . $this->__rtag . '/i', array($this, 'parse_for'), $template);
 
+        //替换常量
+        $template = str_replace('__TPL__', substr(C('VIEW_PATH'),1). C('TPL_NAME'), $template);
+
         // 添加安全代码
         $template = '<?php if (!defined(\'THINK_PATH\')) exit();?>'.$template;
 		// 优化生成的php代码
