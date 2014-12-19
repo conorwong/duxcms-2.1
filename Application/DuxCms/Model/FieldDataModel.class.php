@@ -42,13 +42,18 @@ class FieldDataModel extends Model {
     /**
      * 更新信息
      * @param string $type 更新类型
-     * @param array $fieldsetInfo 字段信息
+     * @param array $fieldsetInfo 字段集信息
      * @param bool $prefix POST前缀
      * @return bool 更新状态
      */
     public function saveData($type = 'add' , $fieldsetInfo){
+        if(is_array($fieldsetInfo)){
+            $fieldsetId = $fieldsetInfo['fieldset_id'];
+        }else{
+            $fieldsetId = $fieldsetInfo;
+        }
         //获取字段列表
-        $fieldList=D('DuxCms/Field')->loadList('fieldset_id='.$fieldsetInfo['fieldset_id']);
+        $fieldList=D('DuxCms/Field')->loadList('fieldset_id='.$fieldsetId);
         if(empty($fieldList)||!is_array($fieldList)){
             return;
         }
@@ -57,13 +62,18 @@ class FieldDataModel extends Model {
         $autoRules = array();
         $data = array();
         foreach ($fieldList as $value) {
-            $data[$value['field']] = I('Fieldset_'.$value['field']);
+            $data[$value['field']] = I('post.Fieldset_'.$value['field']);
             $verify_data = base64_decode($value['verify_data']);
             if($verify_data){
-                $valiRules[] = array($value['field'], $verify_data ,$value['errormsg'],$value['verify_condition'],$value['verify_type'],3);
+                $errormsg = $value['errormsg'];
+                if(empty($errormsg)){
+                    $errormsg = $value['name'].'填写不正确！';
+                }
+                $valiRules[] = array($value['field'], $verify_data ,$errormsg,$value['verify_condition'],$value['verify_type'],3);
             }
             $autoRules[] = array($value['field'],'formatField',3,'callback',array($value['field'],$value['type']));
         }
+
         $data = $this->auto($autoRules)->validate($valiRules)->create($data);
         if(!$data){
             return false;

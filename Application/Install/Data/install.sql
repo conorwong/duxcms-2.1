@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- 主机: localhost
--- 生成日期: 2014 年 11 月 26 日 23:47
+-- 生成日期: 2014 年 12 月 19 日 11:54
 -- 服务器版本: 5.6.17
 -- PHP 版本: 5.3.28
 
@@ -17,7 +17,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8 */;
 
 --
--- 数据库: `new`
+-- 数据库: `duxcms356`
 --
 
 -- --------------------------------------------------------
@@ -26,7 +26,6 @@ SET time_zone = "+00:00";
 -- 表的结构 `dux_admin_group`
 --
 
-DROP TABLE IF EXISTS `dux_admin_group`;
 CREATE TABLE IF NOT EXISTS `dux_admin_group` (
   `group_id` int(10) NOT NULL AUTO_INCREMENT,
   `name` varchar(20) DEFAULT NULL,
@@ -50,7 +49,6 @@ INSERT INTO `dux_admin_group` (`group_id`, `name`, `base_purview`, `menu_purview
 -- 表的结构 `dux_admin_log`
 --
 
-DROP TABLE IF EXISTS `dux_admin_log`;
 CREATE TABLE IF NOT EXISTS `dux_admin_log` (
   `log_id` int(10) NOT NULL AUTO_INCREMENT,
   `user_id` int(10) DEFAULT NULL,
@@ -68,7 +66,6 @@ CREATE TABLE IF NOT EXISTS `dux_admin_log` (
 -- 表的结构 `dux_admin_user`
 --
 
-DROP TABLE IF EXISTS `dux_admin_user`;
 CREATE TABLE IF NOT EXISTS `dux_admin_user` (
   `user_id` int(10) NOT NULL AUTO_INCREMENT COMMENT '用户IP',
   `group_id` int(10) NOT NULL DEFAULT '1' COMMENT '用户组ID',
@@ -100,7 +97,6 @@ INSERT INTO `dux_admin_user` (`user_id`, `group_id`, `username`, `password`, `ni
 -- 表的结构 `dux_category`
 --
 
-DROP TABLE IF EXISTS `dux_category`;
 CREATE TABLE IF NOT EXISTS `dux_category` (
   `class_id` int(10) NOT NULL AUTO_INCREMENT,
   `parent_id` int(10) DEFAULT '0',
@@ -129,7 +125,6 @@ CREATE TABLE IF NOT EXISTS `dux_category` (
 -- 表的结构 `dux_category_article`
 --
 
-DROP TABLE IF EXISTS `dux_category_article`;
 CREATE TABLE IF NOT EXISTS `dux_category_article` (
   `class_id` int(10) NOT NULL,
   `fieldset_id` int(10) NOT NULL,
@@ -145,7 +140,6 @@ CREATE TABLE IF NOT EXISTS `dux_category_article` (
 -- 表的结构 `dux_category_page`
 --
 
-DROP TABLE IF EXISTS `dux_category_page`;
 CREATE TABLE IF NOT EXISTS `dux_category_page` (
   `class_id` int(10) unsigned NOT NULL DEFAULT '0',
   `content` mediumtext COMMENT '内容',
@@ -158,7 +152,6 @@ CREATE TABLE IF NOT EXISTS `dux_category_page` (
 -- 表的结构 `dux_config`
 --
 
-DROP TABLE IF EXISTS `dux_config`;
 CREATE TABLE IF NOT EXISTS `dux_config` (
   `name` varchar(250) NOT NULL,
   `data` varchar(250) NOT NULL
@@ -182,7 +175,8 @@ INSERT INTO `dux_config` (`name`, `data`) VALUES
 ('tpl_search', 'search'),
 ('tpl_tags', 'tag'),
 ('mobile_status', '0'),
-('mobile_tpl', 'mobile'), ('mobile_domain', '');
+('mobile_tpl', 'mobile'),
+('mobile_domain', '');
 
 -- --------------------------------------------------------
 
@@ -219,7 +213,6 @@ INSERT INTO `dux_config_upload` (`id`, `name`, `upload_size`, `upload_exts`, `up
 -- 表的结构 `dux_content`
 --
 
-DROP TABLE IF EXISTS `dux_content`;
 CREATE TABLE IF NOT EXISTS `dux_content` (
   `content_id` int(10) NOT NULL AUTO_INCREMENT COMMENT '文章ID',
   `class_id` int(10) DEFAULT NULL COMMENT '栏目ID',
@@ -256,7 +249,6 @@ CREATE TABLE IF NOT EXISTS `dux_content` (
 -- 表的结构 `dux_content_article`
 --
 
-DROP TABLE IF EXISTS `dux_content_article`;
 CREATE TABLE IF NOT EXISTS `dux_content_article` (
   `content_id` int(10) DEFAULT NULL,
   `content` mediumtext
@@ -265,10 +257,31 @@ CREATE TABLE IF NOT EXISTS `dux_content_article` (
 -- --------------------------------------------------------
 
 --
+-- 表的结构 `dux_ext_guestbook`
+--
+
+CREATE TABLE IF NOT EXISTS `dux_ext_guestbook` (
+  `data_id` int(10) NOT NULL AUTO_INCREMENT,
+  `name` varchar(250) DEFAULT NULL,
+  `email` varchar(250) DEFAULT NULL,
+  `content` text,
+  `time` int(10) DEFAULT NULL,
+  PRIMARY KEY (`data_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+
+--
+-- 转存表中的数据 `dux_ext_guestbook`
+--
+
+INSERT INTO `dux_ext_guestbook` (`data_id`, `name`, `email`, `content`, `time`) VALUES
+(1, 'Life', '349865361@qq.com', '欢迎使用DuxCms内容管理系统！', 1418960975);
+
+-- --------------------------------------------------------
+
+--
 -- 表的结构 `dux_field`
 --
 
-DROP TABLE IF EXISTS `dux_field`;
 CREATE TABLE IF NOT EXISTS `dux_field` (
   `field_id` int(10) NOT NULL AUTO_INCREMENT,
   `fieldset_id` int(10) DEFAULT NULL,
@@ -288,7 +301,17 @@ CREATE TABLE IF NOT EXISTS `dux_field` (
   KEY `field` (`field`),
   KEY `sequence` (`sequence`),
   KEY `fieldset_id` (`fieldset_id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='扩展字段基础' AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='扩展字段基础' AUTO_INCREMENT=5 ;
+
+--
+-- 转存表中的数据 `dux_field`
+--
+
+INSERT INTO `dux_field` (`field_id`, `fieldset_id`, `name`, `field`, `type`, `tip`, `verify_type`, `verify_data`, `verify_data_js`, `verify_condition`, `default`, `sequence`, `errormsg`, `config`) VALUES
+(1, 1, '昵称', 'name', 1, '', 'regex', 'cmVxdWlyZQ==', 'Kg==', 1, '', 0, '', ''),
+(2, 1, '邮箱', 'email', 1, '', 'regex', 'ZW1haWw=', 'ZQ==', 1, '', 1, '', ''),
+(3, 1, '内容', 'content', 2, '', 'regex', 'cmVxdWlyZQ==', 'Kg==', 1, '', 3, '', ''),
+(4, 1, '时间', 'time', 10, '', 'regex', '', '', 1, '', 2, '', '');
 
 -- --------------------------------------------------------
 
@@ -296,14 +319,20 @@ CREATE TABLE IF NOT EXISTS `dux_field` (
 -- 表的结构 `dux_fieldset`
 --
 
-DROP TABLE IF EXISTS `dux_fieldset`;
 CREATE TABLE IF NOT EXISTS `dux_fieldset` (
   `fieldset_id` int(10) NOT NULL AUTO_INCREMENT,
   `table` varchar(250) DEFAULT NULL,
   `name` varchar(250) DEFAULT NULL,
   PRIMARY KEY (`fieldset_id`),
   UNIQUE KEY `table` (`table`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='字段集基础' AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='字段集基础' AUTO_INCREMENT=2 ;
+
+--
+-- 转存表中的数据 `dux_fieldset`
+--
+
+INSERT INTO `dux_fieldset` (`fieldset_id`, `table`, `name`) VALUES
+(1, 'guestbook', '留言板');
 
 -- --------------------------------------------------------
 
@@ -311,7 +340,6 @@ CREATE TABLE IF NOT EXISTS `dux_fieldset` (
 -- 表的结构 `dux_fieldset_expand`
 --
 
-DROP TABLE IF EXISTS `dux_fieldset_expand`;
 CREATE TABLE IF NOT EXISTS `dux_fieldset_expand` (
   `fieldset_id` int(10) DEFAULT NULL,
   `status` tinyint(1) DEFAULT NULL,
@@ -324,7 +352,6 @@ CREATE TABLE IF NOT EXISTS `dux_fieldset_expand` (
 -- 表的结构 `dux_fieldset_form`
 --
 
-DROP TABLE IF EXISTS `dux_fieldset_form`;
 CREATE TABLE IF NOT EXISTS `dux_fieldset_form` (
   `fieldset_id` int(10) DEFAULT NULL,
   `show_list` tinyint(1) DEFAULT NULL,
@@ -340,13 +367,19 @@ CREATE TABLE IF NOT EXISTS `dux_fieldset_form` (
   UNIQUE KEY `fieldset_id` (`fieldset_id`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='字段集-扩展表单';
 
+--
+-- 转存表中的数据 `dux_fieldset_form`
+--
+
+INSERT INTO `dux_fieldset_form` (`fieldset_id`, `show_list`, `show_info`, `list_page`, `list_where`, `list_order`, `tpl_list`, `tpl_info`, `post_status`, `post_msg`, `post_return_url`) VALUES
+(1, 1, 0, 10, '', 'data_id desc', 'guestbook', 'guestbook', 1, '留言发布成功！', '');
+
 -- --------------------------------------------------------
 
 --
 -- 表的结构 `dux_field_expand`
 --
 
-DROP TABLE IF EXISTS `dux_field_expand`;
 CREATE TABLE IF NOT EXISTS `dux_field_expand` (
   `field_id` int(10) DEFAULT NULL,
   `post` tinyint(1) DEFAULT NULL
@@ -358,7 +391,6 @@ CREATE TABLE IF NOT EXISTS `dux_field_expand` (
 -- 表的结构 `dux_field_form`
 --
 
-DROP TABLE IF EXISTS `dux_field_form`;
 CREATE TABLE IF NOT EXISTS `dux_field_form` (
   `field_id` int(10) DEFAULT NULL,
   `post` tinyint(1) DEFAULT '0',
@@ -366,13 +398,22 @@ CREATE TABLE IF NOT EXISTS `dux_field_form` (
   `search` tinyint(1) DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='扩展字段-表单';
 
+--
+-- 转存表中的数据 `dux_field_form`
+--
+
+INSERT INTO `dux_field_form` (`field_id`, `post`, `show`, `search`) VALUES
+(1, 1, 1, 1),
+(2, 1, 1, 1),
+(3, 1, 1, 1),
+(4, 0, 1, 1);
+
 -- --------------------------------------------------------
 
 --
 -- 表的结构 `dux_file`
 --
 
-DROP TABLE IF EXISTS `dux_file`;
 CREATE TABLE IF NOT EXISTS `dux_file` (
   `file_id` int(10) NOT NULL AUTO_INCREMENT,
   `url` varchar(250) DEFAULT NULL,
@@ -392,7 +433,6 @@ CREATE TABLE IF NOT EXISTS `dux_file` (
 -- 表的结构 `dux_fragment`
 --
 
-DROP TABLE IF EXISTS `dux_fragment`;
 CREATE TABLE IF NOT EXISTS `dux_fragment` (
   `fragment_id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '文章id',
   `label` varchar(250) DEFAULT NULL,
@@ -408,7 +448,6 @@ CREATE TABLE IF NOT EXISTS `dux_fragment` (
 -- 表的结构 `dux_position`
 --
 
-DROP TABLE IF EXISTS `dux_position`;
 CREATE TABLE IF NOT EXISTS `dux_position` (
   `position_id` int(10) NOT NULL AUTO_INCREMENT,
   `name` varchar(20) NOT NULL,
@@ -429,7 +468,6 @@ INSERT INTO `dux_position` (`position_id`, `name`, `sequence`) VALUES
 -- 表的结构 `dux_tags`
 --
 
-DROP TABLE IF EXISTS `dux_tags`;
 CREATE TABLE IF NOT EXISTS `dux_tags` (
   `tag_id` int(10) NOT NULL AUTO_INCREMENT,
   `name` varchar(20) NOT NULL,
@@ -447,7 +485,6 @@ CREATE TABLE IF NOT EXISTS `dux_tags` (
 -- 表的结构 `dux_tags_has`
 --
 
-DROP TABLE IF EXISTS `dux_tags_has`;
 CREATE TABLE IF NOT EXISTS `dux_tags_has` (
   `content_id` int(10) DEFAULT NULL,
   `tag_id` int(10) DEFAULT NULL,
@@ -455,11 +492,12 @@ CREATE TABLE IF NOT EXISTS `dux_tags_has` (
   KEY `tid` (`tag_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='TAG关系';
 
+-- --------------------------------------------------------
 
--- ----------------------------
--- Table structure for dux_total_spider
--- ----------------------------
-DROP TABLE IF EXISTS `dux_total_spider`;
+--
+-- 表的结构 `dux_total_spider`
+--
+
 CREATE TABLE IF NOT EXISTS `dux_total_spider` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `time` int(10) DEFAULT NULL,
@@ -467,26 +505,20 @@ CREATE TABLE IF NOT EXISTS `dux_total_spider` (
   `google` int(10) DEFAULT '0',
   `soso` int(10) DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='蜘蛛统计';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='蜘蛛统计' AUTO_INCREMENT=1 ;
 
--- ----------------------------
--- Records of dux_total_spider
--- ----------------------------
+-- --------------------------------------------------------
 
--- ----------------------------
--- Table structure for dux_total_visitor
--- ----------------------------
-DROP TABLE IF EXISTS `dux_total_visitor`;
+--
+-- 表的结构 `dux_total_visitor`
+--
+
 CREATE TABLE IF NOT EXISTS `dux_total_visitor` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `time` int(10) DEFAULT NULL,
   `count` int(10) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='访客统计';
-
--- ----------------------------
--- Records of dux_total_visitor
--- ----------------------------
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='访客统计' AUTO_INCREMENT=1 ;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

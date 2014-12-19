@@ -14,7 +14,7 @@ $config = array(
 	'SITE_URL' => '',
 	'APP_SYSTEM' => 1,
 	'APP_NAME' => '基础应用',
-	'URL_404_REDIRECT'      =>  'http://www.baidu.com',
+	'URL_CASE_INSENSITIVE' => false, 
 	);
 
 $config = array_merge($performance,$shield,$db,$ver,$config,(array)$GLOBALS['config']);

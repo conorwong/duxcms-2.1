@@ -32,8 +32,7 @@ class AdminFormFieldController extends AdminController
                     ),
                 ),
             'cutNav' => array(
-                'url' => 'DuxCms/AdminForm',
-                'complete' => true,
+                'url' => U('DuxCms/AdminForm/index'),
                 )
             );
         return $data;

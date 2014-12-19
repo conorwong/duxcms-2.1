@@ -38,7 +38,9 @@ class FormController extends SiteController {
         $model->setTable($formInfo['table']);
         //查询数据
         $where = array();
-        $where['_string'] = $formInfo['list_where'];
+        if(!empty($formInfo['list_where'])){
+            $where['_string'] = $formInfo['list_where'];
+        }
         $count = $model->countList($where);
         $limit = $this->getPageLimit($count,$listRows);
         //查询内容
@@ -151,11 +153,16 @@ class FormController extends SiteController {
         if(!$formInfo['post_status']){
             $this->errorBlock();
         }
+        $data = array();
+        foreach (I('post.') as $key => $value) {
+            $data['Fieldset_'.$key] = $value;
+        }
+        $_POST = $data;
         //设置模型
         $model = D('DuxCms/FieldData');
         $model->setTable($formInfo['table']);
         //增加信息
-        if ($model->saveData('add',$formInfo['fieldset_id'])){
+        if ($model->saveData('add',$formInfo)){
             $this->success($formInfo['post_msg'],$formInfo['post_return_url']);
         }else{
             $msg = $model->getError();

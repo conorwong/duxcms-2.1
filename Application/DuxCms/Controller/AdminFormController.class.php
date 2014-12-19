@@ -19,11 +19,13 @@ class AdminFormController extends AdminController
                     'url' => U('index'),
                     'icon' => 'list',
                     ),
+                ),
+            'add' => array(
                 array('name' => '添加表单',
                     'url' => U('add'),
-                    'icon' => 'plus',
                     ),
-                )
+                ),
+                
             );
         return $data;
     }
