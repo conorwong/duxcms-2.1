@@ -60,7 +60,7 @@ class AdminUpdateController extends AdminController {
         if(empty($url)){
             $this->error('没有发现更新地址，请稍后重试！');
         }
-        $updateDir = RUNTIME_PATH.'/update/';
+        $updateDir = RUNTIME_PATH.'update/';
         if (!file_exists($updateDir)){
             if(!mkdir($updateDir)){
                 $this->error('抱歉，无法为您创建更新文件夹，请手动创建目录【'.$updateDir.'】');
@@ -84,7 +84,7 @@ class AdminUpdateController extends AdminController {
         $url = I('post.url');
         $fileName = explode('/', $url);
         $fileName = end($fileName);
-        $updateDir = RUNTIME_PATH.'/update/';
+        $updateDir = RUNTIME_PATH.'update/';
         $file = $updateDir.$fileName;
         if(!is_file($file)){
              $this->error('没有发现更新文件，请稍后重试！');
@@ -94,7 +94,7 @@ class AdminUpdateController extends AdminController {
         if($zip->decompress($file,$dir)){
             $this->success('文件解压成功，等待更新操作！');
         }else{
-            $this->error('解压文件失败请假差目录【'.$dir.'】是否有写入权限！');
+            $this->error('解压文件失败请检查目录【'.$dir.'】是否有写入权限！');
         }
         
     }
@@ -103,7 +103,7 @@ class AdminUpdateController extends AdminController {
      * 更新文件
      */
     public function upfile(){
-        $updateDir = RUNTIME_PATH.'/update/';
+        $updateDir = RUNTIME_PATH.'update/';
         $dir = $updateDir.'tmp_'.C('DUX_TIME');
         if(!copy_dir($dir,ROOT_PATH)){
             $this->error('无法复制更新文件，请检查网站是否有写入权限！');
