@@ -24,8 +24,7 @@ class DatabaseModel {
         if(is_array($listFile)){
             $list=array();
             foreach ($listFile as $key => $value) {
-                $value = explode(DIRECTORY_SEPARATOR, $value);
-                $value = end($value);
+                $value = basename($value);
                 $list[$key]['name'] = $value;
                 $fileName = explode('-', $value);
                 $list[$key]['time'] = $fileName[0].'-'.$fileName[1];
