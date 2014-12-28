@@ -7,7 +7,7 @@ use Think\Model;
 
 class DatabaseModel {
 
-    public $backupDir = './Backup';
+    public $backupDir = 'Backup/';
     public $tableList = array(); //表列表
 
     /**
@@ -16,7 +16,7 @@ class DatabaseModel {
      */
     public function backupList()
     {
-        $fileDir = realpath($this->backupDir) . DIRECTORY_SEPARATOR;
+        $fileDir = ROOT_PATH . $this->backupDir;
         if(!is_dir($fileDir)){
             return false;
         }
@@ -118,7 +118,7 @@ class DatabaseModel {
         );
         //设置备份配置
         $config = array(
-            'path'     => realpath($this->backupDir) . DIRECTORY_SEPARATOR,
+            'path'     => ROOT_PATH . $this->backupDir,
             'part'     => 20971520,
             'compress' => 1,
             'level'    => 9,
@@ -131,6 +131,13 @@ class DatabaseModel {
         } else {
             //创建锁文件
             file_put_contents($lock, NOW_TIME);
+        }
+        //检查目录
+        if(!is_dir($config['path'])){
+            if(!mkdir($config['path'])){
+                $this->error = '无法创建备份目录，请手动根目录创建Backup文件夹！';
+                return false;
+            }
         }
         //检查备份目录是否可写
         if(!is_writeable($config['path'])){
@@ -163,7 +170,7 @@ class DatabaseModel {
      */
     public function importData($time){
         $name  = $time . '-*.sql*';
-        $path  = realpath($this->backupDir) . DIRECTORY_SEPARATOR . $name;
+        $path  = ROOT_PATH . $this->backupDir . $name;
         $files = glob($path);
         $list  = array();
         foreach($files as $name){
@@ -183,7 +190,7 @@ class DatabaseModel {
         foreach ($list as $value) {
             $file = $value;
             $config = array(
-                'path'     => realpath($this->backupDir) . DIRECTORY_SEPARATOR,
+                'path'     => ROOT_PATH . $this->backupDir,
                 'compress' => $value[2],
             );
             $db = new \Org\Util\Database($file, $config);
@@ -201,7 +208,7 @@ class DatabaseModel {
      */
     public function delData($time){
         $name  = $time . '-*.sql*';
-        $path  = realpath($this->backupDir) . DIRECTORY_SEPARATOR . $name;
+        $path  = ROOT_PATH . $this->backupDir . $name;
         array_map("unlink", glob($path));
         if(!count(glob($path))){
             return true;
