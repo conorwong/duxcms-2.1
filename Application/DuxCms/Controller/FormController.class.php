@@ -27,7 +27,7 @@ class FormController extends SiteController {
             $this->error404();
         }
         //分页参数
-        $size = intval($info['list_page']); 
+        $size = intval($formInfo['list_page']); 
         if (empty($size)) {
             $listRows = 20;
         } else {
