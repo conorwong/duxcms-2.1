@@ -56,9 +56,9 @@ class ContentController extends SiteController {
         //位置导航
         $crumb = D('DuxCms/Category')->loadCrumb($contentInfo['class_id']);
         //查询上级栏目信息
-        $parentCategoryInfo = $modelCategory->getInfo($categoryInfo['parent_id']);
+        $parentCategoryInfo = D('DuxCms/Category')->getInfo($categoryInfo['parent_id']);
         //获取顶级栏目信息
-        $topCategoryInfo = $modelCategory->getInfo($crumb[0]['class_id']);
+        $topCategoryInfo = D('DuxCms/Category')->getInfo($crumb[0]['class_id']);
         //更新访问计数
         $viewsData=array();
         $viewsData['views'] = array('exp','views+1');
