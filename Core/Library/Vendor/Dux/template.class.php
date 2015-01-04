@@ -95,6 +95,9 @@ class template {
             case 'echo':
                 $html .= ' echo $'.$item.'List; ?>'; 
                 break;
+            case 'assign':
+                $html .= '$'.$dataArray['list'].' = $'.$item.'List; ?>'; 
+                break;
             default:
                 $html .= ' if(is_array($'.$item.'List)) foreach($'.$item.'List as $'.$item.'){ ?>';
                 break;
