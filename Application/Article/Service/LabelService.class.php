@@ -33,6 +33,7 @@ class LabelService{
         if(!empty($data['order'])){
             $order=$data['order'];
         }
+        
         //其他属性
         $where['show'] = 1;
         $model = D('Article/CategoryArticle');

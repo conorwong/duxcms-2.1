@@ -71,9 +71,9 @@ class CategoryController extends SiteController {
         //获取分页
         $page = $this->getPageShow($pageMaps);
         //查询上级栏目信息
-        $parentCategoryInfo = $model->getInfo($categoryInfo['parent_id']);
+        $parentCategoryInfo = D('DuxCms/Category')->getInfo($categoryInfo['parent_id']);
         //获取顶级栏目信息
-        $topCategoryInfo = $model->getInfo($crumb[0]['class_id']);
+        $topCategoryInfo = D('DuxCms/Category')->getInfo($crumb[0]['class_id']);
         //MEDIA信息
         $media = $this->getMedia($categoryInfo['name'],$categoryInfo['keywords'],$categoryInfo['description']);
         //模板赋值
