@@ -77,7 +77,7 @@ class AdminContentController extends AdminController {
         $this->assign('breadCrumb',$breadCrumb);
         $this->assign('list',$list);
         $this->assign('page',$this->getPageShow($pageMaps));
-        $this->assign('categoryList',D('CategoryArticle')->loadList());
+        $this->assign('categoryList',D('DuxCms/Category')->loadList());
         $this->assign('positionList',D('DuxCms/Position')->loadList());
         $this->assign('pageMaps',$pageMaps);
         $this->adminDisplay();
@@ -91,7 +91,7 @@ class AdminContentController extends AdminController {
             $breadCrumb = array('文章列表'=>U('index'),'文章添加'=>U());
             $this->assign('breadCrumb',$breadCrumb);
             $this->assign('name','添加');
-            $this->assign('categoryList',D('CategoryArticle')->loadList());
+            $this->assign('categoryList',D('DuxCms/Category')->loadList());
             $this->assign('tplList',D('Admin/Config')->tplList());
             $this->assign('positionList',D('DuxCms/Position')->loadList());
             $this->assign('default_config',current_config());
@@ -129,7 +129,7 @@ class AdminContentController extends AdminController {
             $this->assign('breadCrumb',$breadCrumb);
             $this->assign('name','修改');
             $this->assign('info',$info);
-            $this->assign('categoryList',D('CategoryArticle')->loadList());
+            $this->assign('categoryList',D('DuxCms/Category')->loadList());
             $this->assign('tplList',D('Admin/Config')->tplList());
             $this->assign('positionList',D('DuxCms/Position')->loadList());
             $this->adminDisplay('info');
