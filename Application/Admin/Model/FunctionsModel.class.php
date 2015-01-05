@@ -4,7 +4,7 @@ use Think\Model;
 /**
  * 应用操作
  */
-class FunctionsModel extends Model {
+class FunctionsModel {
 
     /**
      * 获取列表
