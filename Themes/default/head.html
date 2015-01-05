@@ -23,6 +23,6 @@
         <!--list{app="DuxCms" label="categoryList" limit=5 parent_id=0  }-->
            <li> <a href="{$list.curl}" <!--if{$list['class_id']==$topCategoryInfo['class_id']}--> class="u-crt" <!--{/if}-->  >{$list.name}</a></li>
         <!--{/list}-->
-		<li><a href='{U("DuxCms/Form/index",array("name"=>'guestbook'))}'>留言板</a></li>
+		<li><a href='{url("DuxCms/Form/index",array("name"=>'guestbook'))}'>留言板</a></li>
 	</ul>
 </div>
