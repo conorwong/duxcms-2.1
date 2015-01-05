@@ -79,30 +79,18 @@
                 </div>
                 <div class="field">
                     <select class="input" name="URL_MODEL" id="URL_MODEL">
-                            <!--if{$info['URL_MODEL'] == 0}-->
-                            <option value="0" selected>
+                            <!--if{$info['URL_MODEL'] == 3}-->
+                            <option value="3" selected>
                             <!--{else}-->
-                            <option value="0">
+                            <option value="3">
                             <!--{/if}-->
-                            普通模式</option>
-                            <!--if{$info['URL_MODEL'] == 1}-->
-                            <option value="1" selected>
-                            <!--{else}-->
-                            <option value="1">
-                            <!--{/if}-->
-                            PATHINFO模式</option>
+                            动态模式</option>
                             <!--if{$info['URL_MODEL'] == 2}-->
                             <option value="2" selected>
                             <!--{else}-->
                             <option value="2">
                             <!--{/if}-->
                             伪静态模式</option>
-                            <!--if{$info['URL_MODEL'] == 3}-->
-                            <option value="3" selected>
-                            <!--{else}-->
-                            <option value="3">
-                            <!--{/if}-->
-                            兼容模式</option>
                           </select>
                 
                 <div class="input-note">请确认已放置伪静态规则</div>

@@ -534,7 +534,12 @@ function url($url='', $array = array()){
             $routerUrl = str_replace(':'.$key, $value, $routerUrl);
         }
     }
-    $routerUrl = '/'. __ROOT__ .$routerUrl;
+    $root = __ROOT__;
+    if(empty($root)){
+        $routerUrl = '/'.$routerUrl;
+    }else{
+        $routerUrl = __ROOT__ .'/'.$routerUrl;
+    }
     return $routerUrl.'.'.C('URL_HTML_SUFFIX');
 
 
