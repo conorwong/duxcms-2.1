@@ -5,6 +5,7 @@ use Think\Model;
  * 扩展字段数据操作
  */
 class FieldDataModel extends Model {
+    protected $tableName = 'field';
 
     //设置操作表
     public function setTable($name) {

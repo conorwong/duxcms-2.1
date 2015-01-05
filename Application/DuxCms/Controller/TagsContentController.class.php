@@ -44,8 +44,8 @@ class TagsContentController extends SiteController {
         }
         //位置导航
         $crumb = array(
-            array('name'=>'标签列表','url'=>U('DuxCms/Tags/index')),
-            array('name'=>$tagInfo['name'],'url'=>U('DuxCms/TagsContent/index',array('name'=>$tagInfo['name']))),
+            array('name'=>'标签列表','url'=>url('DuxCms/Tags/index')),
+            array('name'=>$tagInfo['name'],'url'=>url('DuxCms/TagsContent/index',array('name'=>$tagInfo['name']))),
             );
         //MEDIA信息
         $media = $this->getMedia($formInfo['name']);

@@ -65,7 +65,7 @@ class FormController extends SiteController {
         //获取分页
         $page = $this->getPageShow($pageMaps);
         //位置导航
-        $crumb = array(array('name'=>$formInfo['name'],'url'=>U('DuxCms/Form/index',$pageMaps)));
+        $crumb = array(array('name'=>$formInfo['name'],'url'=>url('DuxCms/Form/index',$pageMaps)));
         //MEDIA信息
         $media = $this->getMedia($formInfo['name']);
         $this->assign('crumb',$crumb);
@@ -114,8 +114,8 @@ class FormController extends SiteController {
         }
         //位置导航
         $crumb = array(
-            array('name'=>$formInfo['name'],'url'=>U('DuxCms/Form/index',array('name'=>$name))),
-            array('name'=>'详情','url'=>U('DuxCms/Form/index',array('name'=>$name,'id'=>$id))),
+            array('name'=>$formInfo['name'],'url'=>url('DuxCms/Form/index',array('name'=>$name))),
+            array('name'=>'详情','url'=>url('DuxCms/Form/info',array('name'=>$name,'id'=>$id))),
             );
         //MEDIA信息
         $media = $this->getMedia($formInfo['name'] . '- 详情 ');

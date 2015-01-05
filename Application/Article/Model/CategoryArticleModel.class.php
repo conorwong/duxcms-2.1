@@ -139,7 +139,7 @@ class CategoryArticleModel extends Model {
      */
     public function getUrl($info)
     {
-        return U('Article/Category/index',array('class_id'=>$info['class_id']));
+        return url('Article/Category/index',array('class_id'=>$info['class_id']));
     }
 
     

@@ -184,7 +184,7 @@ class ContentArticleModel extends Model {
      */
     public function getUrl($info)
     {
-        return U('Article/Content/index',array('content_id'=>$info['content_id']));
+        return url('Article/Content/index',array('content_id'=>$info['content_id']));
     }
 
 }

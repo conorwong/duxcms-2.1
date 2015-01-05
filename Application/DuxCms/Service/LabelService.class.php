@@ -172,7 +172,7 @@ class LabelService{
             $nameArray = array();
             foreach ($name as $key => $value) {
                 $nameArray[$key]['name'] = $value;
-                $nameArray[$key]['url'] = U('DuxCms/TagsContent/index',array('name' =>$value));
+                $nameArray[$key]['url'] = url('DuxCms/TagsContent/index',array('name' =>$value));
                 $nameArray[$key]['i'] = $key;
             }
             return $nameArray;

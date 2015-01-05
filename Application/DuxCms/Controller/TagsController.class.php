@@ -18,7 +18,7 @@ class TagsController extends SiteController {
         $limit = $this->getPageLimit($count,20);
         $list = D('Tags')->loadList($where,$limit);
         //位置导航
-        $crumb = array(array('name'=>'标签列表','url'=>U('DuxCms/Tags/index')));
+        $crumb = array(array('name'=>'标签列表','url'=>url('DuxCms/Tags/index')));
         //MEDIA信息
         $media = $this->getMedia($formInfo['name']);
         $this->assign('crumb',$crumb);

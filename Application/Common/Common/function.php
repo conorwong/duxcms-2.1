@@ -514,3 +514,28 @@ function cut_image($img, $width, $height, $type = 3)
     }
     return $newImg;
 }
+
+//URL生成自适应路由
+function url($url='', $array = array()){
+    //获取路由配置
+    $router = C('URL_ROUTE_RULES');
+    $baseUrl = U($url,$array);
+    if(!C('URL_ROUTER_ON')||empty($router)){
+        return $baseUrl;
+    }
+    //匹配规则URL
+    $router = array_flip($router);
+    $routerUrl = $router[$url];
+    if(empty($routerUrl)){
+        return $baseUrl;
+    }
+    if(!empty($array)){
+        foreach ($array as $key => $value) {
+            $routerUrl = str_replace(':'.$key, $value, $routerUrl);
+        }
+    }
+    $routerUrl = '/'. __ROOT__ .$routerUrl;
+    return $routerUrl.'.'.C('URL_HTML_SUFFIX');
+
+
+}
