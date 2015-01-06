@@ -132,6 +132,7 @@ class AdminContentController extends AdminController {
             $this->assign('categoryList',D('DuxCms/Category')->loadList());
             $this->assign('tplList',D('Admin/Config')->tplList());
             $this->assign('positionList',D('DuxCms/Position')->loadList());
+            $this->assign('default_config',current_config());
             $this->adminDisplay('info');
         }else{
             if(D('ContentArticle')->saveData('edit')){
