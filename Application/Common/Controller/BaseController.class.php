@@ -52,7 +52,7 @@ class BaseController extends Controller {
      */
     protected function error404()
     {
-        $this->error('页面不存在！');
+        A('Common/CommonEmpty')->index();
     }
 
     /**

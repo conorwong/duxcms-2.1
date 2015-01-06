@@ -12,6 +12,7 @@ $config = array(
 	'APP_SYSTEM' => 1,
 	'APP_NAME' => '基础应用',
 	'URL_CASE_INSENSITIVE' => false, 
+	'DEFAULT_MODULE' => 'home'
 	);
 foreach ($files as $value) {
 	$array = include $dir.'/'.$value;
@@ -25,9 +26,4 @@ if($config['URL_MODEL'] == 2) {
 	$config['URL_ROUTER_ON'] = false;
 }
 $config = array_merge($config,$router,(array)$GLOBALS['config']);
-
-//设置404页面
-if(!$config['SHOW_ERROR_MSG']){
-	$config['TMPL_EXCEPTION_FILE'] = ROOT_PATH.'Themes/Common/404.html';
-}
 return $config;

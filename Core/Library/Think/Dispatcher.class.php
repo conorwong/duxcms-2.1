@@ -173,7 +173,9 @@ class Dispatcher {
             // 加载模块的扩展配置文件
             load_ext_file(MODULE_PATH);
         }else{
-            E(L('_MODULE_NOT_EXIST_').':'.MODULE_NAME);
+            A('Common/CommonEmpty')->index();
+            exit;
+            //E(L('_MODULE_NOT_EXIST_').':'.MODULE_NAME);
         }
 
         if(!defined('__APP__')){
