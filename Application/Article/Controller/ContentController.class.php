@@ -80,8 +80,8 @@ class ContentController extends SiteController {
         $prevWhere['C.class_id'] = $categoryInfo['class_id'];
         $prevInfo=$model->getWhereInfo($prevWhere,' A.time DESC,A.content_id DESC');
         if(!empty($prevInfo)){
-            $prevInfo['aurl']=$model->getUrl($prevInfo,$appConfig);
-            $prevInfo['curl']=$modelCategory->getUrl($prevInfo,$appConfig);
+            $prevInfo['aurl']=D('DuxCms/Content')->getUrl($prevInfo,$appConfig);
+            $prevInfo['curl']=D('DuxCms/Category')->getUrl($prevInfo,$appConfig);
         }
         //下一篇
         $nextWhere = array();
@@ -90,8 +90,8 @@ class ContentController extends SiteController {
         $nextWhere['C.class_id'] = $categoryInfo['class_id'];
         $nextInfo=$model->getWhereInfo($nextWhere,' A.time ASC,A.content_id ASC');
         if(!empty($nextInfo)){
-            $nextInfo['aurl']=$model->getUrl($nextInfo,$appConfig);
-            $nextInfo['curl']=$modelCategory->getUrl($nextInfo,$appConfig);
+            $nextInfo['aurl']=D('DuxCms/Content')->getUrl($nextInfo,$appConfig);
+            $nextInfo['curl']=D('DuxCms/Category')->getUrl($nextInfo,$appConfig);
         }
         //MEDIA信息
         $media = $this->getMedia($contentInfo['title'],$contentInfo['keywords'],$contentInfo['description']);
