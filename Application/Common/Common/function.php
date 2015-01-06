@@ -536,12 +536,8 @@ function url($url='', $array = array()){
         }
     }
     $root = __ROOT__;
-    if(empty($root)){
-        $routerUrl = '/'.$routerUrl;
-    }else{
-        $routerUrl = __ROOT__ .'/'.$routerUrl;
-    }
-    return $routerUrl.'.'.C('URL_HTML_SUFFIX');
+    $routerUrl = '/'.$routerUrl;
+    return U($routerUrl);
 
 
 }
