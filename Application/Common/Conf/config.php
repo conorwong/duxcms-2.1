@@ -1,11 +1,7 @@
 <?php
 $dir = dirname(__FILE__);
 //载入其他配置(//解决入口无法定义配置的问题)
-$performance = include $dir.'/performance.php';
-$shield = include $dir.'/shield.php';
-$db = include $dir.'/db.php';
-$ver = include $dir.'/ver.php';
-$router = include $dir.'/router-'.$performance['URL_ROUTER_TYPE'].'.php';
+$files = array('performance.php','shield.php','db.php','ver.php');
 $config = array(
 	//'配置项'=>'配置值'
 	'TMPL_ENGINE_TYPE' => 'Dux',
@@ -17,12 +13,17 @@ $config = array(
 	'APP_NAME' => '基础应用',
 	'URL_CASE_INSENSITIVE' => false, 
 	);
+foreach ($files as $value) {
+	$array = include $dir.'/'.$value;
+	$config = array_merge($config,$array);
+}
+$router = include $dir.'/router/router-'.$config['URL_ROUTER_TYPE'].'.php';
 if($performance['URL_MODEL'] == 2) {
 	$performance['URL_ROUTER_ON'] = true;
 }else{
 	$performance['URL_ROUTER_ON'] = false;
 }
-$config = array_merge($performance,$shield,$db,$ver,$router,$config,(array)$GLOBALS['config']);
+$config = array_merge($config,(array)$GLOBALS['config']);
 //设置404页面
 if(!$config['SHOW_ERROR_MSG']){
 	$config['TMPL_EXCEPTION_FILE'] = ROOT_PATH.'Themes/Common/404.html';
