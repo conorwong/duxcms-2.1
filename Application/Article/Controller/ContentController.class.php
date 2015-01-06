@@ -22,7 +22,9 @@ class ContentController extends SiteController {
         if(!empty($contentId)){
             $contentInfo=$model->getInfo($contentId);
         }else if(!empty($urlTitle)){
-            $contentInfo=$model->getInfoUrl($urlTitle);
+            $where = array();
+            $where['urltitle'] = $urlTitle;
+            $contentInfo=$model->getWhereInfo($where);
         }else{
             $this->error404();
         }

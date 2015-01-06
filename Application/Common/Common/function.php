@@ -519,15 +519,16 @@ function cut_image($img, $width, $height, $type = 3)
 function url($url='', $array = array()){
     //获取路由配置
     $router = C('URL_ROUTE_RULES');
-    $baseUrl = U($url,$array);
-    if(!C('URL_ROUTER_ON')||empty($router)){
-        return $baseUrl;
+    if(!C('URL_ROUTER_ON') || empty($router)){
+        unset($array['urlname']);
+        unset($array['class_urlname']);
+        return U($url,$array);
     }
     //匹配规则URL
     $router = array_flip($router);
     $routerUrl = $router[$url];
     if(empty($routerUrl)){
-        return $baseUrl;
+        return U($url,$array);
     }
     if(!empty($array)){
         foreach ($array as $key => $value) {

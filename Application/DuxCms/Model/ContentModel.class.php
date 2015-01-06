@@ -352,7 +352,7 @@ class ContentModel extends Model {
      */
     public function getUrl($info)
     {
-        return url($info['app'].'/Content/index',array('content_id'=>$info['content_id']));
+        return url($info['app'].'/Content/index',array('content_id'=>$info['content_id'],'urltitle'=>$info['urltitle'],'class_urlname'=>$info['class_urlname']));
     }
 
 }

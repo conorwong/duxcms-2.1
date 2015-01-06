@@ -49,8 +49,8 @@ class ContentArticleModel extends Model {
             foreach ($pageList as $key=>$value) {
                 //处理基础
                 $list[$key]=$value;
-                $list[$key]['aurl'] = D('Article/ContentArticle')->getUrl($value);
-                $list[$key]['curl'] = D('Article/CategoryArticle')->getUrl($value);
+                $list[$key]['aurl'] = D('DuxCms/Content')->getUrl($value);
+                $list[$key]['curl'] = D('DuxCms/Category')->getUrl($value);
                 $list[$key]['i'] = $i++;
                 //处理扩展字段
                 if(!empty($fieldList)){
@@ -175,16 +175,6 @@ class ContentArticleModel extends Model {
             $this->rollback();
         }
         return $status;
-    }
-
-    /**
-     * 获取内容URL
-     * @param int $info 栏目信息
-     * @return bool 删除状态
-     */
-    public function getUrl($info)
-    {
-        return url('Article/Content/index',array('content_id'=>$info['content_id']));
     }
 
 }

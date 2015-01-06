@@ -41,7 +41,7 @@ class CategoryArticleModel extends Model {
             $i = 0;
             foreach ($pageList as $key=>$value) {
                 $list[$key]=$value;
-                $list[$key]['curl'] = D('Article/CategoryArticle')->getUrl($value);
+                $list[$key]['curl'] = D('DuxCms/Category')->getUrl($value);
                 $list[$key]['i'] = $i++;
             }
         }
@@ -131,17 +131,6 @@ class CategoryArticleModel extends Model {
         $map['class_id'] = $classId;
         return $this->where($map)->delete();
     }
-
-    /**
-     * 获取栏目URL
-     * @param int $info 栏目信息
-     * @return bool 删除状态
-     */
-    public function getUrl($info)
-    {
-        return url('Article/Category/index',array('class_id'=>$info['class_id']));
-    }
-
     
 
 }

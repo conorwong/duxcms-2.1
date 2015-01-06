@@ -16,7 +16,7 @@ class CategoryController extends SiteController {
             $this->error404();
         }
         //获取栏目信息
-        $model = D('CategoryPage');
+        $model = D('Page/CategoryPage');
         if(!empty($classId)){
             $categoryInfo=$model->getInfo($classId);
         }else if(!empty($urlName)){
@@ -26,6 +26,7 @@ class CategoryController extends SiteController {
         }else{
             $this->error404();
         }
+
         $classId = $categoryInfo['class_id'];
         //信息判断
         if (!is_array($categoryInfo)){

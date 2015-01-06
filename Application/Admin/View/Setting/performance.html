@@ -98,26 +98,58 @@
             </div>
             <div class="form-group">
                 <div class="label">
-                    <label for="sitename">URL路由</label>
+                    <label for="sitename">URL规则</label>
                 </div>
                 <div class="field">
                         <div class="button-group button-group-small radio">
-                            <!--if{$info['URL_ROUTER_ON']}-->
-                            <label class="button active"><input name="URL_ROUTER_ON" value="true" checked="checked" type="radio">
+                            <!--if{$info['URL_ROUTER_TYPE'] == 1}-->
+                            <label class="button active"><input name="URL_ROUTER_TYPE" value="1" checked="checked" type="radio">
                             <!--{else}-->
-                            <label class="button"><input name="URL_ROUTER_ON" value="true" type="radio">
+                            <label class="button"><input name="URL_ROUTER_TYPE" value="1" type="radio">
                             <!--{/if}-->
-                            <span class="icon icon-check"></span> 开启</label>
-                            <!--if{!$info['URL_ROUTER_ON']}-->
-                            <label class="button active"><input name="URL_ROUTER_ON" checked="checked" value="false" type="radio">
+                            <span class="icon icon-check"></span> ID</label>
+                            <!--if{$info['URL_ROUTER_TYPE'] == 2}-->
+                            <label class="button active"><input name="URL_ROUTER_TYPE" checked="checked" value="2" type="radio">
                             <!--{else}-->
-                            <label class="button"><input name="URL_ROUTER_ON" value="false" type="radio">
+                            <label class="button"><input name="URL_ROUTER_TYPE" value="2" type="radio">
                             <!--{/if}-->
-                            <span class="icon icon-times"></span> 关闭</label>
+                            <span class="icon icon-times"></span> URL</label>
+                            <!--if{$info['URL_ROUTER_TYPE'] == 3}-->
+                            <label class="button active"><input name="URL_ROUTER_TYPE" checked="checked" value="3" type="radio">
+                            <!--{else}-->
+                            <label class="button"><input name="URL_ROUTER_TYPE" value="3" type="radio">
+                            <!--{/if}-->
+                            <span class="icon icon-times"></span> 长URL</label>
+                            <!--if{$info['URL_ROUTER_TYPE'] == 4}-->
+                            <label class="button active"><input name="URL_ROUTER_TYPE" checked="checked" value="4" type="radio">
+                            <!--{else}-->
+                            <label class="button"><input name="URL_ROUTER_TYPE" value="4" type="radio">
+                            <!--{/if}-->
+                            <span class="icon icon-times"></span> URL + ID</label>
+                            
                         </div>
-                    <div class="input-note">根据URL设置规则进行URL优化</div>
+                    <div class="input-note">开启伪静态后生效</div>
                 </div>
             </div>
+            <div class="form-group">
+                <div class="label">
+                    <label for="sitename">规则说明</label>
+                </div>
+                <div class="field">
+                    <blockquote>
+                     <strong>ID模式</strong>
+                      <p>如：127.0.0.1/class/id.html 、 127.0.0.1/content/id.html，数字ID变动。</p>
+                      <strong>URL模式</strong>
+                      <p>如：127.0.0.1/class/自定义.html (栏目)、 127.0.0.1/content/自定义.html，自定义为添加栏目内容时设置的URL。</p>
+                      <strong>长URL模式</strong>
+                      <p>如：127.0.0.1/class/自定义.html (栏目)、 127.0.0.1/class/栏目自定义/内容自定义.html，自定义为添加栏目内容时设置的URL。</p>
+                      <strong>URL + ID</strong>
+                      <p>如：127.0.0.1/class/自定义.html (栏目)、 127.0.0.1/class/栏目自定义/id.html，自定义为添加栏目内容时设置的URL。</p>
+                      
+                    </blockquote>
+                </div>
+            </div>
+            
         </div>
         <div class="panel-foot">
             <div class="form-button">

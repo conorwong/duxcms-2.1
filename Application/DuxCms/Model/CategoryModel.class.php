@@ -247,7 +247,7 @@ class CategoryModel extends Model {
      */
     public function getUrl($info)
     {
-        return url($info['app'].'/Category/index',array('class_id'=>$info['class_id']));
+        return url($info['app'].'/Category/index',array('class_id'=>$info['class_id'],'urlname'=>$info['urlname']));
     }
 
 }
