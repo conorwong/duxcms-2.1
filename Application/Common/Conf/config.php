@@ -17,13 +17,15 @@ foreach ($files as $value) {
 	$array = include $dir.'/'.$value;
 	$config = array_merge($config,$array);
 }
+
 $router = include $dir.'/router/router-'.$config['URL_ROUTER_TYPE'].'.php';
-if($performance['URL_MODEL'] == 2) {
-	$performance['URL_ROUTER_ON'] = true;
+if($config['URL_MODEL'] == 2) {
+	$config['URL_ROUTER_ON'] = true;
 }else{
-	$performance['URL_ROUTER_ON'] = false;
+	$config['URL_ROUTER_ON'] = false;
 }
-$config = array_merge($config,(array)$GLOBALS['config']);
+$config = array_merge($config,$router,(array)$GLOBALS['config']);
+
 //设置404页面
 if(!$config['SHOW_ERROR_MSG']){
 	$config['TMPL_EXCEPTION_FILE'] = ROOT_PATH.'Themes/Common/404.html';
