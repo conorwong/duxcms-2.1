@@ -94,7 +94,9 @@ class FieldsetFormModel extends BaseModel {
         }
         if($type == 'edit'){
             //修改数据
-            $status = $this->where('fieldset_id='.$data['fieldset_id'])->save();
+            $where = array();
+            $where['fieldset_id'] = $data['fieldset_id'];
+            $status = $this->where($where)->save();
             if($status === false){
                 $this->rollBack();
                 return false;

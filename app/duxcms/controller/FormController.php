@@ -39,7 +39,7 @@ class FormController extends SiteController {
         //查询数据
         $where = array();
         if(!empty($formInfo['list_where'])){
-            $where['_string'] = $formInfo['list_where'];
+            $where[] = $formInfo['list_where'];
         }
         $count = $model->countList($where);
         $limit = $this->getPageLimit($count,$listRows);
