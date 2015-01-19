@@ -94,11 +94,12 @@ class IndexController extends Controller {
         $file = ROOT_PATH . 'app/install/data/install.sql';
         $sqlData = \framework\ext\Install::mysql($file, 'dux_', $data['DB_PREFIX']);
         foreach ($sqlData as $sql) {
-            $status = mysql_query($sql);
-            if(!$status){
+            mysql_query($sql);
+            if(mysql_affected_rows() < 0){
                 show_msg('数据库导入失败，请检查后手动删除数据库重新安装！',false);
             }
         }
+        
         //修改数据库文件
         $file = CONFIG_PATH . 'db.php';
         if(save_config($file, $data)){
