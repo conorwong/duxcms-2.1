@@ -189,7 +189,7 @@ class CategoryModel extends BaseModel {
             return false;
         }
 
-        $cat = $this->loadList('',$classId);
+        $cat = $this->loadList(array(),$classId);
         if(empty($cat)){
             return true;
         }
@@ -229,7 +229,7 @@ class CategoryModel extends BaseModel {
      */
     public function getSubClassId($classId)
     {
-        $data = $this->loadList('', $classId);
+        $data = $this->loadList(array(), $classId);
         if(empty($data)){
             return;
         }
