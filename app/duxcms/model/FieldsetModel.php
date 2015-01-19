@@ -82,7 +82,9 @@ class FieldsetModel extends BaseModel {
                 return false;
             }
             //修改数据
-            $status = $this->where('fieldset_id='.$data['fieldset_id'])->data($data)->save();
+            $where = array();
+            $where['fieldset_id'] = $data['fieldset_id'];
+            $status = $this->where($where)->data($data)->save();
             if($status === false){
                 return false;
             }

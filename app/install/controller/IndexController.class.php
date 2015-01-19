@@ -14,8 +14,7 @@ class IndexController extends Controller {
         include_once ROOT_PATH . 'app/install/util/Function.php';
 		$this->lock = realpath('./') . DIRECTORY_SEPARATOR . 'install.lock';
 		if(is_file($this->lock)){
-            $this->error('已经成功安装DuxCms，无需重复操作！',__ROOT__.'/');
-            return false;
+            $this->redirect(url('home/Index/index'));
         }
 	}
 
