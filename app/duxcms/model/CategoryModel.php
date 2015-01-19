@@ -233,7 +233,7 @@ class CategoryModel extends BaseModel {
         if(empty($data)){
             return;
         }
-        $list=array();
+        $list = array();
         foreach ($data as $value) {
             if($value['show']){
                 $list[]=$value['class_id'];
