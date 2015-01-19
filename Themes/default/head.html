@@ -2,10 +2,8 @@
 	<div class="m-logo"></div>
 	<div class="m-sch">
 		<!--{* 文章搜索标签 *}-->
-		<form action="{U('Article/Search/index')}" method="get">
-		<input name="m" type="hidden" value="Article">
-        <input name="c" type="hidden" value="Search">
-        <input name="a" type="hidden" value="index">
+		<form action="{url('Article/Search/index')}" method="get">
+		<input name="r" type="hidden" value="Article/Search/index">
 		<div class="select">
 			<select name="model">
 				<option value="0">标题</option>
