@@ -57,9 +57,9 @@ class ContentToolsModel {
         }
         $filesName = date('Y-m-d').'/';
         //文件路径
-        $filePath = './Uploads/'.$filesName;
+        $filePath = './uploads/'.$filesName;
         //文件URL路径
-        $fileUrl = __ROOT__ .'/Uploads/'. $filesName;
+        $fileUrl = __ROOT__ .'/uploads/'. $filesName;
         $body=htmlspecialchars_decode($content);
         $imgArray = array();
         preg_match_all("/(src|SRC)=[\"|'| ]{0,}(http:\/\/(.*)\.(gif|jpg|jpeg|bmp|png))/isU",$body,$imgArray);

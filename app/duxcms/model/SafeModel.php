@@ -13,7 +13,7 @@ class SafeModel {
     {
         $safeArray = array();
         //数据库弱口令
-        if(preg_match('/^(?=.*\d)(?=.*[a-zA-Z])(?=.*\W).+$/', config('DB_PWD'))){
+        if(preg_match('/^(?=.*\d)(?=.*[a-zA-Z])(?=.*\W).+$/', config('DB.default.DB_PWD'))){
             $safeArray['db'] = true;
         }
         //登录密码检测
@@ -38,7 +38,7 @@ class SafeModel {
             }
         }
         //安装模块检测
-        if(!is_dir(APP_PATH . 'Install')){
+        if(!is_dir(APP_PATH . 'install')){
             $safeArray['install'] = true;
         }
         return $safeArray;
