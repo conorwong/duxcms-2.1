@@ -124,7 +124,7 @@ class TempalteHook{
             $url = substr($url, 1);
         }
         $url = str_replace('\\', '/', $url);
-        $url = ROOT_PATH . $url . '/' . $file;
+        $url = ROOT_URL . $url . '/' . $file;
         $html = '<'.$var[1].$var[2].'"'.$url.'"'.$var[5].'>';
         return $html;
     }
