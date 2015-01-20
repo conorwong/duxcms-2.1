@@ -108,7 +108,9 @@ class FieldModel extends BaseModel {
                 }
             }
             //修改数据
-            $status = $this->where('field_id='.$data['field_id'])->data($data)->save();
+			$where = array();
+			$where['field_id'] = $data['field_id'];
+            $status = $this->where($where)->data($data)->save();
             if($status === false){
                 return false;
             }
