@@ -25,7 +25,7 @@ class AdminSettingController extends AdminController {
             $this->assign('info',current_config());
             $this->adminDisplay();
         }else{
-            $file = APP_PATH . 'conf/config.php';
+            $file = 'article/config';
             if(save_config($file, $_POST)){
                 $this->success('应用配置成功！');
             }else{
