@@ -92,7 +92,7 @@ class TotalSpiderModel extends BaseModel {
             $timeNow = strtotime("-".$i." ".$type,strtotime(date('Y-m-d 0:0:0')));
             $jsonArray['labels'][] = date($date,$timeNow);
             $where = array();
-            $where['time'] = array(array('EGT', $timeNow), array('LT', strtotime('+ 1 '.$type, $timeNow)),'and');
+            $where[] = "time >= {$timeNow} AND time < ".strtotime('+ 1 '.$type, $timeNow);
 
             $sum = $this->where($where)->sum('baidu');
             if($sum){
