@@ -244,7 +244,7 @@ class ContentModel extends BaseModel {
             } else {
                 //增加引用次数
                 $data = array();
-                $data['quote'] = array('exp','quote+1');
+                $data['quote'] = $info['quote'] + 1;
                 $data['tag_id'] = $info['tag_id'];
                 $TagsModel->saveData('edit',$data);
                 //查找关联

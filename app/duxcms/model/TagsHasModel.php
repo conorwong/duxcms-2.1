@@ -29,7 +29,7 @@ class TagsHasModel extends BaseModel {
         if(!$data){
             return false;
         }
-        return $this->data($data)->add();
+        return $this->add($data);
     }
 
     /**

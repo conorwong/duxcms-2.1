@@ -79,7 +79,7 @@ class TagsModel extends BaseModel {
             }
             $where = array();
             $where['tag_id'] = $data['tag_id'];
-            $status = $this->where()->save($data);
+            $status = $this->where($where)->save($data);
             if($status === false){
                 return false;
             }
