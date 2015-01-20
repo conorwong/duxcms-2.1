@@ -97,39 +97,6 @@ function check_func(){
 	return $items;
 }
 
-
-/**
- * 创建数据表
- * @param  resource $db 数据库连接资源
- */
-function create_tables($db, $prefix = ''){
-	//读取SQL文件
-	$sql = file_get_contents(MODULE_PATH . 'Data/install.sql');
-	$sql = str_replace("\r", "\n", $sql);
-	$sql = explode(";\n", $sql);
-
-	//替换表前缀
-	$sql = str_replace(" `dux_", " `{$prefix}", $sql);
-	//开始安装
-	show_msg('开始安装数据库...');
-	foreach ($sql as $value) {
-		$value = trim($value);
-		if(empty($value)) continue;
-		if(substr($value, 0, 12) == 'CREATE TABLE') {
-			$name = preg_replace("/^CREATE TABLE `(\w+)` .*/s", "\\1", $value);
-			$msg  = "创建数据表{$name}";
-			if(false !== $db->execute($value)){
-				show_msg($msg . '...成功');
-			} else {
-				show_msg($msg . '...失败！', 'error');
-				session('error', true);
-			}
-		} else {
-			$db->execute($value);
-		}
-	}
-}
-
 /**
  * 及时显示提示信息
  * @param  string $msg 提示信息
