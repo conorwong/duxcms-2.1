@@ -27,7 +27,7 @@ class LabelService{
         }
         //其他条件
         if(!empty($data['where'])){
-            $where['_string'] = $data['where'];
+            $where[] = $data['where'];
         }
         //排序
         if(!empty($data['order'])){
