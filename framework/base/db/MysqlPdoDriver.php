@@ -11,7 +11,7 @@ class MysqlPdoDriver implements DbInterface {
 		$this->config = $config;
 	}
 
-	public function select($table, array $condition = array(), $field='*', $order=NULL, $limit=NULL){
+	public function select($table, $condition = null, $field='*', $order=NULL, $limit=NULL){
 		$field = !empty($field) ? $field : '*';
 		$order = !empty($order) ? ' ORDER BY '.$order : '';
 		$limit = !empty($limit) ? ' LIMIT '.$limit : '';
@@ -65,7 +65,7 @@ class MysqlPdoDriver implements DbInterface {
 		}
 	}
 	
-	public function update($table, array $condition = array(), array $data = array()){
+	public function update($table, $condition = null, array $data = array()){
 		if( empty($condition) ) return false;
 		$values = array();
 		foreach ($data as $k=>$v){
@@ -77,14 +77,14 @@ class MysqlPdoDriver implements DbInterface {
 		return $this->execute("UPDATE {$table} SET ".implode(', ', $keys) . $condition['_where'], $condition['_bindParams'] + $values);
 	}
 	
-	public function delete($table, array $condition = array() ){
+	public function delete($table, $condition = null ){
 		if( empty($condition) ) return false;
 		$table = $this->_table($table);
 		$condition = $this->_where( $condition );
 		return $this->execute("DELETE FROM {$table} {$condition['_where']}", $condition['_bindParams']);
 	}
 
-	public function count($table, array $condition = array()) {
+	public function count($table, $condition = null ) {
 		$table = $this->_table($table);
 		$condition = $this->_where( $condition );
 		$count = $this->query("SELECT COUNT(*) AS __total FROM {$table} ".$condition['_where'], $condition['_bindParams']);
@@ -131,25 +131,29 @@ class MysqlPdoDriver implements DbInterface {
 		return (false===strpos($table, ' '))? "`{$table}`": $table;
 	}
 	
-	protected function _where( array $condition ){
+	protected function _where($condition){
 		$result = array( '_where' => '', '_bindParams' => array() );	 		
 		$sql = null; 
 		$sqlArr = array();
-		$params = array();		
-		foreach( $condition as $k => $v ){
-			if(!is_numeric($k)){
-				if( false===strpos($k, ':') ){
-					$k = str_replace('`', '', $k);				
-					$key = ':__'.str_replace('.', '_', $k);
-					$field = '`'.str_replace('.', '`.`', $k).'`';					
-					$sqlArr[] = "{$field} = {$key}";
+		$params = array();	
+		if(is_array($condition)){	
+			foreach( $condition as $k => $v ){
+				if(!is_numeric($k)){
+					if( false===strpos($k, ':') ){
+						$k = str_replace('`', '', $k);				
+						$key = ':__'.str_replace('.', '_', $k);
+						$field = '`'.str_replace('.', '`.`', $k).'`';					
+						$sqlArr[] = "{$field} = {$key}";
+					}else{
+						$key = $k;
+					}
+					$params[$key] = $v;
 				}else{
-					$key = $k;
+					$sqlArr[] = $v;
 				}
-				$params[$key] = $v;
-			}else{
-				$sqlArr[] = $v;
 			}
+		}else{
+			$sql = $condition;
 		}
 		if(!$sql) $sql = implode(' AND ', $sqlArr);
 

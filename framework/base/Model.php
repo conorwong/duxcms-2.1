@@ -126,7 +126,7 @@ class Model{
 		return $this;
 	}
 
-	public function where(array $where = array()) {
+	public function where($where = null) {
 		$this->options['where'] = $where;
 		return $this;
 	}	

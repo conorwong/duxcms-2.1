@@ -11,18 +11,18 @@ interface DbInterface{
 	public function execute($sql, array $params);
 	
 	//return array
-	public function select($table, array $condition, $field, $order, $limit);
+	public function select($table, $condition, $field, $order, $limit);
 	
 	//return insert_id
 	public function insert($table, array $data);
 	
 	//return affected rows
-	public function update($table, array $condition, array $data);
+	public function update($table, $condition, array $data);
 	
 	//return affected rows
-	public function delete($table, array $condition);
+	public function delete($table, $condition);
 
-	public function count($table, array $condition);	
+	public function count($table, $condition);	
 	
 
 	public function getFields($table);
