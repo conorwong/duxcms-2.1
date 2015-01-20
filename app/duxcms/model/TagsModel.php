@@ -77,7 +77,9 @@ class TagsModel extends BaseModel {
             if(empty($data['tag_id'])){
                 return false;
             }
-            $status = $this->where('tag_id='.$data['tag_id'])->save($data);
+            $where = array();
+            $where['tag_id'] = $data['tag_id'];
+            $status = $this->where()->save($data);
             if($status === false){
                 return false;
             }
