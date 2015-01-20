@@ -50,8 +50,8 @@ class CategoryModel extends BaseModel {
         if(!empty($pageList)){
             $i = 0;
             foreach ($pageList as $key=>$value) {
-                $data[$key]['app'] = strtolower($value['app']);
                 $list[$key]=$value;
+                $list[$key]['app'] = strtolower($value['app']);
                 $list[$key]['curl'] = target('duxcms/Category')->getUrl($value);
                 $list[$key]['i'] = $i++;
             }
