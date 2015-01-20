@@ -26,7 +26,7 @@ class ContentArticleModel extends BaseModel {
             $fieldsetInfo = target('duxcms/FieldsetExpand')->getInfo($fieldsetId);
             if(!empty($fieldsetInfo)){
                 //设置查询
-                $model = $model->join('{pre}'.$fieldsetInfo['table'].' as D ON A.content_id = D.data_id' , 'LEFT');
+                $model = $model->join('{pre}ext_'.$fieldsetInfo['table'].' as D ON A.content_id = D.data_id' , 'LEFT');
                 $field .= ',D.*';
                 //获取字段列表
                 $whereExt = array();

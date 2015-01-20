@@ -1,5 +1,5 @@
 <?php
-namespace app\article\model;
+namespace app\page\model;
 use app\base\model\BaseModel;
 /**
  * 栏目操作
