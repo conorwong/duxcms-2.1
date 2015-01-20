@@ -110,7 +110,7 @@ class LabelService{
         if(empty($info)){
             return ;
         }
-        return html_out($info['content']);
+        return htmlspecialchars_decode(html_out($info['content']));
     }
 
     /**
