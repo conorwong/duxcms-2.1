@@ -39,7 +39,7 @@ class AdminUpdateController extends AdminController {
         $url = $this->domain . 'Service/Update/index';
         $data = array();
         $data['ver_time'] = $verTime;
-        $info = \Common\Util\Http::doPost($url,$data,10);
+        $info = \framework\ext\Http::doGet($url,$data,10);
         $info = json_decode($info,true);
         if(empty($info)){
             $this->error('无法获取版本信息，请稍后再试！');
@@ -70,7 +70,7 @@ class AdminUpdateController extends AdminController {
         $fileName = end($fileName);
         //开始下载文件
         $fileName = $updateDir.$fileName;
-        $file = \Common\Util\Http::doGet($url,30);
+        $file = \framework\ext\Http::doGet($url,30);
         if(!file_put_contents($fileName, $file)){
             $this->error('无法保存更新文件请检查目录【'.$updateDir.'】是否有写入权限！');
         }
@@ -90,7 +90,7 @@ class AdminUpdateController extends AdminController {
              $this->error('没有发现更新文件，请稍后重试！');
         }
         $dir = $updateDir.'tmp_'.config('DUX_TIME');
-        $zip = new \Common\Util\Zip();
+        $zip = new \framework\ext\Zip();
         if($zip->decompress($file,$dir)){
             $this->success('文件解压成功，等待更新操作！');
         }else{
@@ -143,7 +143,7 @@ class AdminUpdateController extends AdminController {
      */
     public function Authorize(){
         $url = 'http://www.duxcms.com/index.php?s=Service/Authorize/index';
-        $info = \Common\Util\Http::doGet($url,30);
+        $info = \framework\ext\Http::doGet($url,30);
         echo $info;
     }
 
