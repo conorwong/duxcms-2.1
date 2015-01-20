@@ -61,12 +61,12 @@ class BaseController extends \framework\base\Controller{
             //网站跳转
             if (!$detect->isMobile() && !$detect->isTablet()){
                 if(config('site_url')&&$url<>config('site_url')){
-                    redirect('http://'.config('site_url'));
+                    $this->redirect('http://'.config('site_url'));
                 }
                 define('MOBILE',false);
             }else{
                 if(config('mobile_domain')&&$url<>config('mobile_domain')){
-                    redirect('http://'.config('mobile_domain'));
+                    $this->redirect('http://'.config('mobile_domain'));
                 }
                 define('MOBILE',true);
             }
