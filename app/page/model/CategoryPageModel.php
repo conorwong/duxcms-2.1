@@ -4,7 +4,7 @@ use app\base\model\BaseModel;
 /**
  * 栏目操作
  */
-class CategoryPageModel extends Model {
+class CategoryPageModel extends BaseModel {
     //验证
     protected $_validate = array(
         array('content','require', '请填写页面内容', 1 ,'regex',3),
