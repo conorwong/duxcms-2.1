@@ -9,12 +9,8 @@ class AdminSettingController extends AdminController {
      * 当前模块参数
      */
     protected function _infoModule(){
-        $menu = A('admin/Functions');
+        $menu = target('admin/Functions','controller');
         $menu = $menu->infoModule;
-        $menu['cutNav'] = array(
-                'url' => url('admin/Functions/index'),
-                'complete' => false,
-                );
         return $menu;
         
     }
@@ -29,8 +25,8 @@ class AdminSettingController extends AdminController {
             $this->assign('info',current_config());
             $this->adminDisplay();
         }else{
-            $file = MODULE_PATH . 'Conf/config.php';
-            if(write_config($file, $_POST)){
+            $file = APP_PATH . 'conf/config.php';
+            if(save_config($file, $_POST)){
                 $this->success('应用配置成功！');
             }else{
                 $this->error('应用配置失败');
