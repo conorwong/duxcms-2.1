@@ -23,9 +23,9 @@
 		<div class="error_box">出错文件：{$errorFile}</div>
 		<div class="error_box">错误行：{$errorLine}</div>
 		<div class="error_box">Trace信息：<br>
-		{foreach $trace as $k=>$v}
+		<!--foreach{$trace as $k=>$v}-->
 			#{$k} {$v['file']}({$v['line']}) {$v['class']}{$v['type']}{$v['function']}() <br>
-		{/foreach}
+		<!--{/foreach}-->
 		</div>
 		<div class="error_tip">您可以选择 &nbsp;&nbsp;<a href="javascript:history.back()" title="返回">返回</a>&nbsp;&nbsp;或者&nbsp;&nbsp;<a href="{ROOT_URL}" title="回到首页">回到首页</a> </div>
 	</div>

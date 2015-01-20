@@ -152,7 +152,7 @@ class AdminUserModel extends BaseModel {
         );
         $this->save($data);
         //写入系统记录
-        //api('Admin','AdminLog','addLog','登录系统');
+        api('Admin','AdminLog','addLog','登录系统');
         //设置cookie
         $auth = array(
             'user_id' => $userId,

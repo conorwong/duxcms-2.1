@@ -19,11 +19,13 @@ class ErrorController extends BaseController{
 				
 		//关闭调试或者是线上版本，不显示详细错误
 		if( false==config('DEBUG') || 'production' == config('ENV') ){
-			$tpl = 'error_production';
+			$home = new \app\home\controller\IndexController();
+			$home->error404();
 			//记录错误日志
 		}else{
 			$tpl = 'error_development';
+			$this->display('app/base/view/error_development');
 		}
-		$this->display('app/base/view/'.$tpl);
+		
 	}	
 }

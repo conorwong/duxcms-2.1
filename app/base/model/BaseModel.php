@@ -210,7 +210,7 @@ class BaseModel extends \framework\base\Model{
                     case 'string':
                     default:
                         if(empty($data[$v[0]])){
-                            $data[$v[0]] = $data[$v[2]];
+                            $data[$v[0]] = $v[1];
                         }
                         break;
                 }

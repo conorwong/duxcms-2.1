@@ -135,7 +135,7 @@ class BaseController extends \framework\base\Controller{
      */
     protected function error404()
     {
-        target('base/Error','controller')->error404();
+        throw new \Exception("404页面不存在！", 404);
     }
 
     /**

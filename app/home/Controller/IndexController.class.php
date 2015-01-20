@@ -16,4 +16,11 @@ class IndexController extends SiteController {
     	$this->assign('media', $media);
         $this->siteDisplay(config('tpl_index'));
     }
+
+    /**
+     * 页面不存在
+     */
+    public function error404(){
+    	$this->siteDisplay('error_404');
+    }
 }

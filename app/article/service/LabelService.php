@@ -47,14 +47,18 @@ class LabelService{
         $where=array();
         //指定栏目内容
         if(!empty($data['class_id'])){
-            $where[] = 'A.class_id in ('.$data['class_id'].')';
+            $classWhere = 'A.class_id in ('.$data['class_id'].')';
         }
         //指定栏目下子栏目内容
         if ($data['sub']&&!empty($data['class_id'])) {
             $classIds = target('duxcms/Category')->getSubClassId($data['class_id']);
+            $classWhere = '';
             if(!empty($classIds)){
-                $where[] = 'A.class_id in ('.$classIds.')';
+                $classWhere = "A.class_id in ({$classIds})";
             }
+        }
+        if(!empty($classWhere)){
+            $where[] = $classWhere;
         }
         //是否带形象图
         if (isset($data['image'])) {

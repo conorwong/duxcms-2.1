@@ -58,8 +58,8 @@ class AdminLogModel extends BaseModel {
             $this->order('log_id asc')->limit('1')->delete();
         }
         //增加记录
-        $this->create($data);
-        return $this->add();
+        $data = $this->create($data);
+        return $this->add($data);
     }
 
 }

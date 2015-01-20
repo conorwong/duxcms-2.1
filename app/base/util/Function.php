@@ -31,7 +31,14 @@ function request($str = null, $default = null, $function = '') {
 	if(empty($name)){
 		$request = $type;
 	}else{
-		$request = $type[$name];
+        switch ($method) {
+            case 'get':
+                $request = urldecode($type[$name]);
+                break;
+            default:
+                $request = $type[$name];
+                break;
+        }
 	}
 	$request = filter_string($request);
 	if(!empty($name)){
@@ -512,4 +519,12 @@ function random_str()
     strtoupper(dechex(date('m'))).date('d').
     substr(time(),-5).substr(microtime(),2,5).sprintf('d',rand(0,99));
     return $order_sn;
+}
+
+/**
+ * 获取客户端IP
+ */
+function get_client_ip()
+{
+    return \framework\ext\Util::getIp();
 }

@@ -359,7 +359,7 @@ class ContentModel extends BaseModel {
     public function getUrl($info)
     {
         if(config('REWRITE_ON')){
-            return url(strtolower($info['app']).'/Content/index',array('content_id'=>$info['content_id'],'urltitle'=>$info['urltitle'],'class_urlname'=>$info['class_urlname']));
+            return match_url(strtolower($info['app']).'/Content/index',array('content_id'=>$info['content_id'],'urltitle'=>$info['urltitle'],'class_urlname'=>$info['class_urlname']));
         }else{
             return url(strtolower($info['app']).'/Content/index',array('content_id'=>$info['content_id']));
         }
