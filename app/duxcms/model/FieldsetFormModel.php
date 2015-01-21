@@ -83,8 +83,8 @@ class FieldsetFormModel extends BaseModel {
         }
         if($type == 'add'){
             //写入数据
-            $this->fieldset_id = $fieldsetId;
-            $status = $this->add();
+            $data['fieldset_id'] = $fieldsetId;
+            $status = $this->add($data);
             if($status){
                 $this->commit();
             }else{
