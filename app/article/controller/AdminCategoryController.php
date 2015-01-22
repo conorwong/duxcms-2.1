@@ -100,7 +100,6 @@ class AdminCategoryController extends AdminController {
         if(target('duxcms/Category')->loadList(array(), $classId)){
             $this->error('请先删除子栏目！');
         }
-        print_r('xx');
         //判断栏目下内容
         $where = array();
         $where['A.class_id'] = $classId;
