@@ -6,7 +6,7 @@ class BaseController extends \framework\base\Controller{
 	public function __construct()
     {
         //设置错误级别
-        //error_reporting( E_ALL ^ E_NOTICE  ^ E_WARNING);
+        error_reporting( E_ALL ^ (E_NOTICE | E_WARNING));
     	//定义常量
     	define('APP_PATH', ROOT_PATH . 'app' . DIRECTORY_SEPARATOR);
         define('DATA_PATH', ROOT_PATH . 'data' . DIRECTORY_SEPARATOR);
