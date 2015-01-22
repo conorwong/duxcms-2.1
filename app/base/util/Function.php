@@ -379,7 +379,9 @@ function session($name='',$value='') {
     if(!empty($sessionId)){
         session_id($sessionId);
     }
-	if (!session_id()) session_start();
+	if(!isset($_SESSION)){
+        session_start();
+    }
 	$pre = config('COOKIE_PREFIX');
 	if(empty($value)){
 		$session = $_SESSION[$pre . $name];
