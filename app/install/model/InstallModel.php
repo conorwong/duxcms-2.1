@@ -8,28 +8,27 @@ class InstallModel extends BaseModel
 {
     /**
      * 运行sql
-     * @param array $data 数据库配置
      * @param array $sqlArray sql数组
      * @return array 状态
      */
-    public function runSql($data, $sqlArray = array())
+    public function runSql($sqlArray = array())
     {
-        $model = new cpModel($data);
         foreach ($sqlArray as $sql) {
-            if (!@$model->db->query($sql)) {
+            if (@$this->execute($sql) === false) {
                 return false;
             }
         }
         return true;
     }
-    public function create_db($data){
-        $model=new cpModel($data);
-        $sql="CREATE DATABASE IF NOT EXISTS `".$data['DB_NAME']."` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;";
-        return @$model->query($sql);
-    }
-    public function sql_db($data,$sql){
-        $model=new cpModel($data);
-        return @$model->query($sql);
+
+    /**
+     * 创建数据库
+     * @param array $sqlArray sql数组
+     * @return array 状态
+     */
+    public function createDB($name){
+        $sql="CREATE DATABASE IF NOT EXISTS `".$name."` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;";
+        return $this->execute($sql);
     }
 }
 ?>

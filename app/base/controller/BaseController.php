@@ -19,9 +19,11 @@ class BaseController extends \framework\base\Controller{
         define('__ROOT__', substr(ROOT_URL, 0, -1));
 
         //判断安装程序
-        $lock = ROOT_PATH . 'install.lock';
-        if(!is_file($lock)){
-            $this->redirect(url('install/Index/index'));
+        if(APP_NAME <> 'base'){
+            $lock = ROOT_PATH . 'install.lock';
+            if(!is_file($lock)){
+                $this->redirect(url('install/Index/index'));
+            }
         }
         //引入扩展函数
         require_once(APP_PATH . 'base/util/Function.php');
