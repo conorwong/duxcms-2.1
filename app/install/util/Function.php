@@ -85,6 +85,7 @@ function check_func(){
 		array('file_get_contents', '支持', 'success'),
 		array('mb_strlen',		   '支持', 'success'),
 		array('eval',		   '支持', 'success'),
+		array('pathinfo',		   '支持', 'success'),
 	);
 
 	foreach ($items as &$val) {
