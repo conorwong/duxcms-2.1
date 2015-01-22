@@ -10,7 +10,6 @@ class IndexController extends Controller {
 	public function __construct(){
         define('__PUBLIC__', substr(PUBLIC_URL, 0, -1));
         define('__ROOT__', substr(ROOT_URL, 0, -1));
-        define('INSTALL', true);
         include_once ROOT_PATH . 'app/base/util/Function.php';
         include_once ROOT_PATH . 'app/install/util/Function.php';
 		$this->lock = ROOT_PATH . 'install.lock';
@@ -82,6 +81,17 @@ class IndexController extends Controller {
         if($mysqlInfo < '5.1.0') {
             show_msg('mysql版本低于5.1，无法继续安装！',false);
         }
+
+        $status = @mysql_select_db($data['DB_NAME'], $link);
+        if(!$status) {
+            //尝试创建数据库
+            $sql = "CREATE DATABASE IF NOT EXISTS `".$data['DB_NAME']."` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;";
+            if(!mysql_query($sql)){
+                show_msg('数据库'. $data['DB_NAME'].'自动创建失败，请手动建立数据库！',false);
+            }
+        }
+        show_msg('数据库检查创建完成...');
+
         //修改数据库文件
         $file = CONFIG_PATH . 'db.php';
         if(save_config($file, $data)){
@@ -90,14 +100,6 @@ class IndexController extends Controller {
             show_msg('配置数据库信息失败！请手动修改['.$file.']文件！',false);
         }
 
-        $status = @mysql_select_db($data['DB_NAME'], $link);
-        if(!$status) {
-            //尝试创建数据库
-            if(!target('Install')->createDB($data['DB_NAME'])){
-                show_msg('数据库'. $data['DB_NAME'].'自动创建失败，请手动建立数据库！',false);
-            }
-        }
-        show_msg('数据库检查创建完成...');
         //安装数据库
         $file = ROOT_PATH . 'app/install/data/install.sql';
         $sqlData = \framework\ext\Install::mysql($file, 'dux_', $data['DB_PREFIX']);

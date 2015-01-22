@@ -1,6 +1,7 @@
 <?php
 namespace app\base\controller;
-class ErrorController extends BaseController{
+use framework\base\Controller;
+class ErrorController extends Controller{
 	
 	public function error404($e=null){
 		header('HTTP/1.1 404 Not Found'); 

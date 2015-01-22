@@ -20,15 +20,5 @@ class InstallModel extends BaseModel
         }
         return true;
     }
-
-    /**
-     * 创建数据库
-     * @param array $sqlArray sql数组
-     * @return array 状态
-     */
-    public function createDB($name){
-        $sql="CREATE DATABASE IF NOT EXISTS `".$name."` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;";
-        return $this->execute($sql);
-    }
 }
 ?>

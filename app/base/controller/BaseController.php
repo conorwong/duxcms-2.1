@@ -18,11 +18,6 @@ class BaseController extends \framework\base\Controller{
         define('__PUBLIC__', substr(PUBLIC_URL, 0, -1));
         define('__ROOT__', substr(ROOT_URL, 0, -1));
 
-        //处理安装状态
-        if (defined('INSTALL')) {
-            return;
-        }
-
         //判断安装程序
         $lock = ROOT_PATH . 'install.lock';
         if(!is_file($lock)){
