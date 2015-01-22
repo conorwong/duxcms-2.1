@@ -28,6 +28,7 @@ class BaseModel extends \framework\base\Model{
             return;
         }
         $class = get_called_class();
+        $class = str_replace('\\', '/', $class);
         $class = basename($class);
         $class = substr($class, 0, -5);
         $class = preg_replace("/(?=[A-Z])/","_\$1",$class);
