@@ -16,6 +16,7 @@ class SiteController extends BaseController {
      * 控制器初始化
      */
     protected function initialize(){
+        
         //设置手机版参数
         if(MOBILE){
             config('tpl_name' , config('mobile_tpl'));

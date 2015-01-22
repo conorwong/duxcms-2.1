@@ -18,12 +18,15 @@ class BaseController extends \framework\base\Controller{
         define('__PUBLIC__', substr(PUBLIC_URL, 0, -1));
         define('__ROOT__', substr(ROOT_URL, 0, -1));
 
+        //处理安装状态
+        if (!defined('INSTALL')) {
+            return;
+        }
+
         //判断安装程序
-        if(APP_NAME <> 'base'){
-            $lock = ROOT_PATH . 'install.lock';
-            if(!is_file($lock)){
-                $this->redirect(url('install/Index/index'));
-            }
+        $lock = ROOT_PATH . 'install.lock';
+        if(!is_file($lock)){
+            $this->redirect(url('install/Index/index'));
         }
         //引入扩展函数
         require_once(APP_PATH . 'base/util/Function.php');
