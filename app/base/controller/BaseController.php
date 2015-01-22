@@ -19,7 +19,7 @@ class BaseController extends \framework\base\Controller{
         define('__ROOT__', substr(ROOT_URL, 0, -1));
 
         //处理安装状态
-        if (!defined('INSTALL')) {
+        if (defined('INSTALL')) {
             return;
         }
 
