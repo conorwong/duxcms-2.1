@@ -93,7 +93,7 @@ class AdminController extends BaseController {
         $this->assign('self',__SELF__);
         $common = $this->display('app/admin/view/common',true);
         $tplArray = get_method_array($tpl);
-        $tpl = 'app/'. $tplArray['app'] . '/view/' . $tplArray['controller'] . '/' . $tplArray['action'];
+        $tpl = 'app/'. strtolower($tplArray['app']) . '/view/' . strtolower($tplArray['controller']) . '/' . strtolower($tplArray['action']);
         $html = $this->display($tpl,true);
         echo str_replace('<!--common-->', $html, $common);
         

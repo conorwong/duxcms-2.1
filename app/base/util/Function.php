@@ -198,12 +198,13 @@ function get_config_file($file){
 				$name = $str[1];
 				break;
 		}
+        $app = strtolower($app);
 		if(empty($app)&&empty($file)){
 			throw new \Exception("Config '{$file}' not found'", 500);
 		}
 		$file = APP_PATH . "{$app}/conf/{$name}.php";
 		if(!file_exists($file)){
-			throw new \Exception("Config '{$name}' not found", 500);
+			throw new \Exception("Config '{$file}' not found", 500);
 		}
 	}
 	return $file;
@@ -274,7 +275,7 @@ function target($str , $layer = 'model'){
 function get_all_service($name,$method,$vars=array()){
 
     if(empty($name))return null;
-    $apiPath = APP_PATH.'*/Service/'.$name.'Service.php';
+    $apiPath = APP_PATH.'*/service/'.$name.'Service.php';
     $apiList = glob($apiPath);
     if(empty($apiList)){
         return;

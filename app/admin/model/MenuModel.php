@@ -11,6 +11,7 @@ class MenuModel {
         if(!empty($loginUserInfo)){
             $menuPurview = unserialize($loginUserInfo['menu_purview']);
         }
+        $list = array();
 		$list = get_all_service('Menu','Admin');
 		//合并菜单
         foreach ($list as $value) {
