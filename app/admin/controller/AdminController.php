@@ -107,6 +107,9 @@ class AdminController extends BaseController {
           <li><a href="'.$this->createPageUrl($map,$pageArray['firstPage']).'">首页</a></li>
           <li><a href="'.$this->createPageUrl($map,$pageArray['prevPage']).'">上一页</a></li> ';
             foreach ($pageArray['allPages'] as $value) {
+                if($value == 0){
+                    continue;
+                }
                 if($value == $pageArray['page']){
                     $html .= '<li class="active">';
                 }else{

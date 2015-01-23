@@ -76,6 +76,9 @@ class SiteController extends BaseController {
           <a class="first-page" href="'.$this->createPageUrl($map,$pageArray['firstPage']).'">首页</a>
           <a class="prev-page" href="'.$this->createPageUrl($map,$pageArray['prevPage']).'">上一页</a> ';
             foreach ($pageArray['allPages'] as $value) {
+                if($value == 0){
+                    continue;
+                }
                 if($value == $pageArray['page']){
                     $html .= '<a class="num-page active-page"';
                 }else{

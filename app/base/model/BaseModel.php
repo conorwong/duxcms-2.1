@@ -340,7 +340,7 @@ class BaseModel extends \framework\base\Model{
      * 设置分页
      */
     public function page($pageSize = 10, $scope = 10){
-        return $this->pager(request('request.page'),$pageSize);
+        return $this->pager(request('request.page'),$pageSize,$scope);
     }
 
     /**

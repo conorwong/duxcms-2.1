@@ -290,7 +290,7 @@ class ContentModel extends BaseModel {
             $where[] = 'A.content_id <> '.$contentId;
         }
         $where['urltitle'] = $urlTitle;
-        $info = $this->getWhereInfo($where); 
+        $info = $this->getWhereInfo($where);
         if (empty($info))
         {
             return $urlTitle;
