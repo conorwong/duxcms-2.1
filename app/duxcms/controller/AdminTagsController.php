@@ -33,9 +33,8 @@ class AdminTagsController extends AdminController {
         $pageMaps['keyword'] = $keyword;
         $where = array();
         //查询数据
-        $count = target('Tags')->countList($where);
-        $limit = $this->getPageLimit($count,20);
-        $list = target('Tags')->loadList($where,$limit);
+        $list = target('Tags')->page(20)->loadList($where,$limit);
+        $this->pager = target('Tags')->pager;
         $breadCrumb = array('标签列表'=>url());
         $this->assign('breadCrumb',$breadCrumb);
         $this->assign('list',$list);

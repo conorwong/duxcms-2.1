@@ -41,10 +41,9 @@ class FormController extends SiteController {
         if(!empty($formInfo['list_where'])){
             $where[] = $formInfo['list_where'];
         }
-        $count = $model->countList($where);
-        $limit = $this->getPageLimit($count,$listRows);
         //查询内容
-        $list = $model->loadList($where,$limit,$formInfo['list_order']);
+        $list = $model->page($listRows)->loadList($where,$limit,$formInfo['list_order']);
+        $this->pager = $model->pager;
         //字段列表
         $where = array();
         $where['A.fieldset_id'] = $formInfo['fieldset_id'];

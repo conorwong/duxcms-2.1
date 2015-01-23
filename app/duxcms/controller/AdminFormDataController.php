@@ -68,9 +68,8 @@ class AdminFormDataController extends AdminController {
         $model = target('duxcms/FieldData');
         $model->setTable('ext_'.$this->formInfo['table']);
         //查询数据
-        $count = $model->countList($searchWhere);
-        $limit = $this->getPageLimit($count,20);
-        $list = $model->loadList($searchWhere,$limit);
+        $list = $model->page(20)->loadList($searchWhere,$limit);
+        $this->pager = $model->pager;
         //URL参数
         $pageMaps = array();
         $pageMaps['fieldset_id'] = $fieldset_id;

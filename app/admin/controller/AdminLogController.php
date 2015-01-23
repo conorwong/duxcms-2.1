@@ -37,9 +37,8 @@ class AdminLogController extends AdminController {
         $pageMaps = array();
         $pageMaps['keyword'] = $keyword;
         //查询数据
-        $count = target('AdminLog')->countList($where);
-        $limit = $this->getPageLimit($count,20);
-        $list = target('AdminLog')->loadList($where,$limit);
+        $list = target('AdminLog')->page(20)->loadList($where,$limit);
+        $this->pager = target('AdminLog')->pager;
         //位置导航
         $breadCrumb = array('安全记录'=>url());
         //模板传值

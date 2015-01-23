@@ -68,9 +68,8 @@ class AdminContentController extends AdminController {
         $pageMaps['class_id'] = $classId;
         $pageMaps['position_id'] = $positionId;
         //查询数据
-        $count = target('ContentArticle')->countList($where);
-        $limit = $this->getPageLimit($count,30);
-        $list = target('ContentArticle')->loadList($where,$limit);
+        $list = target('ContentArticle')->page(30)->loadList($where,$limit);
+        $this->pager = target('ContentArticle')->pager;
         //位置导航
         $breadCrumb = array('文章列表'=>url());
         //模板传值

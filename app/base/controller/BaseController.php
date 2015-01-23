@@ -150,41 +150,13 @@ class BaseController extends \framework\base\Controller{
         $this->error('通讯发生错误，请稍后刷新后尝试！');
     }
 
-    /**
-     * 获取分页数量
-     * @param int $count 数据总数
-     * @param int $num 每页数量
-     */
-    protected function getPageLimit($count, $num = 10)
-    {
-        //生成当前URL
-        $url = url(APP_NAME.'/'.CONTROLLER_NAME.'/'.ACTION_NAME, array('page' => '{page}'));
-        $url = urldecode($url);
-        $page = is_object($this->pager['obj']) ? $this->pager['obj'] : new \framework\ext\Page();
-        $cur_page = $page->getCurPage($url);
-        $limit_start = ($cur_page - 1) * $num;
-        $limit = ($limit_start . ',') . $num;
-        $this->pager = array(
-            'obj' => $page,
-            'url' => $url,
-            'num' => $num,
-            'count' => $count,
-            'cur_page' => $cur_page,
-            'limit' => $limit
-        );
-        return $limit;
+    //生成分页URL
+    protected function createPageUrl($paramer = array(),$page = 1){
+        $paramer = array_merge($paramer,array('page' => $page));
+        $paramer = array_filter($paramer);
+        return url(APP_NAME.'/'.CONTROLLER_NAME.'/'.ACTION_NAME, $paramer);
     }
 
-    //分页结果显示
-    protected function getPageShow($map = array())
-    {
-        $map = array_filter($map);
-        $url = url(APP_NAME.'/'.CONTROLLER_NAME.'/'.ACTION_NAME, array_merge((array)$map,array('page' => '{page}')));
-        $url = urldecode($url);
-        $page = $this->pager['obj']->show($url, $this->pager['count'], $this->pager['num']);
-        $page = '<div class="dux-page">'.$page.'</div>';
-        return $page;
-    }
 
     protected function setPageConfig($name , $value) {
         $this->pager->set($name , $value);

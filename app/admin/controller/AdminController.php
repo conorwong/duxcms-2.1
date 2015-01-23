@@ -96,7 +96,28 @@ class AdminController extends BaseController {
         $tpl = 'app/'. strtolower($tplArray['app']) . '/view/' . strtolower($tplArray['controller']) . '/' . strtolower($tplArray['action']);
         $html = $this->display($tpl,true);
         echo str_replace('<!--common-->', $html, $common);
-        
-        
+    }
+
+    //分页结果显示
+    protected function getPageShow($map = array())
+    {
+        $pageArray = $this->pager;
+        $html = '
+        <ul class="pagination pagination-small">
+          <li><a href="'.$this->createPageUrl($map,$pageArray['firstPage']).'">首页</a></li>
+          <li><a href="'.$this->createPageUrl($map,$pageArray['prevPage']).'">上一页</a></li> ';
+            foreach ($pageArray['allPages'] as $value) {
+                if($value == $pageArray['page']){
+                    $html .= '<li class="active">';
+                }else{
+                    $html .= '<li>';
+                }
+                $html .= '<a href="'.$this->createPageUrl($map,$value).'">'.$value.'</a></li> ';
+           }
+         $html .= '<li><a href="'.$this->createPageUrl($map,$pageArray['nextPage']).'">下一页</a></li>
+          <li><a href="'.$this->createPageUrl($map,$pageArray['lastPage']).'">末页</a></li>
+        </ul>';
+        return $html;
+
     }
 }

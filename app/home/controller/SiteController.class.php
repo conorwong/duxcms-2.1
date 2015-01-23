@@ -66,4 +66,27 @@ class SiteController extends BaseController {
             'description'=>$description,
         );
     }
+
+    //分页结果显示
+    protected function getPageShow($map = array())
+    {
+        $pageArray = $this->pager;
+        $html = '
+        <div class="dux-page">
+          <a class="first-page" href="'.$this->createPageUrl($map,$pageArray['firstPage']).'">首页</a>
+          <a class="prev-page" href="'.$this->createPageUrl($map,$pageArray['prevPage']).'">上一页</a> ';
+            foreach ($pageArray['allPages'] as $value) {
+                if($value == $pageArray['page']){
+                    $html .= '<a class="num-page active-page"';
+                }else{
+                    $html .= '<a class="num-page"';
+                }
+                $html .= ' href="'.$this->createPageUrl($map,$value).'">'.$value.'</a>';
+           }
+         $html .= '<a class="next-page" href="'.$this->createPageUrl($map,$pageArray['nextPage']).'">下一页</a>
+          <a class="last-page" href="'.$this->createPageUrl($map,$pageArray['lastPage']).'">末页</a>
+        </div>';
+        return $html;
+
+    }
 }

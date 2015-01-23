@@ -57,13 +57,12 @@ class CategoryController extends SiteController {
         }
         //查询内容数据
         $modelContent = target('ContentArticle');
-        $count = $modelContent->countList($where);
-        $limit = $this->getPageLimit($count,$listRows);
         if(!empty($categoryInfo['content_order'])){
 
             $categoryInfo['content_order'] = $categoryInfo['content_order'].',';
         }
-        $pageList = $modelContent->loadList($where,$limit,$categoryInfo['content_order'].'A.time desc,A.content_id desc',$categoryInfo['fieldset_id']);
+        $pageList = $modelContent->page($listRows)->loadList($where,$limit,$categoryInfo['content_order'].'A.time desc,A.content_id desc',$categoryInfo['fieldset_id']);
+        $this->pager = $modelContent->pager;
         //URL参数
         $pageMaps = array();
         $pageMaps['class_id'] = $classId;
@@ -82,7 +81,6 @@ class CategoryController extends SiteController {
         $this->assign('topCategoryInfo', $topCategoryInfo);
         $this->assign('crumb', $crumb);
         $this->assign('pageList', $pageList);
-        $this->assign('count', $count);
         $this->assign('page', $page);
         $this->assign('media', $media);
         $this->assign('pageMaps', $pageMaps);

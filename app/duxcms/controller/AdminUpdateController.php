@@ -7,7 +7,7 @@ use app\admin\controller\AdminController;
 
 class AdminUpdateController extends AdminController {
 
-    public $domain = 'http://www.duxcms.com/index.php?s=/';
+    public $domain = 'http://www.duxcms.com/index.php?r=/';
     /**
      * 当前模块参数
      */

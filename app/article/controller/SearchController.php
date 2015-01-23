@@ -52,9 +52,8 @@ class SearchController extends SiteController {
                     break;
             }
         }
-        $count = target('ContentArticle')->countList($where);
-        $limit = $this->getPageLimit($count,$listRows);
-        $pageList = target('ContentArticle')->loadList($where, $limit);
+        $pageList = target('ContentArticle')->page($listRows)->loadList($where, $limit);
+        $this->pager = target('ContentArticle')->pager;
         $list=array();
         if(!empty($pageList)){
             foreach ($pageList as $key=>$value) {
@@ -73,7 +72,7 @@ class SearchController extends SiteController {
         $this->assign('crumb',$crumb);
         $this->assign('media', $media);
         $this->assign('pageList',$list);
-        $this->assign('page',$this->getPageShow());
+        $this->assign('page',$page);
         $this->assign('count', $count);
         $this->assign('keyword', $keyword);
          $this->siteDisplay(config('tpl_search').'_article');

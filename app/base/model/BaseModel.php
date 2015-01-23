@@ -54,6 +54,16 @@ class BaseModel extends \framework\base\Model{
             $this->error = 'Insert data not found';
             return false;
         }
+        //获取限制字段
+        if(!empty($this->intoData)){
+            $newData = array();
+            foreach ($this->intoData as $value) {
+                if(isset($data[$value])){
+                    $newData[$value] = $data[$value];
+                }
+            }
+            $data = $newData;
+        }
         //获取验证
         if(!$time){
             if(empty($this->primary)||empty($data[$this->primary])){
@@ -71,6 +81,18 @@ class BaseModel extends \framework\base\Model{
             return false;
         }
         return $this->data;
+    }
+
+    /**
+     * 规定写入字段
+     */
+    public function into($field){
+        if(empty($field)){
+            $this->intoData = array();
+            return $this;
+        }
+        $this->intoData = explode(',', $field);
+        return $this;
     }
 
     /**
@@ -312,6 +334,13 @@ class BaseModel extends \framework\base\Model{
             $num = 0;
         }
         return $num;
+    }
+
+    /**
+     * 设置分页
+     */
+    public function page($pageSize = 10, $scope = 10){
+        return $this->pager(request('request.page'),$pageSize);
     }
 
     /**

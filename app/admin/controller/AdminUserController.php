@@ -49,9 +49,8 @@ class AdminUserController extends AdminController {
         $pageMaps['keyword'] = $keyword;
         $pageMaps['group_id'] = $groupId;
         //查询数据
-        $count = target('AdminUser')->countList($where);
-        $limit = $this->getPageLimit($count,20);
-        $list = target('AdminUser')->loadList($where,$limit);
+        $list = target('AdminUser')->page(20)->loadList($where,$limit);
+        $this->pager = target('AdminUser')->pager;
         //位置导航
         $breadCrumb = array('用户列表'=>url());
         //模板传值

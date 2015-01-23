@@ -30,9 +30,8 @@ class TagsContentController extends SiteController {
         //查询数据
         $where = array();
         $where['B.tag_id'] = $tagInfo['tag_id'];
-        $count = target('TagsHas')->countContentList($where);
-        $limit = $this->getPageLimit($count,20);
-        $list = target('TagsHas')->loadContentList($where,$limit);
+        $list = target('TagsHas')->page(20)->loadContentList($where,$limit);
+        $this->pager = target('TagsHas')->pager;
         if(!empty($list)){
             $data=array();
             foreach ($list as $key => $value) {

@@ -372,7 +372,7 @@ function array_order($array, $key, $type = 'asc', $reset = false)
  * @param string $value
  * @return  string
  */
-function session($name='',$value='') {
+function session($name='',$value = '') {
 	if(empty($name)){
 		return $_SESSION;
 	}
@@ -384,12 +384,32 @@ function session($name='',$value='') {
         session_start();
     }
 	$pre = config('COOKIE_PREFIX');
-	if(empty($value)){
+	if($value === ''){
 		$session = $_SESSION[$pre . $name];
 	}else{
 		$session = $_SESSION[$pre . $name] = $value;
 	}
 	return $session;
+}
+
+/**
+ * cookie获取
+ * @param string $name
+ * @param string $value
+ * @param int $time 小时时间
+ * @return  string
+ */
+function cookie($name='',$value='',$time = 1) {
+    if(empty($name)){
+        return $_COOKIE;
+    }
+    $pre = config('COOKIE_PREFIX');
+    if($value === ''){
+        $cookie = $_COOKIE[$pre . $name];
+    }else{
+        $cookie = setcookie($pre . $name, $value, time()+3600*$time, '/');
+    }
+    return $cookie;
 }
 
 /**

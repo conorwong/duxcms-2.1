@@ -1,4 +1,4 @@
-<?php
+<?php	
 if( !defined('ROOT_PATH') ) define('ROOT_PATH', realpath('./').DIRECTORY_SEPARATOR);
 if( !defined('BASE_PATH') ) define('BASE_PATH', realpath('./').DIRECTORY_SEPARATOR);
 if( !defined('CONFIG_PATH') ) define('CONFIG_PATH', BASE_PATH.'data/config/');
@@ -36,7 +36,6 @@ function obj($class, $app='', $args=array(), $file='', $forceInstance=false){
 		"", //global
 		"\\app\\{$app}\\model",
 		"\\app\\{$app}\\lib",
-		"\\app\\{$app}\\controller",
 		"\\framework\\ext",
 		"\\framework\\base",
 	);
