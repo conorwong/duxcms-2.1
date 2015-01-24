@@ -10,7 +10,7 @@ class SearchController extends SiteController {
      * 搜索结果
      */
     public function index() {
-        $keyword = request('get.keyword');
+        $keyword = request('request.keyword');
         //解析关键词
         $keyword = len($keyword,0,20);
         $keywords = preg_replace ('/\s+/',' ',$keyword); 
@@ -21,19 +21,19 @@ class SearchController extends SiteController {
         $where = array();
         $where['A.status'] = 1;
         //获取栏目ID
-        $classId = request('get.class_id',0,'intval');
+        $classId = request('request.class_id',0,'intval');
         if($classId){
             $where[] = 'C.class_id in ('.$classId.')';
         }
         //获取搜索类型
-        $model=request('get.model',0,'intval');
+        $model=request('request.model',0,'intval');
         //URL参数
         $pageMaps = array();
         $pageMaps['keyword'] = $keyword;
         $pageMaps['class_id'] = $classId;
         $pageMaps['model'] = $model;
         //分页参数
-        $size = request('get.pageNum',0,'intval');
+        $size = request('request.pageNum',0,'intval');
         if (empty($size)) {
             $listRows = 20;
         } else {
