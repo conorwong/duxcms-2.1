@@ -218,30 +218,31 @@ function get_config_file($file){
  */
 function match_url($str,$params = array(), $mustParams = array()){
     $newParams = array();
+    $keyArray = array_keys($params);
     if(config('REWRITE_ON')){
         //获取规则文件
         $config = config('REWRITE_RULE');
         $configArray = array_flip($config);
         $route = $configArray[$str];
-        if(empty($config)||empty($route)){
-            return url($str, $params);
-        }
-        preg_match_all('/<(\w+)>/', $route, $matches);
-        foreach ($matches[1] as $value) {
-            if($params[$value]){
-                $newParams[$value] = $params[$value];
+        if($route){
+            preg_match_all('/<(\w+)>/', $route, $matches);
+            foreach ($matches[1] as $value) {
+                if($params[$value]){
+                    $newParams[$value] = $params[$value];
+                }
+            }
+        }else{
+            if(!empty($keyArray)){
+                $newParams[$keyArray[0]] = current($params);
             }
         }
     }else{
-        //获取第一个参数
-        foreach ($params as $key => $value) {
-            $newParams[$key] = $value;
-            break;
+        if(!empty($keyArray)){
+            $newParams[$keyArray[0]] = current($params);
         }
     }
     $newParams = array_merge((array)$newParams,(array)$mustParams);
     $newParams = array_filter($newParams);
-    $newParams = array_flip(array_flip($newParams));
     return url($str, $newParams);
 }
 
