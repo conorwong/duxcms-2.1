@@ -22,7 +22,7 @@ class FileModel extends BaseModel {
         if(empty($config)){
             $config = target('admin/ConfigUpload')->getInfo(1);
         }
-        $path = 'uploads/'.date('Y-m-d') . '/';
+        $path = 'upload/'.date('Y-m-d') . '/';
         //上传
         $upload = new \framework\ext\UploadFile();
         $upload->savePath = ROOT_PATH.$path;
