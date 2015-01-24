@@ -46,12 +46,15 @@ class TagsContentController extends SiteController {
             array('name'=>'标签列表','url'=>url('duxcms/Tags/index')),
             array('name'=>$tagInfo['name'],'url'=>url('duxcms/TagsContent/index',array('name'=>$tagInfo['name']))),
             );
+        //URL参数
+        $pageMaps = array();
+        $pageMaps['name'] = $tag;
         //MEDIA信息
         $media = $this->getMedia($formInfo['name']);
         $this->assign('crumb',$crumb);
         $this->assign('media', $media);
         $this->assign('pageList',$data);
-        $this->assign('page',$this->getPageShow());
+        $this->assign('page',$this->getPageShow($pageMaps));
         $this->assign('count', $count);
         $this->siteDisplay(config('tpl_tags').'_content');
     }

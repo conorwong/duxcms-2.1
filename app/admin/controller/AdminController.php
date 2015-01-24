@@ -99,13 +99,13 @@ class AdminController extends BaseController {
     }
 
     //分页结果显示
-    protected function getPageShow($map = array())
+    protected function getPageShow($map = array(), $mustParams = array())
     {
         $pageArray = $this->pager;
         $html = '
         <ul class="pagination pagination-small">
-          <li><a href="'.$this->createPageUrl($map,$pageArray['firstPage']).'">首页</a></li>
-          <li><a href="'.$this->createPageUrl($map,$pageArray['prevPage']).'">上一页</a></li> ';
+          <li><a href="'.$this->createPageUrl($map,$mustParams,$pageArray['firstPage']).'">首页</a></li>
+          <li><a href="'.$this->createPageUrl($map,$mustParams,$pageArray['prevPage']).'">上一页</a></li> ';
             foreach ($pageArray['allPages'] as $value) {
                 if($value == 0){
                     continue;
@@ -115,10 +115,10 @@ class AdminController extends BaseController {
                 }else{
                     $html .= '<li>';
                 }
-                $html .= '<a href="'.$this->createPageUrl($map,$value).'">'.$value.'</a></li> ';
+                $html .= '<a href="'.$this->createPageUrl($map,$mustParams,$value).'">'.$value.'</a></li> ';
            }
-         $html .= '<li><a href="'.$this->createPageUrl($map,$pageArray['nextPage']).'">下一页</a></li>
-          <li><a href="'.$this->createPageUrl($map,$pageArray['lastPage']).'">末页</a></li>
+         $html .= '<li><a href="'.$this->createPageUrl($map,$mustParams,$pageArray['nextPage']).'">下一页</a></li>
+          <li><a href="'.$this->createPageUrl($map,$mustParams,$pageArray['lastPage']).'">末页</a></li>
         </ul>';
         return $html;
 

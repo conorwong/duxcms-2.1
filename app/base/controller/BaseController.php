@@ -151,12 +151,13 @@ class BaseController extends \framework\base\Controller{
     }
 
     //生成分页URL
-    protected function createPageUrl($paramer = array(),$page = 1){
-        $paramer = array_merge($paramer,array('page' => $page));
+    protected function createPageUrl($paramer = array(),$mustParams = array(),$page = 1){
         $paramer = array_filter($paramer);
-        return url(APP_NAME.'/'.CONTROLLER_NAME.'/'.ACTION_NAME, $paramer);
+        $paramer = array_flip(array_flip($paramer));
+        $dir = APP_NAME.'/'.CONTROLLER_NAME.'/'.ACTION_NAME;
+        $mustParams['page'] = $page;
+        return match_url($dir, $paramer, $mustParams);
     }
-
 
     protected function setPageConfig($name , $value) {
         $this->pager->set($name , $value);

@@ -212,24 +212,36 @@ function get_config_file($file){
 /**
  * 自适应URL规则
  * @param string $str URL路径
- * @param string $params 内容数组
+ * @param string $params 自动解析参数
+ * @param string $mustParams 必要参数
  * @return url
  */
-function match_url($str,$params = array()){
+function match_url($str,$params = array(), $mustParams = array()){
     $newParams = array();
-    //获取规则文件
-    $config = config('REWRITE_RULE');
-    $configArray = array_flip($config);
-    $route = $configArray[$str];
-    if(empty($config)||empty($route)){
-        return url($str, $params);
-    }
-    preg_match_all('/<(\w+)>/', $route, $matches);
-    foreach ($matches[1] as $value) {
-        if($params[$value]){
-            $newParams[$value] = $params[$value];
+    if(config('REWRITE_ON')){
+        //获取规则文件
+        $config = config('REWRITE_RULE');
+        $configArray = array_flip($config);
+        $route = $configArray[$str];
+        if(empty($config)||empty($route)){
+            return url($str, $params);
+        }
+        preg_match_all('/<(\w+)>/', $route, $matches);
+        foreach ($matches[1] as $value) {
+            if($params[$value]){
+                $newParams[$value] = $params[$value];
+            }
+        }
+    }else{
+        //获取第一个参数
+        foreach ($params as $key => $value) {
+            $newParams[$key] = $value;
+            break;
         }
     }
+    $newParams = array_merge((array)$newParams,(array)$mustParams);
+    $newParams = array_filter($newParams);
+    $newParams = array_flip(array_flip($newParams));
     return url($str, $newParams);
 }
 

@@ -250,11 +250,7 @@ class CategoryModel extends BaseModel {
      */
     public function getUrl($info)
     {
-        if(config('REWRITE_ON')){
-            return match_url(strtolower($info['app']).'/Category/index',array('class_id'=>$info['class_id'],'urlname'=>$info['urlname']));
-        }else{
-            return url(strtolower($info['app']).'/Category/index',array('class_id'=>$info['class_id']));
-        }
+        return match_url(strtolower($info['app']).'/Category/index',array('class_id'=>$info['class_id'],'urlname'=>$info['urlname']));
     }
 
 }
