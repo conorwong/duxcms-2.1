@@ -161,8 +161,7 @@ class FieldModel extends BaseModel {
         $map = array();
         $map['fieldset_id'] = $fieldsetId;
         if($fieldId){
-            $map[] = array('field_id <> :field_id');
-            $map[':field_id'] = $fieldId;
+            $map[] = 'field_id <> '.$fieldId;
         }
         $map['field'] = $field;
         $info = $this->getWhereInfo($map);
