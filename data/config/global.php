@@ -1,6 +1,6 @@
 <?php
 $dir = dirname(__FILE__);
-$files = array('performance.php','rewrite.php','ver.php');
+$files = array('performance.php','rewrite.php','upload.php','ver.php');
 $db = include $dir.'/db.php';
 $config = array (
 	//默认模块
