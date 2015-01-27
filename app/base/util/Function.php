@@ -2,56 +2,49 @@
 /**
  * 获取request请求方法
  */
-function request($str = null, $default = null, $function = '') {
-	if(empty($str)){
-		return ;
-	}
-	$str = trim($str);
-	list($method,$name) = explode('.',$str,2);
-	$method = strtolower($method);
-	switch ($method) {
-		case 'get':
-			$type = $_GET;
-			break;
-		case 'post':
-			$type = $_POST;
-			break;
-		case 'session':
-			$type = $_SESSION;
-			break;
-		case 'request':
-			$type = $_REQUEST;
-			break;
-		case 'cookie':
-			$type = $_COOKIE;
-			break;
-		default:
-            return ;
-	}
-	if(empty($name)){
-		$request = $type;
-	}else{
-        switch ($method) {
-            case 'get':
-                $request = urldecode($type[$name]);
-                break;
-            default:
-                $request = $type[$name];
-                break;
+function request($str, $default = null, $function = null) {
+    $str = trim($str);
+    list($method,$name) = explode('.',$str,2);
+    $method = strtoupper($method);
+    switch ($method) {
+        case 'POST':
+            $type = $_POST;
+            break;
+        case 'SESSION':
+            $type = $_SESSION;
+            break;
+        case 'REQUEST':
+            $type = $_REQUEST;
+            break;
+        case 'COOKIE':
+            $type = $_COOKIE;
+            break;
+        case 'GET':
+        default:
+            $type = $_GET;
+            break;
+    }
+    if(empty($name)){
+        $request = filter_string($type);
+    }else{
+        if($method == 'GET'){
+            $request = urldecode($type[$name]);
+        }else{
+            $request = $type[$name];
         }
-	}
-	$request = filter_string($request);
-	if(!empty($name)){
-		if(!empty($default)){
-			if(empty($request)){
-				$request = $default;
-			}
-		}
-		if(!empty($function)){
-			$request = call_user_func($function,$request);
-		}
-	}
-	return $request;
+        $request = filter_string($request);
+        //设置默认值
+        if($default){
+            if(empty($request)){
+                $request = $default;
+            }
+        }
+        //设置处理函数
+        if($function){
+            $request = call_user_func($function,$request);
+        }
+    }
+    return $request;
 }
 /**
  * 过滤数据
