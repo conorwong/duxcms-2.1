@@ -72,7 +72,7 @@ class AdminFormDataController extends AdminController {
         $this->pager = $model->pager;
         //URL参数
         $pageMaps = array();
-        $pageMaps['fieldset_id'] = $fieldset_id;
+        $pageMaps['fieldset_id'] = $this->formInfo['fieldset_id'];
         $pageMaps['keyword'] = $keyword;
         //面包屑
         $breadCrumb = array($this->formInfo['name'].'列表' => url('index',array('fieldset_id' => $this->formInfo['fieldset_id'])));

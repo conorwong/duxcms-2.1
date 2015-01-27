@@ -10,6 +10,8 @@ class BaseController extends \framework\base\Controller{
     	//定义常量
     	define('APP_PATH', ROOT_PATH . 'app' . DIRECTORY_SEPARATOR);
         define('DATA_PATH', ROOT_PATH . 'data' . DIRECTORY_SEPARATOR);
+        define('UPLOAD_NAME', 'upload');
+        define('THEME_NAME', 'themes');
         define('NOW_TIME',      $_SERVER['REQUEST_TIME']);
         define('REQUEST_METHOD',$_SERVER['REQUEST_METHOD']);
         define('IS_GET',        REQUEST_METHOD =='GET' ? true : false);

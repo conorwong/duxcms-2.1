@@ -1,25 +1,16 @@
-<form method="post" class="form-x dux-form form-auto" id="form" action="{url()}">
+<form method="post" class="form-x dux-form form-auto" id="form" action="{url('upload')}">
     <div class="panel dux-box  active">
         <div class="panel-head">
-            <strong>{$name}配置</strong>
+            <strong>上传设置</strong>
         </div>
         <div class="panel-body">
-           <div class="form-group">
-                <div class="label">
-                    <label for="sitename">配置名称</label>
-                </div>
-                <div class="field">
-                    <input type="text" class="input" id="name" name="name" size="60" datatype="s" value="{$info.name}">
-                    <div class="input-note">备注名称</div>
-                </div>
-            </div>
             <div class="form-group">
                 <div class="label">
                     <label for="sitename">最大文件大小</label>
                 </div>
                 <div class="field">
-                    <input type="text" class="input" id="upload_size" name="upload_size" size="60" datatype="n" value="{default_data($info['upload_size'],10)}">
-                    <div class="input-note">单位：M</div>
+                    <input type="text" class="input" id="UPLOAD_SIZE" name="UPLOAD_SIZE" size="60" datatype="n" value="{$info['UPLOAD_SIZE']}">
+                    <div class="input-note">单位：M，该设置为程序限制，最大上传具体为服务器限制</div>
                 </div>
             </div>
             <div class="form-group">
@@ -27,31 +18,9 @@
                     <label for="sitename">上传文件格式</label>
                 </div>
                 <div class="field">
-                    <input type="text" class="input" id="upload_exts" name="upload_exts" size="60"  datatype="*" value="{default_data($info['upload_exts'],'jpg,gif,bmp,png')}">
-                    <div class="input-note">用英文逗号分割</div>
+                    <input type="text" class="input" id="UPLOAD_EXTS" name="UPLOAD_EXTS" size="60"  datatype="*" value="{$info['UPLOAD_EXTS']}">
+                    <div class="input-note">用英文逗号分割，部分格式如无法上传请检查服务器</div>
                 </div>
-            </div>
-            <div class="form-group">
-                <div class="label">
-                    <label for="sitename">覆盖同名文件</label>
-                </div>
-                <div class="field">
-                        <div class="button-group button-group-small radio">
-                            <!--if{$info['upload_replace']}-->
-                            <label class="button active"><input name="upload_replace" value="1" checked="checked" type="radio">
-                            <!--{else}-->
-                            <label class="button"><input name="upload_replace" value="1" type="radio">
-                            <!--{/if}-->
-                            <span class="icon icon-check"></span> 开启</label>
-                            <!--if{!$info['upload_replace']}-->
-                            <label class="button active"><input name="upload_replace" checked="checked" value="0" type="radio">
-                            <!--{else}-->
-                            <label class="button"><input name="upload_replace" value="0" type="radio">
-                            <!--{/if}-->
-                            <span class="icon icon-times"></span> 关闭</label>
-                        </div>
-                        <div class="input-note">只对比文件名称</div>
-                    </div>
             </div>
             <div class="form-group">
                 <div class="label">
@@ -59,16 +28,16 @@
                 </div>
                 <div class="field">
                         <div class="button-group button-group-small radio">
-                            <!--if{$info['thumb_status']}-->
-                            <label class="button active"><input name="thumb_status" value="1" checked="checked" type="radio">
+                            <!--if{$info['THUMB_STATUS']}-->
+                            <label class="button active"><input name="THUMB_STATUS" value="1" checked="checked" type="radio">
                             <!--{else}-->
-                            <label class="button"><input name="thumb_status" value="1" type="radio">
+                            <label class="button"><input name="THUMB_STATUS" value="1" type="radio">
                             <!--{/if}-->
                             <span class="icon icon-check"></span> 开启</label>
-                            <!--if{!$info['thumb_status']}-->
-                            <label class="button active"><input name="thumb_status" checked="checked" value="0" type="radio">
+                            <!--if{!$info['THUMB_STATUS']}-->
+                            <label class="button active"><input name="THUMB_STATUS" checked="checked" value="0" type="radio">
                             <!--{else}-->
-                            <label class="button"><input name="thumb_status" value="0" type="radio">
+                            <label class="button"><input name="THUMB_STATUS" value="0" type="radio">
                             <!--{/if}-->
                             <span class="icon icon-times"></span> 关闭</label>
                         </div>
@@ -81,16 +50,16 @@
                 </div>
                 <div class="field">
                         <div class="button-group button-group-small radio">
-                            <!--if{$info['water_status']}-->
-                            <label class="button active"><input name="water_status" value="1" checked="checked" type="radio">
+                            <!--if{$info['WATER_STATUS']}-->
+                            <label class="button active"><input name="WATER_STATUS" value="1" checked="checked" type="radio">
                             <!--{else}-->
-                            <label class="button"><input name="water_status" value="1" type="radio">
+                            <label class="button"><input name="WATER_STATUS" value="1" type="radio">
                             <!--{/if}-->
                             <span class="icon icon-check"></span> 开启</label>
-                            <!--if{!$info['water_status']}-->
-                            <label class="button active"><input name="water_status" checked="checked" value="0" type="radio">
+                            <!--if{!$info['WATER_STATUS']}-->
+                            <label class="button active"><input name="WATER_STATUS" checked="checked" value="0" type="radio">
                             <!--{else}-->
-                            <label class="button"><input name="water_status" value="0" type="radio">
+                            <label class="button"><input name="WATER_STATUS" value="0" type="radio">
                             <!--{/if}-->
                             <span class="icon icon-times"></span> 关闭</label>
                         </div>
@@ -102,38 +71,38 @@
                     <label for="sitename">缩图方式</label>
                 </div>
                 <div class="field">
-                        <select class="input" name="thumb_type" id="thumb_type">
-                            <!--if{$info['thumb_type'] == 1}-->
+                        <select class="input" name="THUMB_TYPE" id="THUMB_TYPE">
+                            <!--if{$info['THUMB_TYPE'] == 1}-->
                             <option value="1" selected>
                             <!--{else}-->
                             <option value="1">
                             <!--{/if}-->
                             等比例缩放</option>
-                            <!--if{$info['thumb_type'] == 2}-->
+                            <!--if{$info['THUMB_TYPE'] == 2}-->
                             <option value="2" selected>
                             <!--{else}-->
                             <option value="2">
                             <!--{/if}-->
                             缩放后填充</option>
-                            <!--if{$info['thumb_type'] == 3}-->
+                            <!--if{$info['THUMB_TYPE'] == 3}-->
                             <option value="3" selected>
                             <!--{else}-->
                             <option value="3">
                             <!--{/if}-->
                             居中裁剪</option>
-                            <!--if{$info['thumb_type'] == 4}-->
+                            <!--if{$info['THUMB_TYPE'] == 4}-->
                             <option value="4" selected>
                             <!--{else}-->
                             <option value="4">
                             <!--{/if}-->
                             左上角裁剪</option>
-                            <!--if{$info['thumb_type'] == 5}-->
+                            <!--if{$info['THUMB_TYPE'] == 5}-->
                             <option value="5" selected>
                             <!--{else}-->
                             <option value="5">
                             <!--{/if}-->
                             右下角裁剪</option>
-                            <!--if{$info['thumb_type'] == 6}-->
+                            <!--if{$info['THUMB_TYPE'] == 6}-->
                             <option value="6" selected>
                             <!--{else}-->
                             <option value="6">
@@ -148,8 +117,8 @@
                     <label for="sitename">缩放宽度</label>
                 </div>
                 <div class="field">
-                    <input type="text" class="input" id="thumb_width" name="thumb_width" size="60" datatype="n" value="{default_data($info['thumb_width'],400)}">
-                    <div class="input-note">单位：M</div>
+                    <input type="text" class="input" id="THUMB_WIDTH" name="THUMB_WIDTH" size="60" datatype="n" value="{$info['THUMB_WIDTH']}">
+                    <div class="input-note">单位：像素</div>
                 </div>
             </div>
             <div class="form-group">
@@ -157,8 +126,8 @@
                     <label for="sitename">缩放高度</label>
                 </div>
                 <div class="field">
-                    <input type="text" class="input" id="thumb_height" name="thumb_height" size="60" datatype="n" value="{default_data($info['thumb_height'],400)}">
-                    <div class="input-note">单位：M</div>
+                    <input type="text" class="input" id="THUMB_HEIGHT" name="THUMB_HEIGHT" size="60" datatype="n" value="{$info['THUMB_HEIGHT']}">
+                    <div class="input-note">单位：像素</div>
                 </div>
             </div>
             <div class="form-group">
@@ -166,7 +135,7 @@
                     <label for="sitename">水印图片</label>
                 </div>
                 <div class="field">
-                    <input type="text" class="input" id="water_image" name="water_image" size="60" datatype="*" value="{default_data($info['water_image'],'logo.jpg')}">
+                    <input type="text" class="input" id="WATER_IMAGE" name="WATER_IMAGE" size="60" datatype="*" value="{$info['WATER_IMAGE']}">
                     <div class="input-note">位于public/watermark下的图片文件</div>
                 </div>
             </div>
@@ -175,56 +144,56 @@
                     <label for="sitename">水印位置</label>
                 </div>
                 <div class="field">
-                        <select class="input" name="water_position" id="water_position">
-                            <!--if{$info['water_position'] == 1}-->
+                        <select class="input" name="WATER_POSITION" id="WATER_POSITION">
+                            <!--if{$info['WATER_POSITION'] == 1}-->
                             <option value="1" selected>
                             <!--{else}-->
                             <option value="1">
                             <!--{/if}-->
                             左上角水印</option>
-                            <!--if{$info['water_position'] == 2}-->
+                            <!--if{$info['WATER_POSITION'] == 2}-->
                             <option value="2" selected>
                             <!--{else}-->
                             <option value="2">
                             <!--{/if}-->
                             上居中水印</option>
-                            <!--if{$info['water_position'] == 3}-->
+                            <!--if{$info['WATER_POSITION'] == 3}-->
                             <option value="3" selected>
                             <!--{else}-->
                             <option value="3">
                             <!--{/if}-->
                             右上角水印</option>
-                            <!--if{$info['water_position'] == 4}-->
+                            <!--if{$info['WATER_POSITION'] == 4}-->
                             <option value="4" selected>
                             <!--{else}-->
                             <option value="4">
                             <!--{/if}-->
                             左居中水印</option>
-                            <!--if{$info['water_position'] == 5}-->
+                            <!--if{$info['WATER_POSITION'] == 5}-->
                             <option value="5" selected>
                             <!--{else}-->
                             <option value="5">
                             <!--{/if}-->
                             居中水印</option>
-                            <!--if{$info['water_position'] == 6}-->
+                            <!--if{$info['WATER_POSITION'] == 6}-->
                             <option value="6" selected>
                             <!--{else}-->
                             <option value="6">
                             <!--{/if}-->
                             右居中水印</option>
-                            <!--if{$info['water_position'] == 7}-->
+                            <!--if{$info['WATER_POSITION'] == 7}-->
                             <option value="7" selected>
                             <!--{else}-->
                             <option value="7">
                             <!--{/if}-->
                             左下角水印</option>
-                            <!--if{$info['water_position'] == 8}-->
+                            <!--if{$info['WATER_POSITION'] == 8}-->
                             <option value="8" selected>
                             <!--{else}-->
                             <option value="8">
                             <!--{/if}-->
                             下居中水印</option>
-                            <!--if{$info['water_position'] == 9}-->
+                            <!--if{$info['WATER_POSITION'] == 9}-->
                             <option value="9" selected>
                             <!--{else}-->
                             <option value="9">
@@ -238,7 +207,6 @@
         <div class="panel-foot">
             <div class="form-button">
                 <div id="tips"></div>
-                <input type="hidden" name="id" type="hidden" value="{$info.id}">
                 <button class="button bg-main" type="submit">保存</button>
                 <button class="button bg" type="reset">重置</button>
             </div>
@@ -247,6 +215,6 @@
 </form>
 <script>
     Do.ready('base', function () {
-        $('#form').duxFormPage();
+        $('#form').duxForm();
     });
 </script>

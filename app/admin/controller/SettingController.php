@@ -36,6 +36,11 @@ class SettingController extends AdminController {
                         'name' => '性能设置',
                         'url' => url('Setting/performance'),
                         'icon' => 'dashboard',
+                    ),
+                    array(
+                        'name' => '上传设置',
+                        'url' => url('Setting/upload'),
+                        'icon' => 'upload',
                     )
                 )
         );
@@ -115,20 +120,20 @@ class SettingController extends AdminController {
         }
     }
     /**
-     * 安全设置
+     * 上传设置
      */
-    public function shield(){
-        $file = CONFIG_PATH . 'shield.php';
+    public function upload(){
+        $file = CONFIG_PATH . 'upload.php';
         if(!IS_POST){
-            $breadCrumb = array('安全设置'=>url());
+            $breadCrumb = array('上传设置'=>url());
             $this->assign('breadCrumb',$breadCrumb);
             $this->assign('info',load_config($file));
             $this->adminDisplay();
         }else{
             if(save_config($file, $_POST)){
-                $this->success('安全配置成功！');
+                $this->success('上传配置成功！');
             }else{
-                $this->error('安全配置失败');
+                $this->error('上传配置失败');
             }
         }
     }

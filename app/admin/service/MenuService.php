@@ -35,12 +35,6 @@ class MenuService{
                         'divider' => true,
                     ),
                     array(
-                        'name' => '上传配置',
-                        'icon' => 'upload',
-                        'url' => url('admin/AdminUploadSetting/index'),
-                        'order' => 1
-                    ),
-                    array(
                         'name' => '缓存管理',
                         'icon' => 'upload',
                         'url' => url('admin/Manage/cache'),

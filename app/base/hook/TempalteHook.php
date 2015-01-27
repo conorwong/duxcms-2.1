@@ -33,7 +33,7 @@ class TempalteHook{
 
         //引入页面标签
         $this->_template_preg[] = '/<!--#include\s*file=[\"|\'](.*)\.(html|htm)[\"|\']-->/';
-        $this->_template_replace[] = "<?php \$__Template->display(\"themes/".config('tpl_name')."/$1\"); ?>";
+        $this->_template_replace[] = "<?php \$__Template->display(\"".THEME_NAME.'/'.TPL_NAME."/$1\"); ?>";
 
         //替换图片CSS等路径
         $template = preg_replace_callback('/<(.*?)(src=|href=|value=|background=)[\"|\'](images\/|img\/|css\/|js\/|style\/)(.*?)[\"|\'](.*?)>/', array($this, 'parse_load'), $template);
@@ -54,7 +54,7 @@ class TempalteHook{
         $template = preg_replace_callback('/' . $this->__ltag . '(\w+){([^"].*)}' . $this->__rtag . '/i', array($this, 'parse_for'), $template);
 
         //替换常量
-        $template = str_replace('__TPL__', ROOT_URL . 'themes/'. config('tpl_name'), $template);
+        $template = str_replace('__TPL__', ROOT_URL . THEME_NAME.'/'.TPL_NAME, $template);
         $template = str_replace('__PUBLIC__', __PUBLIC__, $template);
         $template = str_replace('__ROOT__', __ROOT__, $template);
         return $template;
@@ -119,7 +119,7 @@ class TempalteHook{
      */
     private function parse_load($var) {
         $file = $var[3].$var[4];
-        $url = 'themes/'. config('tpl_name');
+        $url = THEME_NAME.'/'.TPL_NAME;
         if(substr($url, 0,1) == '.'){
             $url = substr($url, 1);
         }

@@ -9,22 +9,15 @@ class SiteController extends BaseController {
     public function __construct()
     {
         parent::__construct();
-        $this->initialize();
-    }
-
-    /**
-     * 控制器初始化
-     */
-    protected function initialize(){
-        
         //设置手机版参数
-        if(MOBILE){
+        if(isset($_GET['mobile']) || MOBILE){
             config('tpl_name' , config('mobile_tpl'));
         }
+        //设置常量
+        define('TPL_NAME', config('tpl_name'));
         //访问统计
         target('duxcms/TotalVisitor')->addData();
-        //蜘蛛爬行统计
-        target('duxcms/TotalSpider')->addData();
+        target('duxcms/TotalSpider')->addData(); 
     }
 
     /**
@@ -35,7 +28,7 @@ class SiteController extends BaseController {
      * @return void
      */
     protected function siteDisplay($name='',$type = true) {
-        $tpl = 'themes/'.config('tpl_name').'/'.$name;
+        $tpl = THEME_NAME . '/' . TPL_NAME . '/' . $name;
         if($type){
             $this->display($tpl);
         }else{

@@ -50,7 +50,7 @@ class ConfigModel extends BaseModel {
     public function tplList()
     {
         $config = $this->getInfo();
-        $tplDir=realpath('./themes/'.$config['tpl_name']);
+        $tplDir = ROOT_PATH . THEME_NAME . '/' . $config['tpl_name'];
         if(!is_dir($tplDir)){
             return false;
         }
@@ -73,7 +73,7 @@ class ConfigModel extends BaseModel {
      */
     public function themesList()
     {
-        $tplDir=realpath('./themes');
+        $tplDir = ROOT_PATH . THEME_NAME;
         if(!is_dir($tplDir)){
             return false;
         }
