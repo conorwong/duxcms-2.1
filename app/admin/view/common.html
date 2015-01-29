@@ -11,15 +11,22 @@
     <script src="__PUBLIC__/js/jquery.js"></script>
     <script src="__PUBLIC__/common/js/pintuer.js"></script>
     <script src="__PUBLIC__/common/js/respond.js"></script>
-    <script src="__PUBLIC__/admin/js/admin.js"></script>
     <script>
-    var baseDir='__PUBLIC__/js/';
-    var rootUrl="__ROOT__/";
-    var appUrl='{$_SERVER['PHP_SELF']}?r=';
-    var sessId='{session_id()}';
+    var duxConfig = {
+        //基础配置
+        'baseDir' : '__PUBLIC__/js/',
+        'baseUrl' : '__ROOT__/',
+        'uploadUrl' : "{$_SERVER['PHP_SELF']}?r=duxcms/AdminUpload/upload",
+        //自定义配置
+        'adminDir' : '__PUBLIC__/admin/js/',
+        'sessId'  : '{session_id()}',
+        'editorUploadUrl' : "{$_SERVER['PHP_SELF']}?r=duxcms/AdminUpload/editor",
+        };
     </script>
     <script src="__PUBLIC__/js/do.js"></script>
     <script src="__PUBLIC__/js/config.js"></script>
+    
+    <script src="__PUBLIC__/admin/js/definition.js"></script>
     <style>
         body {overflow-x:hidden; background-color: #eff3f6;}
     </style>
