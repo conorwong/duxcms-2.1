@@ -240,27 +240,6 @@
                             <div class="input-note">绑定后添加内容时可使用扩展字段</div>
                         </div>
                     </div>
-                    
-                    <div class="form-group">
-                        <div class="label">
-                            <label>绑定上传配置</label>
-                        </div>
-                        <div class="field">
-                            <select class="input" name="upload_config">
-                                <!--loop{$uploadList as $vo}-->
-                                <!--if{$info['upload_config'] == $vo['id']}-->
-                                <option value="{$vo.id}" selected>
-                                    <!--{else}-->
-                                    <option value="{$vo.id}">
-                                        <!--{/if}-->
-                                        {$vo.name}</option>
-                                    <!--{/loop}-->
-                            </select>
-                            <div class="input-note">选择栏目后上传将会使用绑定配置</div>
-                        </div>
-                    </div>
-                    
-                    
                 </div>
             </div>
             <div class="panel-foot">

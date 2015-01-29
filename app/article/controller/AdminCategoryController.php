@@ -26,7 +26,6 @@ class AdminCategoryController extends AdminController {
             $this->assign('categoryList',target('duxcms/Category')->loadList());
             $this->assign('tplList',target('admin/Config')->tplList());
             $this->assign('expandList',target('duxcms/FieldsetExpand')->loadList());
-            $this->assign('uploadList',target('admin/ConfigUpload')->loadList());
             $this->assign('default_config',current_config());
             $this->adminDisplay('info');
         }else{
@@ -65,7 +64,6 @@ class AdminCategoryController extends AdminController {
             $this->assign('categoryList',target('duxcms/Category')->loadList());
             $this->assign('tplList',target('admin/Config')->tplList());
             $this->assign('expandList',target('duxcms/FieldsetExpand')->loadList());
-            $this->assign('uploadList',target('admin/ConfigUpload')->loadList());
             $this->assign('default_config',current_config());
             $this->assign('info',$info);
             $this->adminDisplay('info');
