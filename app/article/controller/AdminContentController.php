@@ -43,7 +43,7 @@ class AdminContentController extends AdminController {
         $positionId = request('request.position_id',0,'intval');
         $status = request('request.status',0,'intval');
         if(!empty($keyword)){
-            $where['A.title'] = array('like','%'.$keyword.'%');
+            $where[] = 'A.title like %'.$keyword.'%';
         }
         if(!empty($classId)){
             $where['C.class_id'] = $classId;
