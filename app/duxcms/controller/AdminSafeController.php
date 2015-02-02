@@ -24,7 +24,7 @@ class AdminSafeController extends AdminController {
         
         $checkArray = array();
         //上传目录检测
-        $dir = @fopen(__ROOT__ .'/uploads','wb');
+        $dir = @fopen(__ROOT__ .'/upload','wb');
         if ($dir !== false)
         {
             $checkArray['upload'] = true;

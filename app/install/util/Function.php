@@ -39,7 +39,7 @@ function check_env(){
  */
 function check_dirfile(){
 	$items = array(
-		array('dir',  '可写', 'success', ROOT_PATH.'uploads'),
+		array('dir',  '可写', 'success', ROOT_PATH.'upload'),
 		array('dir',  '可写', 'success', ROOT_PATH.'data'),
 	);
 	foreach ($items as &$val) {

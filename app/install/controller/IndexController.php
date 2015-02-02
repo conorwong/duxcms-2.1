@@ -89,6 +89,7 @@ class IndexController extends Controller {
             if(!mysql_query($sql)){
                 show_msg('数据库'. $data['DB_NAME'].'自动创建失败，请手动建立数据库！',false);
             }
+            mysql_select_db($data['DB_NAME'], $link);
         }
         show_msg('数据库检查创建完成...');
 
@@ -103,8 +104,11 @@ class IndexController extends Controller {
         //安装数据库
         $file = ROOT_PATH . 'app/install/data/install.sql';
         $sqlData = \framework\ext\Install::mysql($file, 'dux_', $data['DB_PREFIX']);
-        if(!target('Install')->runSql($sqlData)){
-            show_msg('数据库导入失败，请检查后手动删除数据库重新安装！',false);
+        foreach ($sqlData as $sql) {
+            $rst = mysql_query($sql);
+            if($rst === false){
+                show_msg(mysql_error(),false);
+            }
         }
         //修改安全配置文件
         $file = CONFIG_PATH . 'performance.php';
