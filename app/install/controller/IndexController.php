@@ -104,6 +104,7 @@ class IndexController extends Controller {
         //安装数据库
         $file = ROOT_PATH . 'app/install/data/install.sql';
         $sqlData = \framework\ext\Install::mysql($file, 'dux_', $data['DB_PREFIX']);
+        mysql_query("SET NAMES utf8");
         foreach ($sqlData as $sql) {
             $rst = mysql_query($sql);
             if($rst === false){
