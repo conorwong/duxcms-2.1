@@ -557,3 +557,15 @@ function get_client_ip()
 {
     return \framework\ext\Util::getIp();
 }
+
+/**
+ * 判断不为空
+ */
+function is_empty($str)
+{
+    if(empty($str)){
+        return false;
+    }else{
+        return true;
+    }
+}
