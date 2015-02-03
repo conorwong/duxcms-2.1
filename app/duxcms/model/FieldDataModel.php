@@ -177,14 +177,14 @@ class FieldDataModel extends BaseModel {
                     return $data;
                 }
                 $list = explode(",",trim($config));
-                $data = array();
+                $listData = array();
                 $i = 0;
                 foreach ($list as $value) {
                     $i++;
-                    $data[$i] =  $value;
+                    $listData[$i] =  $value;
                 }
                 return array(
-                        'list' => $data,
+                        'list' => $listData,
                         'value' => intval($data),
                         );
                 break;
@@ -193,14 +193,14 @@ class FieldDataModel extends BaseModel {
                     return $data;
                 }
                 $list = explode(",",trim($config));
-                $data = array();
+                $listData = array();
                 $i = 0;
                 foreach ($list as $value) {
                     $i++;
-                    $data[$i] =  $value;
+                    $listData[$i] =  $value;
                 }
                 return array(
-                        'list' => $data,
+                        'list' => $listData,
                         'value' => explode(",",trim($data)),
                         );
                 break;
