@@ -21,7 +21,7 @@ class FileModel extends BaseModel {
         $config['DIR_NAME'] = date('Y-m-d');
         $data = $upload->upload($config);
         if(!$data){
-            $this->error = $upload->getErrorMsg();
+            $this->error = $upload->getError();
             return false;
         }
         $this->add($data);
