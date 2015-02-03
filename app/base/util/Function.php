@@ -477,6 +477,32 @@ function dir_size($directoty)
     return ($dir_size);
 }
 
+//复制目录
+function copy_dir($sourceDir,$aimDir){
+        $succeed = true;
+        if(!file_exists($aimDir)){
+            if(!mkdir($aimDir,0777)){
+                return false;
+            }
+        }
+        $objDir = opendir($sourceDir);
+        while(false !== ($fileName = readdir($objDir))){
+            if(($fileName != ".") && ($fileName != "..")){
+                if(!is_dir("$sourceDir/$fileName")){
+                    if(!copy("$sourceDir/$fileName","$aimDir/$fileName")){
+                        $succeed = false;
+                        break;
+                    }
+                }
+                else{
+                    copy_dir("$sourceDir/$fileName","$aimDir/$fileName");
+                }
+            }
+        }
+        closedir($objDir);
+        return $succeed;
+}
+
 /**
  * 遍历删除目录和目录下所有文件
  * @param string $dir 路径

@@ -36,7 +36,7 @@ class AdminUpdateController extends AdminController {
         if(empty($verTime)){
             $this->error('没有发现版本号！');
         }
-        $url = $this->domain . 'Service/Update/index';
+        $url = $this->domain . 'service/Update/index';
         $data = array();
         $data['ver_time'] = $verTime;
         $info = \framework\ext\Http::doGet($url,$data,10);
@@ -60,7 +60,7 @@ class AdminUpdateController extends AdminController {
         if(empty($url)){
             $this->error('没有发现更新地址，请稍后重试！');
         }
-        $updateDir = RUNTIME_PATH.'update/';
+        $updateDir = DATA_PATH.'update/';
         if (!file_exists($updateDir)){
             if(!mkdir($updateDir)){
                 $this->error('抱歉，无法为您创建更新文件夹，请手动创建目录【'.$updateDir.'】');
@@ -84,7 +84,7 @@ class AdminUpdateController extends AdminController {
         $url = request('post.url');
         $fileName = explode('/', $url);
         $fileName = end($fileName);
-        $updateDir = RUNTIME_PATH.'update/';
+        $updateDir = DATA_PATH.'update/';
         $file = $updateDir.$fileName;
         if(!is_file($file)){
              $this->error('没有发现更新文件，请稍后重试！');
@@ -103,36 +103,24 @@ class AdminUpdateController extends AdminController {
      * 更新文件
      */
     public function upfile(){
-        $updateDir = RUNTIME_PATH.'update/';
+        $updateDir = DATA_PATH.'update/';
         $dir = $updateDir.'tmp_'.config('DUX_TIME');
         if(!copy_dir($dir,ROOT_PATH)){
             $this->error('无法复制更新文件，请检查网站是否有写入权限！');
         }
         //更新SQL文件
-        $sql = file_get_contents(ROOT_PATH.'Update/'.config('DUX_TIME').'.sql');
-        if($sql){
-            $db = new \Think\Model();
-            $sql = str_replace("\r", "\n", $sql);
-            $sql = explode(";\n", $sql);
-            //替换表前缀
-            $sql = str_replace(" `dux_", " `".config('DB_PREFIX'), $sql);
+        $file = ROOT_PATH.'update/'.config('DUX_TIME').'.sql';
+        if(is_file($file)){
+            $sqlData = \framework\ext\Install::mysql($file, 'dux_', $data['DB_PREFIX']);
             //开始导入数据库
-            foreach ($sql as $value) {
-                $value = trim($value);
-                if(empty($value)) continue;
-                if(substr($value, 0, 12) == 'CREATE TABLE') {
-                    $name = preg_replace("/^CREATE TABLE `(\w+)` .*/s", "\\1", $value);
-                    $msg  = "创建数据表{$name}";
-                    if(false === $db->execute($value)){
-                        $this->error($msg . '...失败！');
-                    }
-                } else {
-                    $db->execute($value);
+            foreach ($sqlData as $sql) {
+                if(false === target('Update')->execute($sql)){
+                    $this->error($sql . '...失败！');
                 }
             }
         }
         //清理更新文件
-        del_dir(ROOT_PATH.'Update');
+        del_dir(ROOT_PATH.'update');
         del_dir(ROOT_PATH.$dir);
         $this->success('更新成功，稍后为您刷新！');       
         
@@ -142,7 +130,7 @@ class AdminUpdateController extends AdminController {
      * 查询授权
      */
     public function Authorize(){
-        $url = 'http://www.duxcms.com/index.php?s=Service/Authorize/index';
+        $url = 'http://www.duxcms.com/index.php?r=service/Authorize/index';
         $info = \framework\ext\Http::doGet($url,30);
         echo $info;
     }
