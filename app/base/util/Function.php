@@ -322,6 +322,8 @@ function service($appName,$name,$method,$vars=array()){
     }
 }
 
+
+
 /**
  * 调用指定模块的API
  * @param string $name  指定api名
@@ -594,4 +596,21 @@ function is_empty($str)
     }else{
         return true;
     }
+}
+
+/**
+ * 截取摘要
+ */
+function get_text_make($data,$cut=0,$str="...")
+{
+    $data=strip_tags($data);
+    $pattern = "/&[a-zA-Z]+;/";
+    $data=preg_replace($pattern,'',$data);  
+    if(!is_numeric($cut)){
+        return $data;  
+    }
+    if($cut>0){
+        $data=mb_strimwidth($data,0,$cut,$str);  
+    }
+    return $data;
 }

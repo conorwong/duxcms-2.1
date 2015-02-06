@@ -29,15 +29,10 @@ class LabelService{
         if(!empty($data['where'])){
             $where[] = $data['where'];
         }
-        //排序
-        if(!empty($data['order'])){
-            $order=$data['order'];
-        }
-        
         //其他属性
         $where['show'] = 1;
         $model = target('article/CategoryArticle');
-        return $model->loadData($where,$data['limit'],$order);
+        return $model->loadData($where,$data['limit']);
 	}
 
     /**

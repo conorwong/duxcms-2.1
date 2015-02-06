@@ -44,8 +44,8 @@ class CategoryModel extends BaseModel {
      * 获取列表(前台调用)
      * @return array 列表
      */
-    public function loadData($where = array(), $limit = 0 ,$order="sequence ASC , class_id ASC"){
-        $pageList = $this->where($where)->limit($limit)->order($order)->select();
+    public function loadData($where = array(), $limit = 0){
+        $pageList = $this->where($where)->limit($limit)->order("sequence ASC , class_id ASC")->select();
         $list = array();
         if(!empty($pageList)){
             $i = 0;

@@ -26,13 +26,13 @@ class CategoryArticleModel extends BaseModel {
      * 获取列表
      * @return array 列表
      */
-    public function loadData($where = array(), $limit = 0 ,$order="A.sequence ASC , A.class_id ASC"){
+    public function loadData($where = array(), $limit = 0){
         $pageList = $this->table("category as A")
                     ->join('{pre}category_article as B ON A.class_id = B.class_id')
                     ->field('B.*,A.*')
                     ->where($where)
                     ->limit($limit)
-                    ->order($order)
+                    ->order("A.sequence ASC , A.class_id ASC")
                     ->select();
         //处理数据类型
         $list=array();

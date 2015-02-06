@@ -151,6 +151,7 @@ class FieldsetFormModel extends BaseModel {
         if($token<>$formToken){
             return false;
         }
+        session('form_'.$table,' ');
         return true;
     }
 

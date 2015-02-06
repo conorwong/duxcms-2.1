@@ -2,13 +2,13 @@
 namespace app\base\controller;
 
 class BaseController extends \framework\base\Controller{
-	
-	public function __construct()
+    
+    public function __construct()
     {
         //设置错误级别
         error_reporting( E_ALL ^ (E_NOTICE | E_WARNING));
-    	//定义常量
-    	define('APP_PATH', ROOT_PATH . 'app' . DIRECTORY_SEPARATOR);
+        //定义常量
+        define('APP_PATH', ROOT_PATH . 'app' . DIRECTORY_SEPARATOR);
         define('DATA_PATH', ROOT_PATH . 'data' . DIRECTORY_SEPARATOR);
         define('UPLOAD_NAME', 'upload');
         define('THEME_NAME', 'themes');
@@ -40,9 +40,12 @@ class BaseController extends \framework\base\Controller{
                 $this->error('该应用尚未开启!', false);
             }
         }
-
         $this->setCont();
 
+        //执行初始化
+        if(method_exists($this,'init')){
+            $this->init();
+        }
     }
 
     /**
