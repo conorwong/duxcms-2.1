@@ -4,12 +4,18 @@ function no(){
 }
 function showmsg(msg,tyle){
 	var html = '<p class="'+tyle+'">'+msg+'</p>';
-	$('.m-log').append(html);
+	$('.ins-log').append(html);
 }
 function insok(homeUrl,adminUrl){
 	var html = '\
-	<a href="'+homeUrl+'" class="submit">返回首页</a>\
-	<a href="'+adminUrl+'" class="submit">进入后台</a>\
+    <div class="line-middle">\
+        <div class="xm6">\
+            <a class="button bg-main button-block text-center" href="'+homeUrl+'">返回首页</a>\
+        </div>\
+        <div class="xm6">\
+            <a class="button bg-sub button-block text-center" href="'+adminUrl+'">进入后台</a>\
+        </div>\
+    </div>\
 	';
-	$('.m-foot').html(html);
+	$('.panel-foot').html(html);
 }
