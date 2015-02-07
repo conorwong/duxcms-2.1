@@ -12,9 +12,11 @@ class PurviewService{
             'Setting' => array(
                 'name' => '系统设置',
                 'auth' => array(
-                    'admin' => '后台设置',
+                    'site' => '站点设置',
+                    'mobile' => '手机设置',
+                    'tpl' => '模板设置',
                     'performance' => '性能设置',
-                    'upload' => '上传设置'
+                    'upload' => '上传设置',
                 )
             ),
             'Manage' => array(
@@ -23,12 +25,48 @@ class PurviewService{
                     'cache' => '缓存管理'
                 )
             ),
-            'AppManage' => array(
-                'name' => 'APP管理',
+            'Functions' => array(
+                'name' => '应用管理',
+                'auth' => array(
+                    'index' => '浏览',
+                    'state' => '状态更改',
+                    'install' => '安装',
+                    'uninstall' => '卸载',
+                )
+            ),
+            'AdminBackup' => array(
+                'name' => '备份管理',
+                'auth' => array(
+                    'index' => '浏览',
+                    'add' => '添加',
+                    'import' => '导入',
+                    'del' => '删除',
+                )
+            ),
+            'AdminLog' => array(
+                'name' => '系统日志',
                 'auth' => array(
                     'index' => '浏览'
                 )
-            )
+            ),
+            'AdminUser' => array(
+                'name' => '用户管理',
+                'auth' => array(
+                    'index' => '列表',
+                    'add' => '添加',
+                    'edit' => '编辑',
+                    'del' => '删除',
+                )
+            ),
+            'AdminUserGroup' => array(
+                'name' => '用户组管理',
+                'auth' => array(
+                    'index' => '列表',
+                    'add' => '添加',
+                    'edit' => '编辑',
+                    'del' => '删除',
+                )
+            ),
         );
 	}
 	
