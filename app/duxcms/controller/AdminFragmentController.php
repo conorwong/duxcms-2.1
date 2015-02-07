@@ -52,7 +52,7 @@ class AdminFragmentController extends AdminController {
         }else{
             $model = target('Fragment');
             if($model->saveData('add')){
-                $this->success('碎片添加成功！');
+                $this->success('碎片添加成功！',url('index'));
             }else{
                 $msg = $model->getError();
                 if(empty($msg)){
@@ -86,7 +86,7 @@ class AdminFragmentController extends AdminController {
             $this->adminDisplay('info');
         }else{
             if($model->saveData('edit')){
-                $this->success('碎片修改成功！');
+                $this->success('碎片修改成功！',url('index'));
             }else{
                 $msg = $model->getError();
                 if(empty($msg)){

@@ -59,7 +59,7 @@ class AdminFormController extends AdminController
             $model = target('FieldsetForm');
             if ($model->saveData('add'))
             {
-                $this->success('表单添加成功！');
+                $this->success('表单添加成功！',url('index'));
             }
             else
             {
@@ -105,7 +105,7 @@ class AdminFormController extends AdminController
         {
             if ($model->saveData('edit'))
             {
-                $this->success('表单修改成功！');
+                $this->success('表单修改成功！',url('index'));
             }
             else
             {

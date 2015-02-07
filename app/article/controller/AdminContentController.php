@@ -97,7 +97,7 @@ class AdminContentController extends AdminController {
             $this->adminDisplay('info');
         }else{
             if(target('ContentArticle')->saveData('add')){
-                $this->success('文章添加成功！');
+                $this->success('文章添加成功！',url('index'));
             }else{
                 $msg = target('ContentArticle')->getError();
                 if(empty($msg)){
@@ -135,7 +135,7 @@ class AdminContentController extends AdminController {
             $this->adminDisplay('info');
         }else{
             if(target('ContentArticle')->saveData('edit')){
-                $this->success('文章修改成功！');
+                $this->success('文章修改成功！',url('index'));
             }else{
                 $msg = target('ContentArticle')->getError();
                 if(empty($msg)){

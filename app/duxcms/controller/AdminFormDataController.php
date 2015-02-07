@@ -122,7 +122,7 @@ class AdminFormDataController extends AdminController {
             $this->adminDisplay('info');
         }else{
             if ($model->saveData('add',$_POST['fieldset_id'])){
-                $this->success('表单内容添加成功！');
+                $this->success('表单内容添加成功！',url('index', array('fieldset_id' => request('post.fieldset_id'))));
             }else{
                 $msg = $model->getError();
                 if (empty($msg))
@@ -184,7 +184,7 @@ class AdminFormDataController extends AdminController {
         {
             if ($model->saveData('edit',$_POST['fieldset_id']))
             {
-                $this->success('表单修改成功！');
+                $this->success('表单修改成功！',url('index', array('fieldset_id' => request('post.fieldset_id'))));
             }
             else
             {

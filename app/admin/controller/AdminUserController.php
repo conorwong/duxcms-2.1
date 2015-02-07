@@ -75,7 +75,7 @@ class AdminUserController extends AdminController {
             $this->adminDisplay('info');
         }else{
             if(target('AdminUser')->saveData('add')){
-                $this->success('用户添加成功！');
+                $this->success('用户添加成功！',url('index'));
             }else{
                 $msg = target('AdminUser')->getError();
                 if(empty($msg)){
@@ -111,7 +111,7 @@ class AdminUserController extends AdminController {
             $this->adminDisplay('info');
         }else{
             if(target('AdminUser')->saveData('edit')){
-                $this->success('用户修改成功！');
+                $this->success('用户修改成功！',url('index'));
             }else{
                 $msg = target('AdminUser')->getError();
                 if(empty($msg)){

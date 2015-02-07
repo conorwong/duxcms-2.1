@@ -28,7 +28,7 @@ class AdminCategoryController extends AdminController {
             $_POST['app'] = APP_NAME;
             $model = target('CategoryPage');
             if($model->saveData('add')){
-                $this->success('页面添加成功！');
+                $this->success('页面添加成功！',url('duxcms/AdminCategory/index'));
             }else{
                 $msg = $model->getError();
                 if(empty($msg)){
@@ -65,7 +65,7 @@ class AdminCategoryController extends AdminController {
             $_POST['app'] = APP_NAME;
             $model = target('CategoryPage');
             if($model->saveData('edit')){
-                $this->success('页面修改成功！');
+                $this->success('页面修改成功！',url('duxcms/AdminCategory/index'));
             }else{
                 $msg = $model->getError();
                 if(empty($msg)){

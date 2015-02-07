@@ -52,7 +52,7 @@ class AdminPositionController extends AdminController {
         }else{
             $model = target('Position');
             if($model->saveData('add')){
-                $this->success('推荐位添加成功！');
+                $this->success('推荐位添加成功！',url('index'));
             }else{
                 $msg = $model->getError();
                 if(empty($msg)){
@@ -86,7 +86,7 @@ class AdminPositionController extends AdminController {
             $this->adminDisplay('info');
         }else{
             if($model->saveData('edit')){
-                $this->success('推荐位修改成功！');
+                $this->success('推荐位修改成功！',url('index'));
             }else{
                 $msg = $model->getError();
                 if(empty($msg)){

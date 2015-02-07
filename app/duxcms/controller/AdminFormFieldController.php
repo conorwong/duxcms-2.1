@@ -96,7 +96,7 @@ class AdminFormFieldController extends AdminController
             $model = target('FieldForm');
             if ($model->saveData('add'))
             {
-                $this->success('字段添加成功！');
+                $this->success('字段添加成功！',url('index', array('fieldset_id' => request('post.fieldset_id'))));
             }
             else
             {
@@ -148,7 +148,7 @@ class AdminFormFieldController extends AdminController
         {
             if ($model->saveData('edit'))
             {
-                $this->success('字段修改成功！');
+                $this->success('字段修改成功！',url('index', array('fieldset_id' => request('post.fieldset_id'))));
             }
             else
             {

@@ -52,7 +52,7 @@ class AdminUserGroupController extends AdminController {
             $this->adminDisplay('info');
         }else{
             if(target('AdminGroup')->saveData('add')){
-                $this->success('用户组添加成功！');
+                $this->success('用户组添加成功！',url('index'));
             }else{
                 $this->error('用户组添加失败');
             }
@@ -81,7 +81,7 @@ class AdminUserGroupController extends AdminController {
             $this->adminDisplay('info');
         }else{
             if(target('AdminGroup')->saveData('edit')){
-                $this->success('用户组修改成功！');
+                $this->success('用户组修改成功！',url('index'));
             }else{
                 $this->error('用户组修改失败');
             }

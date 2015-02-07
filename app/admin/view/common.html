@@ -51,12 +51,16 @@
                 </div>
                 <!--if{$infoModule['add']}-->
                 <div class="button-group float-right">
+                    <!--if{$infoModule['add'][1]}-->
                     <a class="button button-small bg-dot icon-plus dropdown-toggle"> 添加 <span class="downward"></span></a> 
                     <ul class="drop-menu pull-right">
                        <!--loop{$infoModule['add'] as $vo }-->
                         <li><a href="{$vo.url}">{$vo.name}</a></li>
                         <!--{/loop}-->
                     </ul>
+                    <!--{else}-->
+                    <a class="button button-small bg-dot icon-plus dropdown-toggle" href="{$infoModule['add'][0]['url']}"> {$infoModule['add'][0]['name']}</a> 
+                    <!--{/if}-->
                 </div>
                 <!--{/if}-->
             </div>

@@ -58,7 +58,7 @@ class AdminExpandController extends AdminController
             $model = target('FieldsetExpand');
             if ($model->saveData('add'))
             {
-                $this->success('扩展模型添加成功！');
+                $this->success('扩展模型添加成功！',url('index'));
             }
             else
             {
@@ -103,7 +103,7 @@ class AdminExpandController extends AdminController
         {
             if ($model->saveData('edit'))
             {
-                $this->success('扩展模型修改成功！');
+                $this->success('扩展模型修改成功！',url('index'));
             }
             else
             {

@@ -71,7 +71,7 @@ class AdminBackupController extends AdminController {
                     break;
             }
             if(target('Database')->$action()){
-                $this->success('数据库操作执行完毕！');
+                $this->success('数据库操作执行完毕！',url('index'));
             }else{
                 $msg = target('Database')->getError();
                 if(empty($msg)){
@@ -94,7 +94,7 @@ class AdminBackupController extends AdminController {
         }
         //获取备份数量
         if(target('Database')->importData($time)){
-            $this->success('备份恢复成功！');
+            $this->success('备份恢复成功！',url('index'));
         }else{
             $msg = target('Database')->error;
             if(empty($msg)){
