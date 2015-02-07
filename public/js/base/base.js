@@ -211,7 +211,7 @@ $.ajaxSetup({
                                         dialog: {
                                             msg: data.info,
                                             btns: 2,
-                                            type: 4,
+                                            type: 1,
                                             btn: ['继续操作', '返回'],
                                             yes: function () {
                                                 window.location.reload();
