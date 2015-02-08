@@ -10,7 +10,7 @@ class AdminLogModel extends BaseModel {
         array('time','time',1,'function'),
         array('ip','get_client_ip',1,'function'),
         array('app',APP_NAME,1,'string'),
-        array('user_id','1',1,'string'),
+        array('user_id',ADMIN_ID,1,'string'),
         
      );
 
