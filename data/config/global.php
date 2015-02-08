@@ -17,6 +17,14 @@ $config = array (
 	'DB'=>array(
 		'default' => $db,
 	),
+	'CACHE' => array(
+		'default' => array(
+			'CACHE_TYPE' => 'FileCache',
+			'CACHE_PATH' => ROOT_PATH . 'data/cache/',
+			'GROUP' => 'db',
+			'HASH_DEEP' => 0,
+		),
+	),
 );
 foreach ($files as $value) {
 	$array = include $dir.'/'.$value;
