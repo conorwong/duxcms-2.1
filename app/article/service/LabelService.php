@@ -47,7 +47,6 @@ class LabelService{
         //指定栏目下子栏目内容
         if ($data['sub']&&!empty($data['class_id'])) {
             $classIds = target('duxcms/Category')->getSubClassId($data['class_id']);
-            $classWhere = '';
             if(!empty($classIds)){
                 $classWhere = "A.class_id in ({$classIds})";
             }
