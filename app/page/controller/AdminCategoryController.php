@@ -86,7 +86,7 @@ class AdminCategoryController extends AdminController {
             $this->error('参数不能为空！');
         }
         //判断子页面
-        if(target('duxcms/Category')->loadList('', $classId)){
+        if(target('duxcms/Category')->loadList(array(), $classId)){
             $this->error('请先删除子页面！');
         }
         //删除页面操作
