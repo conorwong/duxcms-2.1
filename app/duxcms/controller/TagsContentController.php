@@ -56,6 +56,7 @@ class TagsContentController extends SiteController {
         $this->assign('pageList',$data);
         $this->assign('page',$this->getPageShow($pageMaps));
         $this->assign('count', $count);
+        $this->assign('tagInfo', $tagInfo);
         $this->siteDisplay(config('tpl_tags').'_content');
     }
 
