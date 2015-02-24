@@ -235,7 +235,8 @@ class LabelService{
                 $data[$key]=$value;
                 foreach ($fieldList as $v) {
                     $data[$key][$v['field']] = target('duxcms/FieldData')->revertField($value[$v['field']],$v['type'],$v['config']);
-                }                
+                }
+                $data[$key]['furl'] = url('DuxCms/Form/info',array('name'=>$name,'id'=>$value['data_id']));          
             }
         }
         return $data;
