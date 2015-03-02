@@ -49,7 +49,7 @@ class ContentController extends SiteController {
         if (!empty($contentInfo['url']))
         {
             $link = $this->show($contentInfo['url']);
-            redirect($link,301);
+            $this->redirect($link,301);
         }
         //位置导航
         $crumb = target('duxcms/Category')->loadCrumb($contentInfo['class_id']);
