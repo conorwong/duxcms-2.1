@@ -14,7 +14,7 @@ class MenuService{
                     array(
                         'name' => '文章管理',
                         'icon' => 'reorder',
-                        'url' => url('Article/AdminContent/index'),
+                        'url' => url('article/AdminContent/index'),
                         'order' => 1
                     )
                 )
