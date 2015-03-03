@@ -743,7 +743,7 @@ class PHPMailer {
    */
   public function SmtpConnect() {
     if(is_null($this->smtp)) {
-      $this->smtp = new SMTP();
+      $this->smtp = new \SMTP();
     }
 
     $this->smtp->do_debug = $this->SMTPDebug;

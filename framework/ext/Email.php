@@ -23,8 +23,8 @@ class Email
 	static public function send($mail_to,$mail_subject,$mail_body,$mail_attach=NULL)
 	{
 		@error_reporting(E_ERROR | E_WARNING | E_PARSE);//屏蔽出错信息
-         require_once(dirname(__FILE__).'/phpmailer/class.phpmailer.php');
-	    $mail             = new PHPMailer();
+        require_once(dirname(__FILE__).'/phpmailer/class.phpmailer.php');
+	    $mail             = new \PHPMailer();
 		//没有调用配置方法，则调用一次config方法
 		if(!isset(self::$config)||empty(self::$config))
 		{
