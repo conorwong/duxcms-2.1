@@ -250,7 +250,7 @@ class ContentModel extends BaseModel {
                 //查找关联
                 $where = array();
                 $where['content_id'] = $contentId;
-                $where['tag_id'] = $info['id'];
+                $where['tag_id'] = $info['tag_id'];
                 $infoHas = $TagsHasModel->countList($where);
                 //添加关联
                 if (!$infoHas) {
