@@ -17,7 +17,7 @@ class TagsHasModel extends BaseModel {
      * @return array 列表
      */
     public function countList($map){
-        return  $this->count($map);
+        return  $this->where($map)->count();
     }
 
     /**
