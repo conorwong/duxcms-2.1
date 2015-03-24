@@ -88,8 +88,8 @@ class ContentController extends SiteController {
             $nextInfo['aurl']=target('duxcms/Content')->getUrl($nextInfo,$appConfig);
             $nextInfo['curl']=target('duxcms/Category')->getUrl($nextInfo,$appConfig);
         }
-        //MEDIA信息
-        $media = $this->getMedia($contentInfo['title'],$contentInfo['keywords'],$contentInfo['description']);
+        //Meta信息
+        $meta = $this->getMeta($contentInfo['title'],$contentInfo['keywords'],$contentInfo['description']);
         //模板赋值
         $this->assign('contentInfo', $contentInfo);
         $this->assign('categoryInfo', $categoryInfo);
@@ -98,7 +98,7 @@ class ContentController extends SiteController {
         $this->assign('crumb', $crumb);
         $this->assign('count', $count);
         $this->assign('page', $page);
-        $this->assign('media', $media);
+        $this->assign('media', $meta);
         $this->assign('prevInfo', $prevInfo);
         $this->assign('nextInfo', $nextInfo);
         if($contentInfo['tpl']){
