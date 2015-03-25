@@ -40,7 +40,7 @@ class SiteController extends BaseController {
      * 页面Meda信息组合
      * @return array 页面信息
      */
-    protected function getMedia($title='',$keywords='',$description='')
+    protected function getMeta($title='',$keywords='',$description='')
     {
         if(empty($title)){
             $title=config('site_title').' - '.config('site_subtitle');
