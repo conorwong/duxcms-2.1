@@ -11,9 +11,9 @@ class IndexController extends SiteController {
      * 主页
      */
     public function index(){
-    	//Meta信息
-        $meta=$this->getMeta();
-    	$this->assign('media', $meta);
+    	//MEDIA信息
+        $media=$this->getMedia();
+    	$this->assign('media', $media);
         $this->siteDisplay(config('tpl_index'));
     }
 

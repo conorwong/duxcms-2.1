@@ -73,8 +73,8 @@ class CategoryController extends SiteController {
         $parentCategoryInfo = target('duxcms/Category')->getInfo($categoryInfo['parent_id']);
         //获取顶级栏目信息
         $topCategoryInfo = target('duxcms/Category')->getInfo($crumb[0]['class_id']);
-        //Meta信息
-        $meta = $this->getMeta($categoryInfo['name'],$categoryInfo['keywords'],$categoryInfo['description']);
+        //MEDIA信息
+        $media = $this->getMedia($categoryInfo['name'],$categoryInfo['keywords'],$categoryInfo['description']);
         //模板赋值
         $this->assign('categoryInfo', $categoryInfo);
         $this->assign('parentCategoryInfo', $parentCategoryInfo);
@@ -82,7 +82,7 @@ class CategoryController extends SiteController {
         $this->assign('crumb', $crumb);
         $this->assign('pageList', $pageList);
         $this->assign('page', $page);
-        $this->assign('media', $meta);
+        $this->assign('media', $media);
         $this->assign('pageMaps', $pageMaps);
         $this->siteDisplay($categoryInfo['class_tpl']);
     }
