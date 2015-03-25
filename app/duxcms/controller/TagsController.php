@@ -19,10 +19,10 @@ class TagsController extends SiteController {
         $this->pager = target('Tags')->pager;
         //位置导航
         $crumb = array(array('name'=>'标签列表','url'=>url('duxcms/Tags/index')));
-        //MEDIA信息
-        $media = $this->getMedia($formInfo['name']);
+        //Meta信息
+        $meta = $this->getMeta($formInfo['name']);
         $this->assign('crumb',$crumb);
-        $this->assign('media', $media);
+        $this->assign('media', $meta);
         $this->assign('pageList',$list);
         $this->assign('page',$this->getPageShow());
         $this->siteDisplay(config('tpl_tags').'_list');

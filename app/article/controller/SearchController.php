@@ -66,11 +66,11 @@ class SearchController extends SiteController {
         $page = $this->getPageShow($pageMaps);
         //位置导航
         $crumb = array(array('name'=>'文章搜索 - ' . $keyword,'url'=>url('index',$pageMaps)));
-        //MEDIA信息
-        $media = $this->getMedia('文章搜索 - '.$keyword);
+        //Meta信息
+        $meta = $this->getMeta('文章搜索 - '.$keyword);
         //模板赋值
         $this->assign('crumb',$crumb);
-        $this->assign('media', $media);
+        $this->assign('media', $meta);
         $this->assign('pageList',$list);
         $this->assign('page',$page);
         $this->assign('count', $count);

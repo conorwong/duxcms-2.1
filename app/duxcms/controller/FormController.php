@@ -66,10 +66,10 @@ class FormController extends SiteController {
         $page = $this->getPageShow($pageMaps);
         //位置导航
         $crumb = array(array('name'=>$formInfo['name'],'url'=>url('duxcms/Form/index',$pageMaps)));
-        //MEDIA信息
-        $media = $this->getMedia($formInfo['name']);
+        //Meta信息
+        $meta = $this->getMeta($formInfo['name']);
         $this->assign('crumb',$crumb);
-        $this->assign('media', $media);
+        $this->assign('media', $meta);
         $this->assign('pageList',$data);
         $this->assign('count', $count);
         $this->assign('page', $page);
@@ -117,10 +117,10 @@ class FormController extends SiteController {
             array('name'=>$formInfo['name'],'url'=>url('duxcms/Form/index',array('name'=>$name))),
             array('name'=>'详情','url'=>url('duxcms/Form/info',array('name'=>$name,'id'=>$id))),
             );
-        //MEDIA信息
-        $media = $this->getMedia($formInfo['name'] . '- 详情 ');
+        //Meta信息
+        $meta = $this->getMeta($formInfo['name'] . '- 详情 ');
         $this->assign('crumb',$crumb);
-        $this->assign('media', $media);
+        $this->assign('media', $meta);
         $this->assign('formInfo', $formInfo);
         $this->assign('info', $info);
         $this->siteDisplay($formInfo['tpl_info']);

@@ -49,10 +49,10 @@ class TagsContentController extends SiteController {
         //URL参数
         $pageMaps = array();
         $pageMaps['name'] = $tag;
-        //MEDIA信息
-        $media = $this->getMedia($formInfo['name']);
+        //Meta信息
+        $meta = $this->getMeta($formInfo['name']);
         $this->assign('crumb',$crumb);
-        $this->assign('media', $media);
+        $this->assign('media', $meta);
         $this->assign('pageList',$data);
         $this->assign('page',$this->getPageShow($pageMaps));
         $this->assign('count', $count);
