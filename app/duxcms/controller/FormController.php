@@ -71,7 +71,6 @@ class FormController extends SiteController {
         $this->assign('crumb',$crumb);
         $this->assign('media', $media);
         $this->assign('pageList',$data);
-        $this->assign('count', $count);
         $this->assign('page', $page);
         $this->assign('formInfo', $formInfo);
         $this->siteDisplay($formInfo['tpl_list']);
@@ -163,7 +162,12 @@ class FormController extends SiteController {
         $model->setTable('ext_'.$formInfo['table']);
         //增加信息
         if ($model->saveData('add',$formInfo)){
-            $this->success($formInfo['post_msg'],$formInfo['post_return_url']);
+            if(empty($formInfo['post_return_url'])){
+                $url =  $_SERVER["HTTP_REFERER"];
+            }else{
+                $url = $formInfo['post_return_url'];
+            }
+            $this->success($formInfo['post_msg'], $url);
         }else{
             $msg = $model->getError();
             if (empty($msg))
