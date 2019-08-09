@@ -38,7 +38,7 @@ class CategoryController extends SiteController {
         //位置导航
         $crumb = target('duxcms/Category')->loadCrumb($classId);
         //设置查询条件
-        $where='';
+        $where=[];
         if ($categoryInfo['type'] == 0) {
             $classIds = target('duxcms/Category')->getSubClassId($classId);
         }

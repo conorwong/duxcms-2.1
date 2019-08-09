@@ -8,7 +8,7 @@ class LabelService{
 	 * 栏目列表
 	 */
 	public function categoryList($data){
-        $where='';
+        $where=[];
         //上级栏目
         if(isset($data['parent_id'])){
             $where['parent_id'] = $data['parent_id'];
@@ -31,6 +31,7 @@ class LabelService{
         }
         //其他属性
         $where['show'] = 1;
+        $where;
         $model = target('duxcms/Category');
         return $model->loadData($where,$data['limit']);
 	}
