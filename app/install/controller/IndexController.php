@@ -73,23 +73,23 @@ class IndexController extends Controller {
         	show_msg('请填写COOKIE前缀！',false);
         }
         //检查数据库
-        $link = @mysql_connect($data['DB_HOST'] . ':' . $data['DB_PORT'], $data['DB_USER'], $data['DB_PWD']);
+        $link = @mysqli_connect($data['DB_HOST'] . ':' . $data['DB_PORT'], $data['DB_USER'], $data['DB_PWD']);
         if(!$link) {
             show_msg('数据库连接失败，请检查连接信息是否正确！',false);
         }
-        $mysqlInfo = mysql_get_server_info($link);
+        $mysqlInfo = mysqli_get_server_info($link);
         if($mysqlInfo < '5.1.0') {
             show_msg('mysql版本低于5.1，无法继续安装！',false);
         }
 
-        $status = @mysql_select_db($data['DB_NAME'], $link);
+        $status = @mysqli_select_db($link, $data['DB_NAME']);
         if(!$status) {
             //尝试创建数据库
             $sql = "CREATE DATABASE IF NOT EXISTS `".$data['DB_NAME']."` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;";
-            if(!mysql_query($sql)){
+            if(!mysqli_query($link, $sql)){
                 show_msg('数据库'. $data['DB_NAME'].'自动创建失败，请手动建立数据库！',false);
             }
-            mysql_select_db($data['DB_NAME'], $link);
+            mysqli_select_db($link, $data['DB_NAME']);
         }
         show_msg('数据库检查创建完成...');
 
@@ -104,11 +104,11 @@ class IndexController extends Controller {
         //安装数据库
         $file = ROOT_PATH . 'app/install/data/install.sql';
         $sqlData = \framework\ext\Install::mysql($file, 'dux_', $data['DB_PREFIX']);
-        mysql_query("SET NAMES utf8");
+        mysqli_query($link, "SET NAMES utf8");
         foreach ($sqlData as $sql) {
-            $rst = mysql_query($sql);
+            $rst = mysqli_query($link, $sql);
             if($rst === false){
-                show_msg(mysql_error(),false);
+                show_msg(mysqli_error($link),false);
             }
         }
         //修改安全配置文件
