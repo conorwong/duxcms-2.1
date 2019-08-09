@@ -1,12 +1,15 @@
 <?php
 namespace app\duxcms\model;
+
 use app\base\model\BaseModel;
+
 /**
  * 内容操作
  */
-class ContentModel extends BaseModel {
+class ContentModel extends BaseModel
+{
     //完成
-    protected $_auto = array (
+    protected $_auto = array(
         //全部
         array('class_id','intval',3,'function'), //栏目ID
         array('urltitle','getUrlTitle',3,'callback'), //URL
@@ -36,8 +39,8 @@ class ContentModel extends BaseModel {
      * 获取列表
      * @return array 列表
      */
-    public function loadList($where = array(), $limit = 50, $order = 'A.time desc,A.content_id desc'){
-
+    public function loadList($where = array(), $limit = 50, $order = 'A.time desc,A.content_id desc')
+    {
         $pageList = $this->table("content as A")
                     ->join('{pre}category as B ON A.class_id = B.class_id')
                     ->field('A.*,B.name as class_name,B.app,B.urlname as class_urlname,B.image as class_image,B.parent_id')
@@ -47,7 +50,7 @@ class ContentModel extends BaseModel {
                     ->select();
         //处理数据类型
         $list=array();
-        if(!empty($pageList)){
+        if (!empty($pageList)) {
             $i = 0;
             foreach ($pageList as $key=>$value) {
                 $list[$key]=$value;
@@ -64,7 +67,8 @@ class ContentModel extends BaseModel {
      * 获取数量
      * @return int 数量
      */
-    public function countList($where = array()){
+    public function countList($where = array())
+    {
         return $this->table("content as A")
                     ->join('{pre}category as B ON A.class_id = B.class_id')
                     ->where($where)
@@ -76,13 +80,14 @@ class ContentModel extends BaseModel {
      * @param array $where 条件
      * @return array 信息
      */
-    public function getWhereInfo($where){
+    public function getWhereInfo($where)
+    {
         $info = $this->table("content as A")
                     ->join('{pre}category as B ON A.class_id = B.class_id')
                     ->field('A.*,B.name as class_name,B.app,B.urlname as class_urlname,B.image as class_image,B.parent_id')
                     ->where($where)
                     ->find();
-        if(!empty($info)){
+        if (!empty($info)) {
             $info['app'] = strtolower($info['app']);
         }
         return $info;
@@ -93,36 +98,37 @@ class ContentModel extends BaseModel {
      * @param string $type 更新类型
      * @return bool 更新状态
      */
-    public function saveData($type = 'add'){
+    public function saveData($type = 'add')
+    {
         $data = $this->create();
-        if(!$data){
+        if (!$data) {
             return false;
         }
-        if($type == 'add'){
+        if ($type == 'add') {
             //保存基本信息
             $contentId = $this->add($data);
-            if(!$contentId){
+            if (!$contentId) {
                 return false;
             }
             $data['content_id'] = $contentId;
             //保存扩展表
-            if(!$this->saveExtData($data)){
+            if (!$this->saveExtData($data)) {
                 return false;
             }
             //保存TAG
             $this->hasTags($data['keywords'], $data['content_id']);
             return $contentId;
         }
-        if($type == 'edit'){
-            if(empty($data['content_id'])){
+        if ($type == 'edit') {
+            if (empty($data['content_id'])) {
                 return false;
             }
             $status = $this->save();
-            if($status === false){
+            if ($status === false) {
                 return false;
             }
             //保存扩展表
-            if(!$this->saveExtData($data)){
+            if (!$this->saveExtData($data)) {
                 return false;
             }
             //保存TAG
@@ -137,7 +143,8 @@ class ContentModel extends BaseModel {
      * @param string $type 更新类型
      * @return bool 更新状态
      */
-    public function editData($data){
+    public function editData($data)
+    {
         $map = array();
         $map['content_id'] = $data['content_id'];
         return $this->where($map)->data($data)->save();
@@ -148,22 +155,23 @@ class ContentModel extends BaseModel {
      * @param int $contentId ID
      * @return bool 删除状态
      */
-    public function delData($contentId){
+    public function delData($contentId)
+    {
         $map = array();
         $map['content_id'] = $contentId;
         $status = $this->where($map)->delete();
-        if(!$status){
+        if (!$status) {
             return false;
         }
         //获取字段集信息
         $info = $this->getWhereInfo($map);
         $fieldsetInfo = target('duxcms/Fieldset')->getInfoClassId($info['class_id']);
         //删除扩展字段
-        if(!empty($fieldsetInfo)){
+        if (!empty($fieldsetInfo)) {
             $expandModel = target('duxcms/FieldData');
             $expandModel->setTable('ext_'.$fieldsetInfo['table']);
-            if($expandModel->getInfo($contentId)){
-                if(!$expandModel->delData($contentId)){
+            if ($expandModel->getInfo($contentId)) {
+                if (!$expandModel->delData($contentId)) {
                     $this->error = $expandModel->getError();
                     return false;
                 }
@@ -179,24 +187,25 @@ class ContentModel extends BaseModel {
      * @param string $type 更新类型
      * @return bool 更新状态
      */
-    public function saveExtData($data){
+    public function saveExtData($data)
+    {
         //查询栏目信息
         $classId = $data['class_id'];
         //获取字段集信息
         $fieldsetInfo = target('duxcms/Fieldset')->getInfoClassId($classId);
         //保存扩展字段
-        if(!empty($fieldsetInfo)){
+        if (!empty($fieldsetInfo)) {
             $expandModel = target('duxcms/FieldData');
             //设置模型信息
             $expandModel->setTable('ext_'.$fieldsetInfo['table']);
             $_POST['data_id'] = $data['content_id'];
-            if($expandModel->getInfo($data['content_id'])){
+            if ($expandModel->getInfo($data['content_id'])) {
                 $type = 'edit';
-            }else{
+            } else {
                 $type = 'add';
             }
             
-            if(!$expandModel->saveData($type,$fieldsetInfo)){
+            if (!$expandModel->saveData($type, $fieldsetInfo)) {
                 $this->error = $expandModel->getError();
                 return false;
             }
@@ -210,7 +219,8 @@ class ContentModel extends BaseModel {
      * @param string $contentId 内容ID
      * @return bool 状态
      */
-    public function hasTags($keywords, $contentId){
+    public function hasTags($keywords, $contentId)
+    {
         if (empty($keywords)) {
             return false;
         }
@@ -235,7 +245,7 @@ class ContentModel extends BaseModel {
                 $data = array();
                 $data['name'] = $name;
                 $data['quote'] = 1;
-                $tagId = $TagsModel->saveData('add',$data);
+                $tagId = $TagsModel->saveData('add', $data);
                 //添加关联
                 $hasData = array();
                 $hasData['content_id'] = $contentId;
@@ -246,7 +256,7 @@ class ContentModel extends BaseModel {
                 $data = array();
                 $data['quote'] = $info['quote'] + 1;
                 $data['tag_id'] = $info['tag_id'];
-                $TagsModel->saveData('edit',$data);
+                $TagsModel->saveData('edit', $data);
                 //查找关联
                 $where = array();
                 $where['content_id'] = $contentId;
@@ -268,36 +278,32 @@ class ContentModel extends BaseModel {
      * 内容拼音转换
      * @return string 内容拼音
      */
-    public function getUrlTitle(){
+    public function getUrlTitle()
+    {
         //获取变量
         $name = request('post.title');
         $urlTitle = request('post.urltitle');
         $contentId = request('post.content_id');
         //生成URL
-        if (empty($urlTitle))
-        {
+        if (empty($urlTitle)) {
             $pinyin = new \framework\ext\Pinyin();
             $name = preg_replace('/\s+/', '-', $name);
             $pattern = '/[^\x{4e00}-\x{9fa5}\d\w\-]+/u';
             $name = preg_replace($pattern, '', $name);
-            $urlTitle = substr($pinyin->output($name, true),0,30);
-            $urlTitle = trim($urlTitle,'-');
+            $urlTitle = substr($pinyin->output($name, true), 0, 30);
+            $urlTitle = trim($urlTitle, '-');
         }
         //返回数据
         $where = array();
-        if (!empty($contentId))
-        {
+        if (!empty($contentId)) {
             $where[] = 'A.content_id <> '.$contentId;
         }
         $where['urltitle'] = $urlTitle;
         $info = $this->getWhereInfo($where);
-        if (empty($info))
-        {
+        if (empty($info)) {
             return $urlTitle;
-        }
-        else
-        {
-            return $urlTitle.substr(unique_number(),8);
+        } else {
+            return $urlTitle.substr(unique_number(), 8);
         }
     }
 
@@ -305,19 +311,20 @@ class ContentModel extends BaseModel {
      * 提取描述
      * @return string 内容描述
      */
-    public function getDescription(){
+    public function getDescription()
+    {
         //获取变量
-        $getDescStatus = request('post.get_description',0,'intval');
+        $getDescStatus = request('post.get_description', 0, 'intval');
         $description = request('post.description');
         $content = request('post.content');
         //处理数据
-        if(!$getDescStatus||empty($content)){
+        if (!$getDescStatus||empty($content)) {
             return $description;
         }
         $description = html_out($content);
         $description = strip_tags($description);
         $description = str_replace(array("\r\n","\t",'&ldquo;','&rdquo;','&nbsp;'), '', $description);
-        $description = substr($description, 0,250);
+        $description = substr($description, 0, 250);
         return $description;
     }
 
@@ -325,14 +332,15 @@ class ContentModel extends BaseModel {
      * 提取形象图
      * @return string 内容形象图
      */
-    public function getImage(){
+    public function getImage()
+    {
         //获取变量
-        $getImageStatus = request('post.get_image',0,'intval');
-        $getImageNum = request('post.get_image_num',0,'intval');
+        $getImageStatus = request('post.get_image', 0, 'intval');
+        $getImageNum = request('post.get_image_num', 0, 'intval');
         $image = request('post.image');
         $content = request('post.content');
         //处理数据
-        if(!$getImageStatus||!empty($image)||!$content||!$getImageNum){
+        if (!$getImageStatus||!empty($image)||!$content||!$getImageNum) {
             return $image;
         }
         return target('duxcms/ContentTools')->getImage($content, $getImageNum);
@@ -342,11 +350,12 @@ class ContentModel extends BaseModel {
      * 格式化推荐位
      * @return string 推荐ID
      */
-    public function formatPosition(){
+    public function formatPosition()
+    {
         $position = request('post.position');
-        if(!empty($position)){
+        if (!empty($position)) {
             return implode(',', $position);
-        }else{
+        } else {
             return ;
         }
     }
@@ -358,7 +367,6 @@ class ContentModel extends BaseModel {
      */
     public function getUrl($info)
     {
-        return match_url(strtolower($info['app']).'/Content/index',array('content_id'=>$info['content_id'],'urltitle'=>$info['urltitle'],'class_urlname'=>$info['class_urlname']));
+        return match_url(strtolower($info['app']).'/Content/index', array('content_id'=>$info['content_id'],'urltitle'=>$info['urltitle'],'class_urlname'=>$info['class_urlname']));
     }
-
 }

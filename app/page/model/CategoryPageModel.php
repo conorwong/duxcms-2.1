@@ -1,10 +1,13 @@
 <?php
 namespace app\page\model;
+
 use app\base\model\BaseModel;
+
 /**
  * 栏目操作
  */
-class CategoryPageModel extends BaseModel {
+class CategoryPageModel extends BaseModel
+{
     //验证
     protected $_validate = array(
         array('content','require', '请填写页面内容', 1 ,'regex',3),
@@ -34,7 +37,7 @@ class CategoryPageModel extends BaseModel {
                     ->field('B.*,A.*')
                     ->where($where)
                     ->find();
-        if(!empty($info)){
+        if (!empty($info)) {
             $info['app'] = strtolower($info['app']);
         }
         return $info;
@@ -45,36 +48,37 @@ class CategoryPageModel extends BaseModel {
      * @param string $type 更新类型
      * @return bool 更新状态
      */
-    public function saveData($type = 'add'){
+    public function saveData($type = 'add')
+    {
         //事务总表处理
         $this->beginTransaction();
         $model = target('duxcms/Category');
         $classId = $model->saveData($type);
-        if(!$classId){
+        if (!$classId) {
             $this->error = $model->getError();
             return false;
         }
         //分表处理
         $data = $this->create();
-        if(!$data){
+        if (!$data) {
             $this->rollBack();
             return false;
         }
-        if($type == 'add'){
+        if ($type == 'add') {
             $data['class_id'] = $classId;
             $status = $this->add($data);
-            if($status){
+            if ($status) {
                 $this->commit();
-            }else{
+            } else {
                 $this->rollBack();
             }
             return $status;
         }
-        if($type == 'edit'){
+        if ($type == 'edit') {
             $where = array();
             $where['class_id'] = $data['class_id'];
             $status = $this->where($where)->save();
-            if($status === false){
+            if ($status === false) {
                 $this->rollBack();
                 return false;
             }
@@ -99,5 +103,4 @@ class CategoryPageModel extends BaseModel {
         $map['class_id'] = $classId;
         return $this->where($map)->delete();
     }
-
 }

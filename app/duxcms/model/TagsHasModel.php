@@ -1,12 +1,15 @@
 <?php
 namespace app\duxcms\model;
+
 use app\base\model\BaseModel;
+
 /**
  * 标签关系表操作
  */
-class TagsHasModel extends BaseModel {
+class TagsHasModel extends BaseModel
+{
     //完成
-    protected $_auto = array (
+    protected $_auto = array(
         array('content_id','intval',3,'function'),
         array('tag_id','intval',3,'function'),
      );
@@ -16,7 +19,8 @@ class TagsHasModel extends BaseModel {
      * @param array $map 统计条件
      * @return array 列表
      */
-    public function countList($map){
+    public function countList($map)
+    {
         return  $this->where($map)->count();
     }
 
@@ -25,8 +29,9 @@ class TagsHasModel extends BaseModel {
      * @return bool 状态
      * @param array $data 更新数据
      */
-    public function addData($data){
-        if(!$data){
+    public function addData($data)
+    {
+        if (!$data) {
             return false;
         }
         return $this->add($data);
@@ -48,7 +53,8 @@ class TagsHasModel extends BaseModel {
      * 获取内容列表
      * @return array 列表
      */
-    public function loadContentList($where, $limit){
+    public function loadContentList($where, $limit)
+    {
         $data   = $this->field('distinct C.*,D.name as class_name,D.app,D.urlname as class_urlname')
                     ->table("tags_has as A")
                     ->join('{pre}tags as B ON B.tag_id = A.tag_id')
@@ -65,7 +71,8 @@ class TagsHasModel extends BaseModel {
      * 获取内容统计
      * @return array 列表
      */
-    public function countContentList($where){
+    public function countContentList($where)
+    {
         $data   = $this->field(' distinct ')
                     ->table("tags_has as A")
                     ->join('{pre}tags as B ON B.tag_id = A.tag_id')
@@ -75,5 +82,4 @@ class TagsHasModel extends BaseModel {
                     ->count();
         return $data;
     }
-
 }

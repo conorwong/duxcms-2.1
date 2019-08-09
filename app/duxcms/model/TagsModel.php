@@ -1,12 +1,15 @@
 <?php
 namespace app\duxcms\model;
+
 use app\base\model\BaseModel;
+
 /**
  * 标签表操作
  */
-class TagsModel extends BaseModel {
+class TagsModel extends BaseModel
+{
     //完成
-    protected $_auto = array (
+    protected $_auto = array(
         array('click','intval',3,'function'),
         array('quote','intval',3,'function'),
      );
@@ -15,15 +18,16 @@ class TagsModel extends BaseModel {
      * 获取列表
      * @return array 列表
      */
-    public function loadList($where = array(), $limit, $order = 'tag_id DESC'){
+    public function loadList($where = array(), $limit, $order = 'tag_id DESC')
+    {
         $pageList = $this->where($where)->limit($limit)->order($order)->select();
         //处理数据类型
         $list = array();
-        if(!empty($pageList)){
+        if (!empty($pageList)) {
             $i = 0;
             foreach ($pageList as $key=>$value) {
                 $list[$key]=$value;
-                $list[$key]['url'] = url('duxcms/TagsContent/index',array('name' => $value['name']));
+                $list[$key]['url'] = url('duxcms/TagsContent/index', array('name' => $value['name']));
                 $list[$key]['i'] = $i++;
             }
         }
@@ -34,7 +38,8 @@ class TagsModel extends BaseModel {
      * 获取统计
      * @return int 数量
      */
-    public function countList($where = array()){
+    public function countList($where = array())
+    {
         return  $this->where($where)->count();
     }
 
@@ -66,21 +71,22 @@ class TagsModel extends BaseModel {
      * @param array $data 更新数据
      * @return bool 更新状态
      */
-    public function saveData($type = 'add',$data){
-        if(!$data){
+    public function saveData($type = 'add', $data)
+    {
+        if (!$data) {
             return false;
         }
-        if($type == 'add'){
+        if ($type == 'add') {
             return $this->add($data);
         }
-        if($type == 'edit'){
-            if(empty($data['tag_id'])){
+        if ($type == 'edit') {
+            if (empty($data['tag_id'])) {
                 return false;
             }
             $where = array();
             $where['tag_id'] = $data['tag_id'];
             $status = $this->where($where)->save($data);
-            if($status === false){
+            if ($status === false) {
                 return false;
             }
             return true;
@@ -100,5 +106,4 @@ class TagsModel extends BaseModel {
         target('duxcms/TagsHas')->delData($map);
         return $this->where($map)->delete();
     }
-
 }

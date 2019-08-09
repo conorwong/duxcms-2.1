@@ -1,16 +1,20 @@
 <?php
 namespace app\duxcms\model;
+
 use app\base\model\BaseModel;
+
 /**
  * 蜘蛛统计操作
  */
-class TotalSpiderModel extends BaseModel {
+class TotalSpiderModel extends BaseModel
+{
 
     /**
      * 获取列表
      * @return array 列表
      */
-    public function loadList($where,$limit){
+    public function loadList($where, $limit)
+    {
         return  $this->where($where)->limit($limit)->order('time desc')->select();
     }
 
@@ -18,14 +22,16 @@ class TotalSpiderModel extends BaseModel {
      * 获取统计
      * @return int 数量
      */
-    public function countList($where){
+    public function countList($where)
+    {
         return  $this->where($where)->count();
     }
 
     /**
      * 查询当天访问量
      */
-    public function curNum(){
+    public function curNum()
+    {
         $date =  strtotime(date('Y-m-d 0:0:0'));
         $where = array();
         $where['time'] = $date;
@@ -35,24 +41,24 @@ class TotalSpiderModel extends BaseModel {
         $num = $num + $info['baidu'];
         $num = $num + $info['soso'];
         return $num;
-        
     }
 
     /**
      * 判断蜘蛛爬行
      */
-    public function addData(){
+    public function addData()
+    {
         $agent = $_SERVER['HTTP_USER_AGENT'];
-        if(strpos($tmp, 'Googlebot') !== false){
+        if (strpos($tmp, 'Googlebot') !== false) {
             $boot = 'google';
         }
-        if(strpos($tmp, 'Baiduspider') !== false){
+        if (strpos($tmp, 'Baiduspider') !== false) {
             $boot = 'baidu';
         }
-        if(strpos($tmp, 'Sosospider') !== false){
+        if (strpos($tmp, 'Sosospider') !== false) {
             $boot = 'soso';
         }
-        if(empty($boot)){
+        if (empty($boot)) {
             return ;
         }
         //当天时间
@@ -60,11 +66,11 @@ class TotalSpiderModel extends BaseModel {
         $where = array();
         $where['time'] = $time;
         $info = $this->where($where)->find();
-        if($info){
+        if ($info) {
             $where = array();
             $where['id'] = $info['id'];
             $this->where($where)->setInc($boot);
-        }else{
+        } else {
             $data = array();
             $data['time'] = $time;
             $data[$boot] = 1;
@@ -78,7 +84,8 @@ class TotalSpiderModel extends BaseModel {
      * @param int $type 类型
      * @return array 信息
      */
-    public function getJson($num , $type = 'day', $date = 'Y-m-d'){
+    public function getJson($num, $type = 'day', $date = 'Y-m-d')
+    {
         $jsonArray = array();
         $jsonArray['labels'] = array();
         $datasets[1] = target('TotalVisitor')->getChart('blue');
@@ -89,30 +96,29 @@ class TotalSpiderModel extends BaseModel {
         $datasets[3]['label'] = '搜搜';
         $timeArray = array();
         for ($i=0; $i < $num; $i++) {
-            $timeNow = strtotime("-".$i." ".$type,strtotime(date('Y-m-d 0:0:0')));
-            $jsonArray['labels'][] = date($date,$timeNow);
+            $timeNow = strtotime("-".$i." ".$type, strtotime(date('Y-m-d 0:0:0')));
+            $jsonArray['labels'][] = date($date, $timeNow);
             $where = array();
             $where[] = "time >= {$timeNow} AND time < ".strtotime('+ 1 '.$type, $timeNow);
 
             $sum = $this->where($where)->sum('baidu');
-            if($sum){
+            if ($sum) {
                 $datasets[1]['data'][] = $sum;
-            }else{
+            } else {
                 $datasets[1]['data'][] = 0;
             }
             $sum = $this->where($where)->sum('google');
-            if($sum){
+            if ($sum) {
                 $datasets[2]['data'][] = $sum;
-            }else{
+            } else {
                 $datasets[2]['data'][] = 0;
             }
             $sum = $this->where($where)->sum('soso');
-            if($sum){
+            if ($sum) {
                 $datasets[3]['data'][] = $sum;
-            }else{
+            } else {
                 $datasets[3]['data'][] = 0;
             }
-
         }
         $jsonArray['labels'] = array_reverse($jsonArray['labels']);
         $datasets[1]['data'] = array_reverse($datasets[1]['data']);
@@ -120,7 +126,5 @@ class TotalSpiderModel extends BaseModel {
         $datasets[3]['data'] = array_reverse($datasets[3]['data']);
         $jsonArray['datasets'] = $datasets;
         return json_encode($jsonArray);
-        
     }
-
 }

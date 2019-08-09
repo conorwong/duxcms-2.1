@@ -1,10 +1,13 @@
 <?php
 namespace app\admin\model;
+
 use app\base\model\BaseModel;
+
 /**
  * 网站配置
  */
-class ConfigModel extends BaseModel {
+class ConfigModel extends BaseModel
+{
     /**
      * 获取信息
      * @return array 网站配置
@@ -24,9 +27,10 @@ class ConfigModel extends BaseModel {
      * @param int $siteId 站点配置ID
      * @return bool 更新状态
      */
-    public function saveData(){
+    public function saveData()
+    {
         $data = request('post.');
-        if(empty($data)){
+        if (empty($data)) {
             $this->error = '数据创建失败！';
             return false;
         }
@@ -36,7 +40,7 @@ class ConfigModel extends BaseModel {
             $where = array();
             $where['name'] = $key;
             $status = $this->data($currentData)->where($where)->save();
-            if($status === false){
+            if ($status === false) {
                 return false;
             }
         }
@@ -51,11 +55,11 @@ class ConfigModel extends BaseModel {
     {
         $config = $this->getInfo();
         $tplDir = ROOT_PATH . THEME_NAME . '/' . $config['tpl_name'];
-        if(!is_dir($tplDir)){
+        if (!is_dir($tplDir)) {
             return false;
         }
         $listFile=scandir($tplDir);
-        if(is_array($listFile)){
+        if (is_array($listFile)) {
             $list=array();
             foreach ($listFile as $key => $value) {
                 if ($value != "." && $value != "..") {
@@ -74,14 +78,14 @@ class ConfigModel extends BaseModel {
     public function themesList()
     {
         $tplDir = ROOT_PATH . THEME_NAME;
-        if(!is_dir($tplDir)){
+        if (!is_dir($tplDir)) {
             return false;
         }
         $listFile=scandir($tplDir);
-        if(is_array($listFile)){
-        $list=array();
+        if (is_array($listFile)) {
+            $list=array();
             foreach ($listFile as $key => $value) {
-                if ($value != "." && $value != ".."&&!strpos($value,".")) {
+                if ($value != "." && $value != ".."&&!strpos($value, ".")) {
                     $list[$key]['file']=$value;
                     $list[$key]['name']=$value;
                 }
@@ -89,6 +93,4 @@ class ConfigModel extends BaseModel {
         }
         return $list;
     }
-
-
 }

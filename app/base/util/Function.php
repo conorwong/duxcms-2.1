@@ -2,9 +2,10 @@
 /**
  * 获取request请求方法
  */
-function request($str, $default = null, $function = null) {
+function request($str, $default = null, $function = null)
+{
     $str = trim($str);
-    list($method,$name) = explode('.',$str,2);
+    list($method, $name) = explode('.', $str, 2);
     $method = strtoupper($method);
     switch ($method) {
         case 'POST':
@@ -24,24 +25,24 @@ function request($str, $default = null, $function = null) {
             $type = $_GET;
             break;
     }
-    if(empty($name)){
+    if (empty($name)) {
         $request = filter_string($type);
-    }else{
-        if($method == 'GET'){
+    } else {
+        if ($method == 'GET') {
             $request = urldecode($type[$name]);
-        }else{
+        } else {
             $request = $type[$name];
         }
         $request = filter_string($request);
         //设置默认值
-        if($default){
-            if(empty($request)){
+        if ($default) {
+            if (empty($request)) {
                 $request = $default;
             }
         }
         //设置处理函数
-        if($function){
-            $request = call_user_func($function,$request);
+        if ($function) {
+            $request = call_user_func($function, $request);
         }
     }
     return $request;
@@ -50,16 +51,17 @@ function request($str, $default = null, $function = null) {
  * 过滤数据
  * @param  array  $data 过滤数据
  */
-function filter_string($data){
-    if($data===NULL){
+function filter_string($data)
+{
+    if ($data===null) {
         return false;
     }
-    if (is_array($data)){
-        foreach ($data as $k=>$v){
+    if (is_array($data)) {
+        foreach ($data as $k=>$v) {
             $data[$k] = filter_string($v);
         }
         return $data;
-    }else{
+    } else {
         return htmlspecialchars($data, ENT_QUOTES, 'UTF-8');
     }
 }
@@ -68,9 +70,10 @@ function filter_string($data){
  * @param  array  $data 被认证的数据
  * @return string       签名
  */
-function data_auth_sign($data) {
+function data_auth_sign($data)
+{
     //数据类型检测
-    if(!is_array($data)){
+    if (!is_array($data)) {
         $data = (array)$data;
     }
     ksort($data); //排序
@@ -83,9 +86,10 @@ function data_auth_sign($data) {
  * @param string $file 调用文件
  * @return array
  */
-function load_config($file){
-	$file = get_config_file($file);
-	return require $file;
+function load_config($file)
+{
+    $file = get_config_file($file);
+    return require $file;
 }
 
 /**
@@ -93,7 +97,8 @@ function load_config($file){
  * @return array
  */
 
-function current_config(){
+function current_config()
+{
     return load_config('config');
 }
 
@@ -102,16 +107,17 @@ function current_config(){
  * @param string $file 调用文件
  * @return array
  */
-function save_config($file, $config){
-	if(empty($config) || !is_array($config)){
-		return array();
-	}
-	$file = get_config_file($file);
+function save_config($file, $config)
+{
+    if (empty($config) || !is_array($config)) {
+        return array();
+    }
+    $file = get_config_file($file);
     //读取配置内容
     $conf = file_get_contents($file);
     //替换配置项
     foreach ($config as $key => $value) {
-        if (is_string($value) && !in_array($value, array('true','false'))){
+        if (is_string($value) && !in_array($value, array('true','false'))) {
             if (!is_numeric($value)) {
                 $value = "'" . $value . "'"; //如果是字符串，加上单引号
             }
@@ -119,10 +125,10 @@ function save_config($file, $config){
         $conf = preg_replace("/'" . $key . "'\s*=\>\s*(.*?),/iU", "'".$key."'=>".$value.",", $conf);
     }
     //写入应用配置文件
-    if(!IS_WRITE){
+    if (!IS_WRITE) {
         return false;
-    }else{
-        if(file_put_contents($file, $conf)){
+    } else {
+        if (file_put_contents($file, $conf)) {
             return true;
         } else {
             return false;
@@ -136,9 +142,10 @@ function save_config($file, $config){
  * @param string $str
  * @return array
  */
-function get_method_array($str = ''){
+function get_method_array($str = '')
+{
     $strArray = array();
-    if(!empty($str)){
+    if (!empty($str)) {
         $strArray = explode('/', $str, 3);
     }
     $strCount = count($strArray);
@@ -164,7 +171,7 @@ function get_method_array($str = ''){
                 $action = ACTION_NAME;
                 break;
         }
-        return array(
+    return array(
             'app' => strtolower($app),
             'controller' => $controller,
             'action' => $action,
@@ -176,31 +183,32 @@ function get_method_array($str = ''){
  * @param string $file 文件路径或简写路径
  * @return dir
  */
-function get_config_file($file){
-	$name = $file;
-	if(!is_file($file)){
-		$str = explode('/', $file);
-		$strCount = count($str);
-		switch ($strCount) {
-			case 1:
-				$app = APP_NAME;
-				$name = $str[0];
-				break;
-			case 2:
-				$app = $str[0];
-				$name = $str[1];
-				break;
-		}
+function get_config_file($file)
+{
+    $name = $file;
+    if (!is_file($file)) {
+        $str = explode('/', $file);
+        $strCount = count($str);
+        switch ($strCount) {
+            case 1:
+                $app = APP_NAME;
+                $name = $str[0];
+                break;
+            case 2:
+                $app = $str[0];
+                $name = $str[1];
+                break;
+        }
         $app = strtolower($app);
-		if(empty($app)&&empty($file)){
-			throw new \Exception("Config '{$file}' not found'", 500);
-		}
-		$file = APP_PATH . "{$app}/conf/{$name}.php";
-		if(!file_exists($file)){
-			throw new \Exception("Config '{$file}' not found", 500);
-		}
-	}
-	return $file;
+        if (empty($app)&&empty($file)) {
+            throw new \Exception("Config '{$file}' not found'", 500);
+        }
+        $file = APP_PATH . "{$app}/conf/{$name}.php";
+        if (!file_exists($file)) {
+            throw new \Exception("Config '{$file}' not found", 500);
+        }
+    }
+    return $file;
 }
 /**
  * 自适应URL规则
@@ -209,32 +217,33 @@ function get_config_file($file){
  * @param string $mustParams 必要参数
  * @return url
  */
-function match_url($str,$params = array(), $mustParams = array()){
+function match_url($str, $params = array(), $mustParams = array())
+{
     $newParams = array();
     $keyArray = array_keys($params);
-    if(config('REWRITE_ON')){
+    if (config('REWRITE_ON')) {
         //获取规则文件
         $config = config('REWRITE_RULE');
         $configArray = array_flip($config);
         $route = $configArray[$str];
-        if($route){
+        if ($route) {
             preg_match_all('/<(\w+)>/', $route, $matches);
             foreach ($matches[1] as $value) {
-                if($params[$value]){
+                if ($params[$value]) {
                     $newParams[$value] = $params[$value];
                 }
             }
-        }else{
-            if(!empty($keyArray)){
+        } else {
+            if (!empty($keyArray)) {
                 $newParams[$keyArray[0]] = current($params);
             }
         }
-    }else{
-        if(!empty($keyArray)){
+    } else {
+        if (!empty($keyArray)) {
             $newParams[$keyArray[0]] = current($params);
         }
     }
-    $newParams = array_merge((array)$newParams,(array)$mustParams);
+    $newParams = array_merge((array)$newParams, (array)$mustParams);
     $newParams = array_filter($newParams);
     return url($str, $newParams);
 }
@@ -245,32 +254,33 @@ function match_url($str,$params = array(), $mustParams = array()){
  * @param string $layer 调用层 默认model
  * @return obj
  */
-function target($str , $layer = 'model'){
-	static $_target  =   array();
-	$str = explode('/', $str);
-	$strCount = count($str);
-	switch ($strCount) {
-		case 1:
-			$app = APP_NAME;
-			$module = $str[0];
-			break;
-		case 2:
-			$app = $str[0];
-			$module = $str[1];
-			break;
-	}
-	$app = strtolower($app);
-	$name = $app.'/'.$layer.'/'.$module;
-	if(isset($_target[$name])){
+function target($str, $layer = 'model')
+{
+    static $_target  =   array();
+    $str = explode('/', $str);
+    $strCount = count($str);
+    switch ($strCount) {
+        case 1:
+            $app = APP_NAME;
+            $module = $str[0];
+            break;
+        case 2:
+            $app = $str[0];
+            $module = $str[1];
+            break;
+    }
+    $app = strtolower($app);
+    $name = $app.'/'.$layer.'/'.$module;
+    if (isset($_target[$name])) {
         return $_target[$name];
-	}
-	$class = "\\app\\{$app}\\{$layer}\\{$module}".ucfirst($layer);
-	if(!class_exists($class)){
-		throw new \Exception("Class '{$class}' not found'", 500);
-	}
-	$target = new $class();
-	$_target[$name]  =  $target;
-	return $target;
+    }
+    $class = "\\app\\{$app}\\{$layer}\\{$module}".ucfirst($layer);
+    if (!class_exists($class)) {
+        throw new \Exception("Class '{$class}' not found'", 500);
+    }
+    $target = new $class();
+    $_target[$name]  =  $target;
+    return $target;
 }
 
 /**
@@ -278,28 +288,30 @@ function target($str , $layer = 'model'){
  * @param string $name 指定service名
  * @return array
  */
-function get_all_service($name,$method,$vars=array()){
-
-    if(empty($name))return null;
+function get_all_service($name, $method, $vars=array())
+{
+    if (empty($name)) {
+        return null;
+    }
     $apiPath = APP_PATH.'*/service/'.$name.'Service.php';
     $apiList = glob($apiPath);
-    if(empty($apiList)){
+    if (empty($apiList)) {
         return;
     }
     $appPathStr = strlen(APP_PATH);
     $method = 'get'.$method.$name;
     $data = array();
     foreach ($apiList as $value) {
-        $path = substr($value, $appPathStr,-4);
-        $path = str_replace('\\', '/',  $path);
+        $path = substr($value, $appPathStr, -4);
+        $path = str_replace('\\', '/', $path);
         $appName = explode('/', $path);
         $appName = $appName[0];
         $config = load_config($appName .'/config');
-        if(!$config['APP_SYSTEM'] &&( !$config['APP_STATE'] || !$config['APP_INSTALL'])){
+        if (!$config['APP_SYSTEM'] &&(!$config['APP_STATE'] || !$config['APP_INSTALL'])) {
             continue;
         }
-        $class = target($appName.'/'.$name,'service');
-        if(method_exists($class,$method)){
+        $class = target($appName.'/'.$name, 'service');
+        if (method_exists($class, $method)) {
             $data[$appName] = $class->$method($vars);
         }
     }
@@ -311,13 +323,14 @@ function get_all_service($name,$method,$vars=array()){
  * @param string $name 指定service名
  * @return Service
  */
-function service($appName,$name,$method,$vars=array()){
+function service($appName, $name, $method, $vars=array())
+{
     $config = load_config($appName .'/config');
-    if(!$config['APP_SYSTEM'] &&( !$config['APP_STATE'] || !$config['APP_INSTALL'])){
+    if (!$config['APP_SYSTEM'] &&(!$config['APP_STATE'] || !$config['APP_INSTALL'])) {
         return;
     }
-    $class = target($appName.'/'.$name,'service');
-    if(method_exists($class,$method)){
+    $class = target($appName.'/'.$name, 'service');
+    if (method_exists($class, $method)) {
         return $class->$method($vars);
     }
 }
@@ -329,14 +342,14 @@ function service($appName,$name,$method,$vars=array()){
  * @param string $name  指定api名
  * @return Api
  */
-function api($appName,$name,$method,$vars=array())
+function api($appName, $name, $method, $vars=array())
 {
     $config = load_config($appName .'/config');
-    if(!$config['APP_SYSTEM'] &&( !$config['APP_STATE'] || !$config['APP_INSTALL'])){
+    if (!$config['APP_SYSTEM'] &&(!$config['APP_STATE'] || !$config['APP_INSTALL'])) {
         return;
     }
-    $class = target($appName.'/'.$name,'api');
-    if(method_exists($class,$method)){
+    $class = target($appName.'/'.$name, 'api');
+    if (method_exists($class, $method)) {
         return $class->$method($vars);
     }
 }
@@ -380,24 +393,25 @@ function array_order($array, $key, $type = 'asc', $reset = false)
  * @param string $value
  * @return  string
  */
-function session($name='',$value = '') {
-	if(empty($name)){
-		return $_SESSION;
-	}
+function session($name='', $value = '')
+{
+    if (empty($name)) {
+        return $_SESSION;
+    }
     $sessionId = request('request.session_id');
-    if(!empty($sessionId)){
+    if (!empty($sessionId)) {
         session_id($sessionId);
     }
-	if(!isset($_SESSION)){
+    if (!isset($_SESSION)) {
         session_start();
     }
-	$pre = config('COOKIE_PREFIX');
-	if($value === ''){
-		$session = $_SESSION[$pre . $name];
-	}else{
-		$session = $_SESSION[$pre . $name] = $value;
-	}
-	return $session;
+    $pre = config('COOKIE_PREFIX');
+    if ($value === '') {
+        $session = $_SESSION[$pre . $name];
+    } else {
+        $session = $_SESSION[$pre . $name] = $value;
+    }
+    return $session;
 }
 
 /**
@@ -407,14 +421,15 @@ function session($name='',$value = '') {
  * @param int $time 小时时间
  * @return  string
  */
-function cookie($name='',$value='',$time = 1) {
-    if(empty($name)){
+function cookie($name='', $value='', $time = 1)
+{
+    if (empty($name)) {
         return $_COOKIE;
     }
     $pre = config('COOKIE_PREFIX');
-    if($value === ''){
+    if ($value === '') {
         $cookie = $_COOKIE[$pre . $name];
-    }else{
+    } else {
         $cookie = setcookie($pre . $name, $value, time()+3600*$time, '/');
     }
     return $cookie;
@@ -426,10 +441,11 @@ function cookie($name='',$value='',$time = 1) {
  * @param string $var
  * @return  string
  */
-function default_data($data,$var){
-    if(empty($data)){
+function default_data($data, $var)
+{
+    if (empty($data)) {
         return $var;
-    }else{
+    } else {
         return $data;
     }
 }
@@ -437,20 +453,20 @@ function default_data($data,$var){
 //图片裁剪
 function cut_image($img, $width, $height, $type = 3)
 {
-    if(empty($width)&&empty($height)){
+    if (empty($width)&&empty($height)) {
         return $img;
     }
     $imgDir = realpath(ROOT_PATH.$img);
-    if(!is_file($imgDir)){
+    if (!is_file($imgDir)) {
         return $img;
     }
     $imgInfo = pathinfo($img);
     $newImg = $imgInfo['dirname'].'/cut_'.$width.'_'.$height.'_'.$imgInfo["basename"];
     $newImgDir = ROOT_PATH.$newImg;
-    if(!is_file($newImgDir)){
+    if (!is_file($newImgDir)) {
         $image = new \app\base\util\ThinkImage();
         $image->open($imgDir);
-        $image->thumb($width, $height,$type)->save($newImgDir);
+        $image->thumb($width, $height, $type)->save($newImgDir);
     }
     return $newImg;
 }
@@ -480,29 +496,29 @@ function dir_size($directoty)
 }
 
 //复制目录
-function copy_dir($sourceDir,$aimDir){
-        $succeed = true;
-        if(!file_exists($aimDir)){
-            if(!mkdir($aimDir,0777)){
-                return false;
+function copy_dir($sourceDir, $aimDir)
+{
+    $succeed = true;
+    if (!file_exists($aimDir)) {
+        if (!mkdir($aimDir, 0777)) {
+            return false;
+        }
+    }
+    $objDir = opendir($sourceDir);
+    while (false !== ($fileName = readdir($objDir))) {
+        if (($fileName != ".") && ($fileName != "..")) {
+            if (!is_dir("$sourceDir/$fileName")) {
+                if (!copy("$sourceDir/$fileName", "$aimDir/$fileName")) {
+                    $succeed = false;
+                    break;
+                }
+            } else {
+                copy_dir("$sourceDir/$fileName", "$aimDir/$fileName");
             }
         }
-        $objDir = opendir($sourceDir);
-        while(false !== ($fileName = readdir($objDir))){
-            if(($fileName != ".") && ($fileName != "..")){
-                if(!is_dir("$sourceDir/$fileName")){
-                    if(!copy("$sourceDir/$fileName","$aimDir/$fileName")){
-                        $succeed = false;
-                        break;
-                    }
-                }
-                else{
-                    copy_dir("$sourceDir/$fileName","$aimDir/$fileName");
-                }
-            }
-        }
-        closedir($objDir);
-        return $succeed;
+    }
+    closedir($objDir);
+    return $succeed;
 }
 
 /**
@@ -510,28 +526,31 @@ function copy_dir($sourceDir,$aimDir){
  * @param string $dir 路径
  * @return bool
  */
-function del_dir($dir){
+function del_dir($dir)
+{
     framework\ext\Util::delDir($dir);
 }
 
 /**
  * html代码输入
  */
-function html_in($str){
+function html_in($str)
+{
     $str=htmlspecialchars($str);
-    if(!get_magic_quotes_gpc()) {
+    if (!get_magic_quotes_gpc()) {
         $str = addslashes($str);
     }
-   return $str;
+    return $str;
 }
 
 /**
  * html代码输出
  */
-function html_out($str){
-    if(function_exists('htmlspecialchars_decode')){
+function html_out($str)
+{
+    if (function_exists('htmlspecialchars_decode')) {
         $str=htmlspecialchars_decode($str);
-    }else{
+    } else {
         $str=html_entity_decode($str);
     }
     $str = stripslashes($str);
@@ -543,9 +562,9 @@ function html_out($str){
  */
 function len($str, $len=0)
 {
-    if(!empty($len)){
+    if (!empty($len)) {
         return \framework\ext\Util::msubstr($str, 0, $len);
-    }else{
+    } else {
         return $str;
     }
 }
@@ -555,7 +574,7 @@ function len($str, $len=0)
  */
 function U($str = null, $var = null)
 {
-    return url($str,$var);
+    return url($str, $var);
 }
 
 /**
@@ -563,7 +582,7 @@ function U($str = null, $var = null)
  */
 function unique_number()
 {
-    return date('Ymd').substr(implode(NULL, array_map('ord', str_split(substr(uniqid(), 7, 13), 1))), 0, 8);
+    return date('Ymd').substr(implode(null, array_map('ord', str_split(substr(uniqid(), 7, 13), 1))), 0, 8);
 }
 
 /**
@@ -574,7 +593,7 @@ function random_str()
     $year_code = array('A','B','C','D','E','F','G','H','I','J');
     $order_sn = $year_code[intval(date('Y'))-2010].
     strtoupper(dechex(date('m'))).date('d').
-    substr(time(),-5).substr(microtime(),2,5).sprintf('d',rand(0,99));
+    substr(time(), -5).substr(microtime(), 2, 5).sprintf('d', rand(0, 99));
     return $order_sn;
 }
 
@@ -591,9 +610,9 @@ function get_client_ip()
  */
 function is_empty($str)
 {
-    if(empty($str)){
+    if (empty($str)) {
         return false;
-    }else{
+    } else {
         return true;
     }
 }
@@ -601,16 +620,16 @@ function is_empty($str)
 /**
  * 截取摘要
  */
-function get_text_make($data,$cut=0,$str="...")
+function get_text_make($data, $cut=0, $str="...")
 {
     $data=strip_tags($data);
     $pattern = "/&[a-zA-Z]+;/";
-    $data=preg_replace($pattern,'',$data);  
-    if(!is_numeric($cut)){
-        return $data;  
+    $data=preg_replace($pattern, '', $data);
+    if (!is_numeric($cut)) {
+        return $data;
     }
-    if($cut>0){
-        $data=mb_strimwidth($data,0,$cut,$str);  
+    if ($cut>0) {
+        $data=mb_strimwidth($data, 0, $cut, $str);
     }
     return $data;
 }

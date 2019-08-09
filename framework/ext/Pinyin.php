@@ -1,149 +1,149 @@
 <?php
 namespace framework\ext;
+
 /*
 汉字转化为拼音类
  */
-class Pinyin{
-	
-	/**
-	 * 汉字ASCII码库
-	 * 
-	 * @var array
-	 */
-	protected $lib;
-	
-	
-	/**
-	 * 构造函数
-	 * 
-	 * @return void
-	 */
-	public function __construct(){
-		
-	}
-	/**
-	 * 汉字转化并输出拼音
-	 * 
-	 * @param string $str		所要转化拼音的汉字
-	 * @param boolean $utf8 	汉字编码是否为utf8
-	 * @return string
-	 */
-	public function output($str, $utf8 = true)
-	{		
-		//参数分析
-		if (!$str) {
-			return false;
-		}
-		
-		//编码转换.
-		$str = ($utf8==true) ? $this->iconvStr('utf-8', 'gbk', $str) : $str;
-		$num = strlen($str);
-		
-		$pinyin = '';
-		for ($i=0; $i<$num; $i++) {
-			$temp = ord(substr($str, $i, 1));
-			if ($temp>160) {				
-				$temp2=ord(substr($str,++$i,1));
-				$temp=$temp*256+$temp2-65536;
-			}
-			$pinyin .= $this->num2str($temp);
-		}
-				
-		//输出的拼音编码转换.
-		return ($utf8==true) ? $this->iconvStr('gbk', 'utf-8', $pinyin) : $pinyin;
-	}
-	/**
-	 * 将ASCII编码转化为字符串.
-	 * 
-	 * @param integer $num
-	 * @return string
-	 */
-	protected function num2str($num) {		
-		
-		if (!$this->lib) {			
-			$this->parse_lib();
-		}
-				
-		if ($num>0&&$num<160) {	
-			
-   			return chr($num);
-		} elseif($num<-20319||$num>-10247) {
-			
-			return '';
-		} else{
-			$total =sizeof($this->lib)-1;
-			for($i=$total; $i>=0; $i--) {
-				if($this->lib[$i][1]<=$num) {					
-					break;
-				}
-			}
-			
-			return $this->lib[$i][0];
-		}
-	}
+class Pinyin
+{
+    
+    /**
+     * 汉字ASCII码库
+     *
+     * @var array
+     */
+    protected $lib;
+    
+    
+    /**
+     * 构造函数
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+    }
+    /**
+     * 汉字转化并输出拼音
+     *
+     * @param string $str		所要转化拼音的汉字
+     * @param boolean $utf8 	汉字编码是否为utf8
+     * @return string
+     */
+    public function output($str, $utf8 = true)
+    {
+        //参数分析
+        if (!$str) {
+            return false;
+        }
+        
+        //编码转换.
+        $str = ($utf8==true) ? $this->iconvStr('utf-8', 'gbk', $str) : $str;
+        $num = strlen($str);
+        
+        $pinyin = '';
+        for ($i=0; $i<$num; $i++) {
+            $temp = ord(substr($str, $i, 1));
+            if ($temp>160) {
+                $temp2=ord(substr($str, ++$i, 1));
+                $temp=$temp*256+$temp2-65536;
+            }
+            $pinyin .= $this->num2str($temp);
+        }
+                
+        //输出的拼音编码转换.
+        return ($utf8==true) ? $this->iconvStr('gbk', 'utf-8', $pinyin) : $pinyin;
+    }
+    /**
+     * 将ASCII编码转化为字符串.
+     *
+     * @param integer $num
+     * @return string
+     */
+    protected function num2str($num)
+    {
+        if (!$this->lib) {
+            $this->parse_lib();
+        }
+                
+        if ($num>0&&$num<160) {
+            return chr($num);
+        } elseif ($num<-20319||$num>-10247) {
+            return '';
+        } else {
+            $total =sizeof($this->lib)-1;
+            for ($i=$total; $i>=0; $i--) {
+                if ($this->lib[$i][1]<=$num) {
+                    break;
+                }
+            }
+            
+            return $this->lib[$i][0];
+        }
+    }
 
-	/**
-	 * 返回汉字编码库
-	 * 
-	 * @return array
-	 */
-	protected function parse_lib() {
-		
-		return $this->lib = array(
-			array("a",-20319),
-			array("ai",-20317),
-			array("an",-20304),
-			array("ang",-20295),
-			array("ao",-20292),
-			array("ba",-20283),
-			array("bai",-20265),
-			array("ban",-20257),
-			array("bang",-20242),
-			array("bao",-20230),
-			array("bei",-20051),
-			array("ben",-20036),
-			array("beng",-20032),
-			array("bi",-20026),
-			array("bian",-20002),
-			array("biao",-19990),
-			array("bie",-19986),
-			array("bin",-19982),
-			array("bing",-19976),
-			array("bo",-19805),
-			array("bu",-19784),
-			array("ca",-19775),
-			array("cai",-19774),
-			array("can",-19763),
-			array("cang",-19756),
-			array("cao",-19751),
-			array("ce",-19746),
-			array("ceng",-19741),
-			array("cha",-19739),
-			array("chai",-19728),
-			array("chan",-19725),
-			array("chang",-19715),
-			array("chao",-19540),
-			array("che",-19531),
-			array("chen",-19525),
-			array("cheng",-19515),
-			array("chi",-19500),
-			array("chong",-19484),
-			array("chou",-19479),
-			array("chu",-19467),
-			array("chuai",-19289),
-			array("chuan",-19288),
-			array("chuang",-19281),
-			array("chui",-19275),
-			array("chun",-19270),
-			array("chuo",-19263),
-			array("ci",-19261),
-			array("cong",-19249),
-			array("cou",-19243),
-			array("cu",-19242),
-			array("cuan",-19238),
-			array("cui",-19235),
-			array("cun",-19227),
-			array("cuo",-19224),
+    /**
+     * 返回汉字编码库
+     *
+     * @return array
+     */
+    protected function parse_lib()
+    {
+        return $this->lib = array(
+            array("a",-20319),
+            array("ai",-20317),
+            array("an",-20304),
+            array("ang",-20295),
+            array("ao",-20292),
+            array("ba",-20283),
+            array("bai",-20265),
+            array("ban",-20257),
+            array("bang",-20242),
+            array("bao",-20230),
+            array("bei",-20051),
+            array("ben",-20036),
+            array("beng",-20032),
+            array("bi",-20026),
+            array("bian",-20002),
+            array("biao",-19990),
+            array("bie",-19986),
+            array("bin",-19982),
+            array("bing",-19976),
+            array("bo",-19805),
+            array("bu",-19784),
+            array("ca",-19775),
+            array("cai",-19774),
+            array("can",-19763),
+            array("cang",-19756),
+            array("cao",-19751),
+            array("ce",-19746),
+            array("ceng",-19741),
+            array("cha",-19739),
+            array("chai",-19728),
+            array("chan",-19725),
+            array("chang",-19715),
+            array("chao",-19540),
+            array("che",-19531),
+            array("chen",-19525),
+            array("cheng",-19515),
+            array("chi",-19500),
+            array("chong",-19484),
+            array("chou",-19479),
+            array("chu",-19467),
+            array("chuai",-19289),
+            array("chuan",-19288),
+            array("chuang",-19281),
+            array("chui",-19275),
+            array("chun",-19270),
+            array("chuo",-19263),
+            array("ci",-19261),
+            array("cong",-19249),
+            array("cou",-19243),
+            array("cu",-19242),
+            array("cuan",-19238),
+            array("cui",-19235),
+            array("cun",-19227),
+            array("cuo",-19224),
             array("da",-19218),
             array("dai",-19212),
             array("dan",-19038),
@@ -441,9 +441,9 @@ class Pinyin{
             array("yao",-11781),
             array("ye",-11604),
             array("yi",-11589),
-            array("yin",-11536),			
-			array("ying",-11358),
-            array("yo",-11340),	
+            array("yin",-11536),
+            array("ying",-11358),
+            array("yo",-11340),
             array("yo",-11340),
             array("yong",-11339),
             array("you",-11324),
@@ -483,42 +483,36 @@ class Pinyin{
             array("zong",-10281),
             array("zou",-10274),
             array("zu",-10270),
-            array("zuan",-10262),                        		
-			array("zui",-10260),
-			array("zun",-10256),
-			array("zuo",-10254),
-		);
-	}
-	
-	//编码转换
-	protected function iconvStr($from,$to,$fContents)
-	{
-			if(is_string($fContents) ) 
-			{
-				if(function_exists('mb_convert_encoding'))
-				{
-					return mb_convert_encoding ($fContents, $to, $from);
-				}
-				else if(function_exists('iconv'))
-				{
-					return iconv($from,$to,$fContents);
-				}
-				else
-				{
-					return $fContents;
-				}
-		}
-	}
-	/**
-	 * 析构函数
-	 * 
-	 * @access public
-	 * @return void
-	 */
-	public function __destruct()
-	{		
-		if (isset($this->lib)) {
-			unset($this->lib);
-		}
-	}
+            array("zuan",-10262),
+            array("zui",-10260),
+            array("zun",-10256),
+            array("zuo",-10254),
+        );
+    }
+    
+    //编码转换
+    protected function iconvStr($from, $to, $fContents)
+    {
+        if (is_string($fContents)) {
+            if (function_exists('mb_convert_encoding')) {
+                return mb_convert_encoding($fContents, $to, $from);
+            } elseif (function_exists('iconv')) {
+                return iconv($from, $to, $fContents);
+            } else {
+                return $fContents;
+            }
+        }
+    }
+    /**
+     * 析构函数
+     *
+     * @access public
+     * @return void
+     */
+    public function __destruct()
+    {
+        if (isset($this->lib)) {
+            unset($this->lib);
+        }
+    }
 }

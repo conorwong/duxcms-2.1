@@ -1,13 +1,16 @@
 <?php
 namespace app\duxcms\model;
+
 use app\base\model\BaseModel;
+
 /**
  * 表单字段操作
  */
-class FieldFormModel extends BaseModel {
+class FieldFormModel extends BaseModel
+{
 
     //完成
-    protected $_auto = array (
+    protected $_auto = array(
         array('show','intval',3,'function'),
         array('post','intval',3,'function'),
     );
@@ -16,7 +19,8 @@ class FieldFormModel extends BaseModel {
      * 获取列表
      * @return array 列表
      */
-    public function loadList($where = array()){
+    public function loadList($where = array())
+    {
         $data = $this->table("field as A")
                     ->join('{pre}field_form as B ON A.field_id = B.field_id')
                     ->field('B.*,A.*')
@@ -57,40 +61,41 @@ class FieldFormModel extends BaseModel {
      * @param string $type 更新类型
      * @return bool 更新状态
      */
-    public function saveData($type = 'add'){
+    public function saveData($type = 'add')
+    {
         
         //事务处理
         $this->beginTransaction();
         $model = target('duxcms/Field');
         $fieldId = $model->saveData($type);
-        if(!$fieldId){
+        if (!$fieldId) {
             $this->error = $model->getError();
             $this->rollBack();
             return false;
         }
         //分表处理
         $data = $this->create();
-        if(!$data){
+        if (!$data) {
             $this->rollBack();
             return false;
         }
-        if($type == 'add'){
+        if ($type == 'add') {
             //写入数据
             $data['field_id'] = $fieldId;
             $status = $this->add($data);
-            if($status){
+            if ($status) {
                 $this->commit();
-            }else{
+            } else {
                 $this->rollBack();
             }
             return $status;
         }
-        if($type == 'edit'){
+        if ($type == 'edit') {
             //修改数据
             $where = array();
             $where['field_id'] = $data['field_id'];
             $status = $this->where($where)->save();
-            if($status === false){
+            if ($status === false) {
                 $this->rollBack();
                 return false;
             }
@@ -111,7 +116,7 @@ class FieldFormModel extends BaseModel {
         $this->beginTransaction();
         $model = target('duxcms/Field');
         $status = $model->delData($fieldId);
-        if(!$status){
+        if (!$status) {
             $this->error = $model->getError();
             $this->rollBack();
             return false;
@@ -120,12 +125,11 @@ class FieldFormModel extends BaseModel {
         $map = array();
         $map['field_id'] = $fieldId;
         $status = $this->where($map)->delete();
-        if($status){
+        if ($status) {
             $this->commit();
-        }else{
+        } else {
             $this->rollBack();
         }
         return $status;
     }
-
 }

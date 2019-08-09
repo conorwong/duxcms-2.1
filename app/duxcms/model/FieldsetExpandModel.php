@@ -1,16 +1,20 @@
 <?php
 namespace app\duxcms\model;
+
 use app\base\model\BaseModel;
+
 /**
  * 扩展模型操作
  */
-class FieldsetExpandModel extends BaseModel {
+class FieldsetExpandModel extends BaseModel
+{
 
     /**
      * 获取列表
      * @return array 列表
      */
-    public function loadList($where = array()){
+    public function loadList($where = array())
+    {
         $data = $this->table("fieldset as A")
                     ->join('{pre}fieldset_expand as B ON A.fieldset_id = B.fieldset_id')
                     ->field('B.*,A.*')
@@ -50,40 +54,41 @@ class FieldsetExpandModel extends BaseModel {
      * @param string $type 更新类型
      * @return bool 更新状态
      */
-    public function saveData($type = 'add'){
+    public function saveData($type = 'add')
+    {
         
         //事务处理
         $this->beginTransaction();
         $model = target('duxcms/Fieldset');
         $fieldsetId = $model->saveData($type);
-        if(!$fieldsetId){
+        if (!$fieldsetId) {
             $this->error = $model->getError();
             $this->rollBack();
             return false;
         }
         //分表处理
         $data = $this->create();
-        if(!$data){
+        if (!$data) {
             $this->rollBack();
             return false;
         }
-        if($type == 'add'){
+        if ($type == 'add') {
             //写入数据
             $data['fieldset_id'] = $fieldsetId;
             $status = $this->add($data);
-            if($status){
+            if ($status) {
                 $this->commit();
-            }else{
+            } else {
                 $this->rollBack();
             }
             return $status;
         }
-        if($type == 'edit'){
+        if ($type == 'edit') {
             //修改数据
             $where = array();
             $where['fieldset_id'] = $data['fieldset_id'];
             $status = $this->where($where)->save($data);
-            if($status === false){
+            if ($status === false) {
                 $this->rollBack();
                 return false;
             }
@@ -104,7 +109,7 @@ class FieldsetExpandModel extends BaseModel {
         $this->beginTransaction();
         $model = target('duxcms/Fieldset');
         $status = $model->delData($fieldsetId);
-        if(!$status){
+        if (!$status) {
             $this->error = $model->getError();
             $this->rollBack();
             return false;
@@ -113,9 +118,9 @@ class FieldsetExpandModel extends BaseModel {
         $map = array();
         $map['fieldset_id'] = $fieldsetId;
         $status = $this->where($map)->delete();
-        if($status){
+        if ($status) {
             $this->commit();
-        }else{
+        } else {
             $this->rollBack();
         }
         return $status;
@@ -127,32 +132,30 @@ class FieldsetExpandModel extends BaseModel {
      * @param int $dataId 数据ID
      * @return array 数据
      */
-    public function getDataInfo($fieldsetId,$dataId)
+    public function getDataInfo($fieldsetId, $dataId)
     {
         //获取模型信息
         $fieldsetInfo = target('duxcms/FieldsetExpand')->getInfo($fieldsetId);
-        if(empty($fieldsetInfo)){
+        if (empty($fieldsetInfo)) {
             return ;
         }
         //获取字段内容
         target('duxcms/FieldData')->setTable('ext_'.$fieldsetInfo['table']);
         $extInfo = target('duxcms/FieldData')->getInfo($dataId);
-        if(empty($extInfo)){
+        if (empty($extInfo)) {
             return ;
         }
         //获取字段列表
         $where = array();
         $where['A.fieldset_id'] = $fieldsetId;
-        $fieldList = target('duxcms/FieldExpand')->loadList($where); 
-        if(empty($fieldList)){
+        $fieldList = target('duxcms/FieldExpand')->loadList($where);
+        if (empty($fieldList)) {
             return ;
         }
         $extArray = array();
         foreach ($fieldList as $value) {
-            $extArray[$value['field']] = target('duxcms/FieldData')->revertField($extInfo[$value['field']],$value['type'],$value['config']);
+            $extArray[$value['field']] = target('duxcms/FieldData')->revertField($extInfo[$value['field']], $value['type'], $value['config']);
         }
         return $extArray;
-
     }
-
 }

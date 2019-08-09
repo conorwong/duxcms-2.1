@@ -1,14 +1,17 @@
 <?php
 namespace app\duxcms\service;
+
 /**
  * 权限接口
  */
-class PurviewService{
-	/**
-	 * 获取模块权限
-	 */
-	public function getAdminPurview(){
-		return array(
+class PurviewService
+{
+    /**
+     * 获取模块权限
+     */
+    public function getAdminPurview()
+    {
+        return array(
             'AdminExpand' => array(
                 'name' => '扩展模型',
                 'auth' => array(
@@ -99,8 +102,5 @@ class PurviewService{
                 )
             ),
         );
-	}
-	
-
-
+    }
 }

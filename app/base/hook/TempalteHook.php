@@ -1,16 +1,20 @@
 <?php
 namespace app\base\hook;
+
 /**
- * Dux模板标签类 
+ * Dux模板标签类
  */
-class TempalteHook{
+class TempalteHook
+{
     private $__ldel = '{';
     private $__rdel = '}';
     private $__ltag = '<!--';
     private $__rtag = '-->';
-    private $_template_preg = array(), $_template_replace = array();
+    private $_template_preg = array();
+    private $_template_replace = array();
 
-	public function templateParse($template){
+    public function templateParse($template)
+    {
        
         //替换判断
         $this->_template_preg[] = '/' . $this->__ltag . "if\{(.*?)\}" . $this->__rtag . '/i';
@@ -58,14 +62,15 @@ class TempalteHook{
         $template = str_replace('__PUBLIC__', __PUBLIC__, $template);
         $template = str_replace('__ROOT__', __ROOT__, $template);
         return $template;
-	}
+    }
 
     /**
      * 解析循环标签
      * @param array $var
      * @return string
      */
-    private function parse_for($var) {
+    private function parse_for($var)
+    {
         $tpl = trim($var[2]);
         $item = trim($var[1]);
         $tpl = ' ' . $tpl;
@@ -73,7 +78,7 @@ class TempalteHook{
         $tpl = substr($tpl, 1);
         //匹配必要参数
         $dataArray = array();
-        if(preg_match_all('/\s"([_a-zA-Z]+)"=>"(.+?)"/', $tpl, $result)){
+        if (preg_match_all('/\s"([_a-zA-Z]+)"=>"(.+?)"/', $tpl, $result)) {
             foreach ($result[1] as $key => $value) {
                 $dataArray[$value] = $result[2][$key];
             }
@@ -82,10 +87,10 @@ class TempalteHook{
         $html = '<?php $'.$item.'List = service("'.strtolower($dataArray['app']).'","Label","'.$dataArray['label'].'",array('.$tpl.')); ';
         switch ($item) {
             case 'echo':
-                $html .= ' echo $'.$item.'List; ?>'; 
+                $html .= ' echo $'.$item.'List; ?>';
                 break;
             case 'assign':
-                $html .= '$'.$dataArray['list'].' = $'.$item.'List; ?>'; 
+                $html .= '$'.$dataArray['list'].' = $'.$item.'List; ?>';
                 break;
             default:
                 $html .= ' if(is_array($'.$item.'List)) foreach($'.$item.'List as $'.$item.'){ ?>';
@@ -99,14 +104,15 @@ class TempalteHook{
      * @param array $var
      * @return string
      */
-    private function parse_var($var) {
-        if (empty($var[0])){
+    private function parse_var($var)
+    {
+        if (empty($var[0])) {
             return;
         }
         $vars = explode('.', $var[0]);
         $var = array_shift($vars);
         $name = $var;
-        foreach ($vars as $val){
+        foreach ($vars as $val) {
             $name .= '["' . $val . '"]';
         }
         return $name;
@@ -117,10 +123,11 @@ class TempalteHook{
      * @param array $var
      * @return string
      */
-    private function parse_load($var) {
+    private function parse_load($var)
+    {
         $file = $var[3].$var[4];
         $url = THEME_NAME.'/'.TPL_NAME;
-        if(substr($url, 0,1) == '.'){
+        if (substr($url, 0, 1) == '.') {
             $url = substr($url, 1);
         }
         $url = str_replace('\\', '/', $url);
@@ -128,5 +135,4 @@ class TempalteHook{
         $html = '<'.$var[1].$var[2].'"'.$url.'"'.$var[5].'>';
         return $html;
     }
-
 }

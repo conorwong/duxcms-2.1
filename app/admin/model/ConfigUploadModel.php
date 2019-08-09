@@ -1,16 +1,20 @@
 <?php
 namespace app\admin\model;
+
 use app\base\model\BaseModel;
+
 /**
  * 上传配置表操作
  */
-class ConfigUploadModel extends BaseModel {
+class ConfigUploadModel extends BaseModel
+{
 
     /**
      * 获取列表
      * @return array 列表
      */
-    public function loadList(){
+    public function loadList()
+    {
         return  $this->select();
     }
 
@@ -18,7 +22,8 @@ class ConfigUploadModel extends BaseModel {
      * 获取统计
      * @return int 数量
      */
-    public function countList(){
+    public function countList()
+    {
         return  $this->count();
     }
 
@@ -49,20 +54,21 @@ class ConfigUploadModel extends BaseModel {
      * @param string $type 更新类型
      * @return bool 更新状态
      */
-    public function saveData($type = 'add'){
+    public function saveData($type = 'add')
+    {
         $data = $this->create();
-        if(!$data){
+        if (!$data) {
             return false;
         }
-        if($type == 'add'){
+        if ($type == 'add') {
             return $this->add();
         }
-        if($type == 'edit'){
-            if(empty($data['id'])){
+        if ($type == 'edit') {
+            if (empty($data['id'])) {
                 return false;
             }
             $status = $this->save();
-            if($status === false){
+            if ($status === false) {
                 return false;
             }
             return true;
@@ -81,5 +87,4 @@ class ConfigUploadModel extends BaseModel {
         $map['id'] = $id;
         return $this->where($map)->delete();
     }
-
 }

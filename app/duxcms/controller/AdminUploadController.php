@@ -1,6 +1,8 @@
 <?php
 namespace app\duxcms\controller;
+
 use app\admin\controller\AdminController;
+
 /**
  * 文件上传
  */
@@ -14,12 +16,9 @@ class AdminUploadController extends AdminController
         $return = array('status' => 1, 'info' => '上传成功', 'data' => '');
         $file = target('admin/File');
         $info = $file->uploadData();
-        if ($info)
-        {
+        if ($info) {
             $return['data'] = $info;
-        }
-        else
-        {
+        } else {
             $return['status'] = 0;
             $return['info'] = $file->getError();
         }
@@ -34,13 +33,13 @@ class AdminUploadController extends AdminController
         //编辑器无法动态获取参数，使用默认配置
         $file = target('admin/File');
         $info = $file->uploadData();
-        if ($info){
+        if ($info) {
             $return = array(
                 'error' => 0,
                 'url' => $info['url'],
                 'info' => $info,
                 );
-        }else{
+        } else {
             $return = array(
                 'error' => 1,
                 'message' => $file->getError(),
@@ -49,4 +48,3 @@ class AdminUploadController extends AdminController
         $this->ajaxReturn($return);
     }
 }
-

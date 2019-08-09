@@ -1,12 +1,15 @@
 <?php
 namespace app\admin\model;
+
 use app\base\model\BaseModel;
+
 /**
  * 文件操作
  */
-class FileModel extends BaseModel {
+class FileModel extends BaseModel
+{
     //完成
-    protected $_auto = array (
+    protected $_auto = array(
         array('time','time',3,'function'),
      );
 
@@ -20,12 +23,11 @@ class FileModel extends BaseModel {
         $config = array();
         $config['DIR_NAME'] = date('Y-m-d');
         $data = $upload->upload($config);
-        if(!$data){
+        if (!$data) {
             $this->error = $upload->getError();
             return false;
         }
         $this->add($data);
         return $data;
     }
-
 }

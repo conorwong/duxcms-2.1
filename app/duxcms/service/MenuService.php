@@ -1,27 +1,30 @@
 <?php
 namespace app\duxcms\service;
+
 /**
  * 后台菜单接口
  */
-class MenuService{
-	/**
-	 * 获取菜单结构
-	 */
-	public function getAdminMenu(){
+class MenuService
+{
+    /**
+     * 获取菜单结构
+     */
+    public function getAdminMenu()
+    {
         //获取表单列表
         $formList = target('duxcms/FieldsetForm')->loadList();
         $formMenu = array();
-        if(!empty($formList)){
+        if (!empty($formList)) {
             foreach ($formList as $key => $value) {
                 $formMenu[] = array(
                     'name' => $value['name'],
-                    'url' => url('duxcms/AdminFormData/index',array('fieldset_id'=>$value['fieldset_id'])),
+                    'url' => url('duxcms/AdminFormData/index', array('fieldset_id'=>$value['fieldset_id'])),
                     'order' => $key,
                     );
             }
         }
         //返回菜单
-		return array(
+        return array(
             'Content' => array(
                 'name' => '内容',
                 'icon' => 'bars',
@@ -60,14 +63,14 @@ class MenuService{
                         'icon' => 'bug',
                         'url' => url('duxcms/AdminUpdate/index'),
                         'order' => 3
-                    ), 
+                    ),
                 )
             ),
             'Function' => array(
                 'name' => '功能',
                 'icon' => 'wrench',
                 'order' => 3,
-                'menu' => array(    
+                'menu' => array(
                     array(
                         'name' => '碎片管理',
                         'icon' => 'leaf',
@@ -101,8 +104,5 @@ class MenuService{
                 )
             ),
         );
-	}
-	
-
-
+    }
 }

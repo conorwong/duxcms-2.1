@@ -1,14 +1,17 @@
 <?php
 namespace app\page\service;
+
 /**
  * 权限接口
  */
-class PurviewService{
-	/**
-	 * 获取模块权限
-	 */
-	public function getAdminPurview(){
-		return array(
+class PurviewService
+{
+    /**
+     * 获取模块权限
+     */
+    public function getAdminPurview()
+    {
+        return array(
             'AdminCategory' => array(
                 'name' => '单页栏目管理',
                 'auth' => array(
@@ -24,8 +27,5 @@ class PurviewService{
                 )
             ),
         );
-	}
-	
-
-
+    }
 }

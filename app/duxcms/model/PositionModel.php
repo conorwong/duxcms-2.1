@@ -1,12 +1,15 @@
 <?php
 namespace app\duxcms\model;
+
 use app\base\model\BaseModel;
+
 /**
  * 推荐位表操作
  */
-class PositionModel extends BaseModel {
+class PositionModel extends BaseModel
+{
     //完成
-    protected $_auto = array (
+    protected $_auto = array(
         array('sequence','intval',3,'function'),
         array('position_id','intval',2,'function'),
      );
@@ -19,7 +22,8 @@ class PositionModel extends BaseModel {
      * 获取列表
      * @return array 列表
      */
-    public function loadList(){
+    public function loadList()
+    {
         return  $this->select();
     }
 
@@ -40,20 +44,21 @@ class PositionModel extends BaseModel {
      * @param string $type 更新类型
      * @return bool 更新状态
      */
-    public function saveData($type = 'add'){
+    public function saveData($type = 'add')
+    {
         $data = $this->create();
-        if(!$data){
+        if (!$data) {
             return false;
         }
-        if($type == 'add'){
+        if ($type == 'add') {
             return $this->add();
         }
-        if($type == 'edit'){
-            if(empty($data['position_id'])){
+        if ($type == 'edit') {
+            if (empty($data['position_id'])) {
                 return false;
             }
             $status = $this->save();
-            if($status === false){
+            if ($status === false) {
                 return false;
             }
             return true;
@@ -72,5 +77,4 @@ class PositionModel extends BaseModel {
         $map['position_id'] = $positionId;
         return $this->where($map)->delete();
     }
-
 }

@@ -1,10 +1,13 @@
 <?php
 namespace app\base\model;
+
 use app\base\model\BaseModel;
+
 /**
  * 上传模块
  */
-class UploadModel extends BaseModel {
+class UploadModel extends BaseModel
+{
 
     /**
      * 上传数据
@@ -15,7 +18,7 @@ class UploadModel extends BaseModel {
     {
         $baseConfig = load_config(CONFIG_PATH . 'upload.php');
         $config = array_merge((array)$baseConfig, (array)$config);
-        if(empty($config['DIR_NAME'])){
+        if (empty($config['DIR_NAME'])) {
             $config['DIR_NAME'] = date('Y-m-d');
         }
         $path = UPLOAD_NAME . '/' . $config['DIR_NAME'] . '/';
@@ -41,31 +44,31 @@ class UploadModel extends BaseModel {
         $fileTitle = $fileTitle['filename'];
         $fileExt = $info['extension'];
         //设置保存文件名(针对图片有效)
-        if($config['SAVE_EXT']){
+        if ($config['SAVE_EXT']) {
             $saveName = $fileName. '.' . $config['SAVE_EXT'];
-        }else{
+        } else {
             $saveName = $info['savename'];
         }
         //处理图片数据
         $imgType = array('jpg','jpeg','png','gif','bmp');
-        if(in_array(strtolower($fileExt), $imgType)){
+        if (in_array(strtolower($fileExt), $imgType)) {
             //设置图片驱动
             $image = new \app\base\util\ThinkImage();
             //设置缩图
-            if($config['THUMB_STATUS']){
+            if ($config['THUMB_STATUS']) {
                 $image->open(ROOT_PATH . $file);
                 $thumbFile = $path.'thumb_'.$saveName;
                 $status = $image->thumb($config['THUMB_WIDTH'], $config['THUMB_HEIGHT'], $config['THUMB_TYPE'])->save(ROOT_PATH . $thumbFile);
-                if($status){
+                if ($status) {
                     $file = $thumbFile;
                 }
             }
             //设置水印
-            if($config['WATER_STATUS']){
+            if ($config['WATER_STATUS']) {
                 $image->open(ROOT_PATH . $file);
                 $wateFile = $path.'wate_'.$saveName;
-                $status = $image->water(ROOT_PATH . 'public/watermark/'.$config['WATER_IMAGE'],$config['WATER_POSITION'])->save(ROOT_PATH . $wateFile);
-                if($status){
+                $status = $image->water(ROOT_PATH . 'public/watermark/'.$config['WATER_IMAGE'], $config['WATER_POSITION'])->save(ROOT_PATH . $wateFile);
+                if ($status) {
                     $file = $wateFile;
                 }
             }
@@ -80,5 +83,4 @@ class UploadModel extends BaseModel {
         $data['time'] = time();
         return $data;
     }
-
 }

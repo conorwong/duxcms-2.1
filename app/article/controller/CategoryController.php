@@ -1,38 +1,42 @@
 <?php
 namespace app\article\controller;
+
 use app\home\controller\SiteController;
+
 /**
  * 栏目页面
  */
 
-class CategoryController extends SiteController {
+class CategoryController extends SiteController
+{
 
-	/**
+    /**
      * 栏目页
      */
-    public function index(){
-    	$classId = request('get.class_id',0,'intval');
+    public function index()
+    {
+        $classId = request('get.class_id', 0, 'intval');
         $urlName = request('get.urlname');
         if (empty($classId)&&empty($urlName)) {
             $this->error404();
         }
         //获取栏目信息
         $model = target('CategoryArticle');
-        if(!empty($classId)){
+        if (!empty($classId)) {
             $categoryInfo=$model->getInfo($classId);
-        }else if(!empty($urlName)){
+        } elseif (!empty($urlName)) {
             $map = array();
             $map['urlname'] = $urlName;
             $categoryInfo=$model->getWhereInfo($map);
-        }else{
+        } else {
             $this->error404();
         }
         $classId = $categoryInfo['class_id'];
         //信息判断
-        if (!is_array($categoryInfo)){
+        if (!is_array($categoryInfo)) {
             $this->error404();
         }
-        if(strtolower($categoryInfo['app'])<>APP_NAME){
+        if (strtolower($categoryInfo['app'])<>APP_NAME) {
             $this->error404();
         }
         //位置导航
@@ -42,14 +46,14 @@ class CategoryController extends SiteController {
         if ($categoryInfo['type'] == 0) {
             $classIds = target('duxcms/Category')->getSubClassId($classId);
         }
-        if(empty($classIds)){
+        if (empty($classIds)) {
             $classIds = $categoryInfo['class_id'];
         }
         $where['A.status'] = 1;
         $where[] = 'C.class_id in ('.$classIds.')';
 
         //分页参数
-        $size = intval($categoryInfo['page']); 
+        $size = intval($categoryInfo['page']);
         if (empty($size)) {
             $listRows = 20;
         } else {
@@ -57,11 +61,10 @@ class CategoryController extends SiteController {
         }
         //查询内容数据
         $modelContent = target('ContentArticle');
-        if(!empty($categoryInfo['content_order'])){
-
+        if (!empty($categoryInfo['content_order'])) {
             $categoryInfo['content_order'] = $categoryInfo['content_order'].',';
         }
-        $pageList = $modelContent->page($listRows)->loadList($where,$limit,$categoryInfo['content_order'].'A.time desc,A.content_id desc',$categoryInfo['fieldset_id']);
+        $pageList = $modelContent->page($listRows)->loadList($where, $limit, $categoryInfo['content_order'].'A.time desc,A.content_id desc', $categoryInfo['fieldset_id']);
         $this->pager = $modelContent->pager;
         //URL参数
         $pageMaps = array();
@@ -74,7 +77,7 @@ class CategoryController extends SiteController {
         //获取顶级栏目信息
         $topCategoryInfo = target('duxcms/Category')->getInfo($crumb[0]['class_id']);
         //MEDIA信息
-        $media = $this->getMedia($categoryInfo['name'],$categoryInfo['keywords'],$categoryInfo['description']);
+        $media = $this->getMedia($categoryInfo['name'], $categoryInfo['keywords'], $categoryInfo['description']);
         //模板赋值
         $this->assign('categoryInfo', $categoryInfo);
         $this->assign('parentCategoryInfo', $parentCategoryInfo);

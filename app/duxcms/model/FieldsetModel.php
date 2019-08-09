@@ -1,10 +1,13 @@
 <?php
 namespace app\duxcms\model;
+
 use app\base\model\BaseModel;
+
 /**
  * 字段集操作
  */
-class FieldsetModel extends BaseModel {
+class FieldsetModel extends BaseModel
+{
 
     //验证
     protected $_validate = array(
@@ -40,35 +43,36 @@ class FieldsetModel extends BaseModel {
      * @param bool $autoKey 自动更新主键
      * @return bool 更新状态
      */
-    public function saveData($type = 'add' ,$autoKey = false){
+    public function saveData($type = 'add', $autoKey = false)
+    {
         $data = $this->create();
-        if(!$data){
+        if (!$data) {
             return false;
         }
-        if($type == 'add'){
+        if ($type == 'add') {
             //创建数据表
             $sql=" CREATE TABLE IF NOT EXISTS `{pre}ext_".$data['table']."` ( ";
-            if($autoKey){
+            if ($autoKey) {
                 $sql .= '
                     `data_id` int(10) NOT NULL AUTO_INCREMENT ,
                     PRIMARY KEY (`data_id`)
                     ) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
                 ';
-            }else{
+            } else {
                 $sql .= '
                     `data_id` int(10) DEFAULT NULL 
                     ) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
                 ';
             }
             $statusSql = $this->execute($sql);
-            if($statusSql === false){
+            if ($statusSql === false) {
                 return false;
             }
             //写入数据
             return $this->data($data)->add();
         }
-        if($type == 'edit'){
-            if(empty($data['fieldset_id'])){
+        if ($type == 'edit') {
+            if (empty($data['fieldset_id'])) {
                 return false;
             }
             //获取信息
@@ -78,14 +82,14 @@ class FieldsetModel extends BaseModel {
             ALTER TABLE {pre}ext_".$info['table']." RENAME TO {pre}ext_".$data['table']."
             ";
             $statusSql = $this->execute($sql);
-            if($statusSql === false){
+            if ($statusSql === false) {
                 return false;
             }
             //修改数据
             $where = array();
             $where['fieldset_id'] = $data['fieldset_id'];
             $status = $this->where($where)->data($data)->save();
-            if($status === false){
+            if ($status === false) {
                 return false;
             }
             return true;
@@ -104,7 +108,7 @@ class FieldsetModel extends BaseModel {
         $map['fieldset_id'] = $fieldsetId;
         //获取信息
         $info = $this->getWhereInfo($map);
-        if(!$info){
+        if (!$info) {
             $this->error = '数据不存在！';
             return false;
         }
@@ -113,7 +117,7 @@ class FieldsetModel extends BaseModel {
             DROP TABLE `{pre}ext_".$info['table']."`
         ";
         $statusSql = $this->execute($sql);
-        if($statusSql === false){
+        if ($statusSql === false) {
             return false;
         }
         //删除数据
@@ -129,15 +133,14 @@ class FieldsetModel extends BaseModel {
     {
         //获取栏目信息
         $classInfo=target('duxcms/Category')->getInfo($classId);
-        if(empty($classInfo)){
+        if (empty($classInfo)) {
             return false;
         }
         //获取完整栏目信息
         $classInfo=target(strtolower($classInfo['app']).'/Category'.ucfirst($classInfo['app']))->getInfo($classId);
-        if(empty($classInfo)||!$classInfo['fieldset_id']){
+        if (empty($classInfo)||!$classInfo['fieldset_id']) {
             return false;
         }
         return $this->getInfo($classInfo['fieldset_id']);
     }
-
 }

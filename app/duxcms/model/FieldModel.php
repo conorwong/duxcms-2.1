@@ -1,10 +1,13 @@
 <?php
 namespace app\duxcms\model;
+
 use app\base\model\BaseModel;
+
 /**
  * 字段操作
  */
-class FieldModel extends BaseModel {
+class FieldModel extends BaseModel
+{
 
     //验证
     protected $_validate = array(
@@ -15,7 +18,7 @@ class FieldModel extends BaseModel {
         array('verify_type','require', '验证类型未选择', 1),
     );
     //完成
-    protected $_auto = array (
+    protected $_auto = array(
         //全部
         array('fieldset_id','intval',3,'function'), //字段集ID
         array('name','htmlspecialchars',3,'function'), //字段名
@@ -30,7 +33,8 @@ class FieldModel extends BaseModel {
      * 获取列表
      * @return array 列表
      */
-    public function loadList($where = array()){
+    public function loadList($where = array())
+    {
         return $this->where($where)->order('sequence asc')->select();
     }
 
@@ -61,9 +65,10 @@ class FieldModel extends BaseModel {
      * @param string $type 更新类型
      * @return bool 更新状态
      */
-    public function saveData($type = 'add'){
+    public function saveData($type = 'add')
+    {
         $data = $this->create();
-        if(!$data){
+        if (!$data) {
             return false;
         }
         //字段集信息
@@ -73,45 +78,45 @@ class FieldModel extends BaseModel {
         $propertyField = $this->propertyField();
         $typeData = $typeField[$data['type']];
         $property = $propertyField[$typeData['property']];
-        if($property['decimal']){
+        if ($property['decimal']) {
             $property['decimal']=','.$property['decimal'];
-        }else{
+        } else {
             $property['decimal']='';
         }
-        if($type == 'add'){
+        if ($type == 'add') {
             //插入字段
             $sqlText="
             ALTER TABLE {pre}ext_{$fieldsetInfo['table']} ADD {$data['field']} {$property['name']}({$property['maxlen']}{$property['decimal']}) DEFAULT NULL
             ";
             $sql = $this->execute($sqlText);
 
-            if($sql === false){
+            if ($sql === false) {
                 return false;
             }
             //写入数据
             return $this->add($data);
         }
-        if($type == 'edit'){
-            if(empty($data['field_id'])){
+        if ($type == 'edit') {
+            if (empty($data['field_id'])) {
                 return false;
             }
             //获取信息
             $info = $this->getInfo($data['field_id']);
-             //修改字段
-            if($info['type']<>$data['type']||$info['field']<>$data['field']){
+            //修改字段
+            if ($info['type']<>$data['type']||$info['field']<>$data['field']) {
                 $sql="
                 ALTER TABLE {pre}ext_{$fieldsetInfo['table']} CHANGE {$info['field']} {$data['field']} {$property['name']}({$property['maxlen']}{$property['decimal']})
                 ";
                 $statusSql = $this->execute($sql);
-                if($statusSql === false){
+                if ($statusSql === false) {
                     return false;
                 }
             }
             //修改数据
-			$where = array();
-			$where['field_id'] = $data['field_id'];
+            $where = array();
+            $where['field_id'] = $data['field_id'];
             $status = $this->where($where)->data($data)->save();
-            if($status === false){
+            if ($status === false) {
                 return false;
             }
             return true;
@@ -131,7 +136,7 @@ class FieldModel extends BaseModel {
         //获取信息
         $info = $this->getWhereInfo($map);
         $fieldsetInfo = target('duxcms/Fieldset')->getInfo($info['fieldset_id']);
-        if(empty($fieldsetInfo)){
+        if (empty($fieldsetInfo)) {
             return false;
         }
         //删除字段
@@ -139,7 +144,7 @@ class FieldModel extends BaseModel {
              ALTER TABLE {pre}ext_{$fieldsetInfo['table']} DROP {$info['field']}
             ";
         $statusSql = $this->execute($sql);
-        if($statusSql === false){
+        if ($statusSql === false) {
             return false;
         }
         //删除数据
@@ -153,24 +158,23 @@ class FieldModel extends BaseModel {
      */
     public function validateField($field)
     {
-        if(empty($field)){
+        if (empty($field)) {
             return false;
         }
-        $fieldsetId = request('post.fieldset_id',0);
-        $fieldId = request('post.field_id',0);
+        $fieldsetId = request('post.fieldset_id', 0);
+        $fieldId = request('post.field_id', 0);
         $map = array();
         $map['fieldset_id'] = $fieldsetId;
-        if($fieldId){
+        if ($fieldId) {
             $map[] = 'field_id <> '.$fieldId;
         }
         $map['field'] = $field;
         $info = $this->getWhereInfo($map);
-        if(empty($info)){
+        if (empty($info)) {
             return true;
-        }else{
+        } else {
             return false;
         }
-
     }
 
     /**
@@ -369,7 +373,7 @@ class FieldModel extends BaseModel {
      * @param string $model 其他模块
      * @return string HTML信息
      */
-    public function htmlFieldFull($value,$data = null,$model = 'duxcms/Field')
+    public function htmlFieldFull($value, $data = null, $model = 'duxcms/Field')
     {
         //获取字段属性
         $typeField=$this->typeField();
@@ -378,9 +382,9 @@ class FieldModel extends BaseModel {
         $config['type']=$typeField[$value['type']]['html'];
         $config['title']=$value['name'];
         $config['name']='Fieldset_'.$value['field'];
-        if($data){
+        if ($data) {
             $config['value'] = $data;
-        }else{
+        } else {
             $config['value'] = $value['default'];
         }
         $config['verify_data_js']=base64_decode($value['verify_data_js']);
@@ -399,7 +403,7 @@ class FieldModel extends BaseModel {
     public function htmlField($config)
     {
         //设置统一JS验证
-        if($config['verify_data_js']){
+        if ($config['verify_data_js']) {
             $verifyHtml = 'datatype="'.$config['verify_data_js'].'" errormsg="'.$config['errormsg'].'"';
         }
         //设置HTML
@@ -441,9 +445,9 @@ class FieldModel extends BaseModel {
                     </div>
                     <br>
                     <div class="media-inline  clearfix dux-multi-image" id="'.$config['name'].'">';
-                    if(!empty($config['value'])){
+                    if (!empty($config['value'])) {
                         $list = unserialize($config['value']);
-                        if(is_array($list)&&!empty($list)){
+                        if (is_array($list)&&!empty($list)) {
                             foreach ($list as $value) {
                                 $html.='
                                 <div class="media radius clearfix">
@@ -466,9 +470,9 @@ class FieldModel extends BaseModel {
                 $i = 0;
                 foreach ($list as $vo) {
                     $i++;
-                    if($i == $config['value']){
+                    if ($i == $config['value']) {
                         $html .= '<option value="'.$i.'" selected>'.$vo.'</option>';
-                    }else{
+                    } else {
                         $html .= '<option value="'.$i.'">'.$vo.'</option>';
                     }
                 }
@@ -481,9 +485,9 @@ class FieldModel extends BaseModel {
                 foreach ($list as $vo) {
                     $i++;
                     $html .= ' <label>';
-                    if($i == $config['value']){
+                    if ($i == $config['value']) {
                         $html .= '<input name="'.$config['name'].'" value="'.$i.'" checked="checked" type="radio">';
-                    }else{
+                    } else {
                         $html .= '<input name="'.$config['name'].'" value="'.$i.'" type="radio">';
                     }
                     $html .= ' '.$vo.'</label> ';
@@ -498,9 +502,9 @@ class FieldModel extends BaseModel {
                 foreach ($list as $vo) {
                     $i++;
                     $html .= ' <label>';
-                    if(in_array($i,$val)){
+                    if (in_array($i, $val)) {
                         $html .= '<input name="'.$config['name'].'[]" value="'.$i.'" checked="checked" type="checkbox">';
-                    }else{
+                    } else {
                         $html .= '<input name="'.$config['name'].'[]" value="'.$i.'" type="checkbox">';
                     }
                     $html .= ' '.$vo.'</label> ';
@@ -508,8 +512,8 @@ class FieldModel extends BaseModel {
                 $html .= '</div>';
                 break;
             case 'textTime':
-                if(!empty($config['value'])){
-                    $config['value'] = date('Y/m/d H:i:s',$config['value']);
+                if (!empty($config['value'])) {
+                    $config['value'] = date('Y/m/d H:i:s', $config['value']);
                 }
                 $html .= '
                     <input type="text" class="input  js-time" id="'.$config['name'].'" name="'.$config['name'].'" size="60" '.$verifyHtml.' value="'.$config['value'].'">
@@ -524,7 +528,5 @@ class FieldModel extends BaseModel {
         $html .= '<div class="input-note">'.$config['tip'].'</div>';
         $html .= '</div></div>';
         return $html;
-
     }
-
 }

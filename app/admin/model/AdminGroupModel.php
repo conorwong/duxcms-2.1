@@ -1,12 +1,15 @@
 <?php
 namespace app\admin\model;
+
 use app\base\model\BaseModel;
+
 /**
  * 用户组操作
  */
-class AdminGroupModel extends BaseModel {
+class AdminGroupModel extends BaseModel
+{
     //完成
-    protected $_auto = array (
+    protected $_auto = array(
          array('status','intval',3,'function'),
          array('name','htmlspecialchars',3,'function'),
      );
@@ -19,7 +22,8 @@ class AdminGroupModel extends BaseModel {
      * 获取列表
      * @return array 列表
      */
-    public function loadList(){
+    public function loadList()
+    {
         $data   = $this->select();
         return $data;
     }
@@ -41,20 +45,21 @@ class AdminGroupModel extends BaseModel {
      * @param string $type 更新类型
      * @return bool 更新状态
      */
-    public function saveData($type = 'add'){
+    public function saveData($type = 'add')
+    {
         $data = $this->create();
-        if(!$data){
+        if (!$data) {
             return false;
         }
-        if($type == 'add'){
+        if ($type == 'add') {
             return $this->add();
         }
-        if($type == 'edit'){
-            if(empty($data['group_id'])){
+        if ($type == 'edit') {
+            if (empty($data['group_id'])) {
                 return false;
             }
             $status = $this->save();
-            if($status === false){
+            if ($status === false) {
                 return false;
             }
             return true;
@@ -67,13 +72,14 @@ class AdminGroupModel extends BaseModel {
      * @param string $type 更新类型
      * @return bool 更新状态
      */
-    public function savePurviewData(){
+    public function savePurviewData()
+    {
         $this->_auto = array();
         $data = $this->create();
         $data['menu_purview'] = serialize($data['menu_purview']);
         $data['base_purview'] = serialize($data['base_purview']);
         $status = $this->save($data);
-        if($status === false){
+        if ($status === false) {
             return false;
         }
         return true;
@@ -90,5 +96,4 @@ class AdminGroupModel extends BaseModel {
         $map['group_id'] = $groupId;
         return $this->where($map)->delete();
     }
-
 }

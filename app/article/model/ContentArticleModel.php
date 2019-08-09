@@ -1,10 +1,13 @@
 <?php
 namespace app\article\model;
+
 use app\base\model\BaseModel;
+
 /**
  * 内容操作
  */
-class ContentArticleModel extends BaseModel {
+class ContentArticleModel extends BaseModel
+{
     //验证
     protected $_validate = array(
         array('content','require', '请填写文章内容', 1 ,'regex',3),
@@ -14,19 +17,20 @@ class ContentArticleModel extends BaseModel {
      * 获取列表
      * @return array 列表
      */
-    public function loadList($where = array(), $limit = 0, $order = 'A.time desc,A.content_id desc', $fieldsetId = 0){
+    public function loadList($where = array(), $limit = 0, $order = 'A.time desc,A.content_id desc', $fieldsetId = 0)
+    {
         //基础条件
         $where['C.app'] = 'article';
         $model =  $this->table("content as A")
                     ->join('{pre}content_article as B ON A.content_id = B.content_id')
-					->join('{pre}category as C ON A.class_id = C.class_id');
+                    ->join('{pre}category as C ON A.class_id = C.class_id');
         $field = 'A.*,B.*,C.name as class_name,C.app,C.urlname as class_urlname,C.image as class_image,C.parent_id';
         //查询扩展信息
-        if(!empty($fieldsetId)){
+        if (!empty($fieldsetId)) {
             $fieldsetInfo = target('duxcms/FieldsetExpand')->getInfo($fieldsetId);
-            if(!empty($fieldsetInfo)){
+            if (!empty($fieldsetInfo)) {
                 //设置查询
-                $model = $model->join('{pre}ext_'.$fieldsetInfo['table'].' as D ON A.content_id = D.data_id' , 'LEFT');
+                $model = $model->join('{pre}ext_'.$fieldsetInfo['table'].' as D ON A.content_id = D.data_id', 'LEFT');
                 $field .= ',D.*';
                 //获取字段列表
                 $whereExt = array();
@@ -43,7 +47,7 @@ class ContentArticleModel extends BaseModel {
 
         //处理数据结果
         $list=array();
-        if(!empty($pageList)){
+        if (!empty($pageList)) {
             $i = 0;
             foreach ($pageList as $key=>$value) {
                 //处理基础
@@ -53,9 +57,9 @@ class ContentArticleModel extends BaseModel {
                 $list[$key]['curl'] = target('duxcms/Category')->getUrl($value);
                 $list[$key]['i'] = $i++;
                 //处理扩展字段
-                if(!empty($fieldList)){
+                if (!empty($fieldList)) {
                     foreach ($fieldList as $v) {
-                        $list[$key][$v['field']] = target('duxcms/FieldData')->revertField($value[$v['field']],$v['type'],$v['config']);
+                        $list[$key][$v['field']] = target('duxcms/FieldData')->revertField($value[$v['field']], $v['type'], $v['config']);
                     }
                 }
             }
@@ -67,7 +71,8 @@ class ContentArticleModel extends BaseModel {
      * 获取数量
      * @return int 数量
      */
-    public function countList($where = array()){
+    public function countList($where = array())
+    {
         $where['C.app'] = 'article';
         return $this->table("content as A")
                     ->join('{pre}content_article as B ON A.content_id = B.content_id')
@@ -86,7 +91,7 @@ class ContentArticleModel extends BaseModel {
         $map = array();
         $map['A.content_id'] = $contentId;
         $info = $this->getWhereInfo($map);
-        if(empty($info)){
+        if (empty($info)) {
             $this->error = '文章不存在！';
         }
         return $info;
@@ -97,16 +102,16 @@ class ContentArticleModel extends BaseModel {
      * @param array $where 条件
      * @return array 信息
      */
-    public function getWhereInfo($where,$order = '')
+    public function getWhereInfo($where, $order = '')
     {
         $info = $this->table("content as A")
                     ->join('{pre}content_article as B ON A.content_id = B.content_id')
-					->join('{pre}category as C ON A.class_id = C.class_id')
+                    ->join('{pre}category as C ON A.class_id = C.class_id')
                     ->field('A.*,B.content,C.name as class_name,C.app,C.urlname as class_urlname,C.image as class_image')
                     ->where($where)
                     ->order($order)
                     ->find();
-        if(!empty($info)){
+        if (!empty($info)) {
             $info['app'] = strtolower($info['app']);
         }
         return $info;
@@ -117,35 +122,36 @@ class ContentArticleModel extends BaseModel {
      * @param string $type 更新类型
      * @return bool 更新状态
      */
-    public function saveData($type = 'add'){
+    public function saveData($type = 'add')
+    {
         //事务总表处理
         $this->beginTransaction();
         $contentId = target('duxcms/Content')->saveData($type);
-        if(!$contentId){
+        if (!$contentId) {
             $this->error = target('duxcms/Content')->getError();
             return false;
         }
         //分表处理
         $data = $this->create();
-        if(!$data){
+        if (!$data) {
             $this->rollBack();
             return false;
         }
-        if($type == 'add'){
+        if ($type == 'add') {
             $data['content_id'] = $contentId;
             $status = $this->add($data);
-            if($status){
+            if ($status) {
                 $this->commit();
-            }else{
+            } else {
                 $this->rollBack();
             }
             return $contentId;
         }
-        if($type == 'edit'){
+        if ($type == 'edit') {
             $where = array();
             $where['content_id'] = $data['content_id'];
             $status = $this->where($where)->save($data);
-            if($status === false){
+            if ($status === false) {
                 $this->rollBack();
                 return false;
             }
@@ -166,7 +172,7 @@ class ContentArticleModel extends BaseModel {
         $this->beginTransaction();
         $model = target('duxcms/Content');
         $status = $model->delData($contentId);
-        if(!$status){
+        if (!$status) {
             $this->error = $model->getError();
             $this->rollBack();
             return false;
@@ -174,12 +180,11 @@ class ContentArticleModel extends BaseModel {
         $map = array();
         $map['content_id'] = $contentId;
         $status = $this->where($map)->delete();
-        if($status){
+        if ($status) {
             $this->commit();
-        }else{
+        } else {
             $this->rollBack();
         }
         return $status;
     }
-
 }

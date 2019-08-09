@@ -1,12 +1,15 @@
 <?php
 namespace app\duxcms\model;
+
 use app\base\model\BaseModel;
+
 /**
  * 碎片表操作
  */
-class FragmentModel extends BaseModel {
+class FragmentModel extends BaseModel
+{
     //完成
-    protected $_auto = array (
+    protected $_auto = array(
          array('content','html_in',3,'function'),
      );
     //验证
@@ -21,7 +24,8 @@ class FragmentModel extends BaseModel {
      * 获取列表
      * @return array 列表
      */
-    public function loadList(){
+    public function loadList()
+    {
         return  $this->select();
     }
 
@@ -29,7 +33,8 @@ class FragmentModel extends BaseModel {
      * 获取统计
      * @return int 数量
      */
-    public function countList(){
+    public function countList()
+    {
         return  $this->count();
     }
 
@@ -60,20 +65,21 @@ class FragmentModel extends BaseModel {
      * @param string $type 更新类型
      * @return bool 更新状态
      */
-    public function saveData($type = 'add'){
+    public function saveData($type = 'add')
+    {
         $data = $this->create();
-        if(!$data){
+        if (!$data) {
             return false;
         }
-        if($type == 'add'){
+        if ($type == 'add') {
             return $this->add();
         }
-        if($type == 'edit'){
-            if(empty($data['fragment_id'])){
+        if ($type == 'edit') {
+            if (empty($data['fragment_id'])) {
                 return false;
             }
             $status = $this->save();
-            if($status === false){
+            if ($status === false) {
                 return false;
             }
             return true;
@@ -92,5 +98,4 @@ class FragmentModel extends BaseModel {
         $map['fragment_id'] = $fragmentId;
         return $this->where($map)->delete();
     }
-
 }

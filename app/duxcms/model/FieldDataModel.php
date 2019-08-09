@@ -1,16 +1,20 @@
 <?php
 namespace app\duxcms\model;
+
 use app\base\model\BaseModel;
+
 /**
  * 扩展字段数据操作
  */
-class FieldDataModel extends BaseModel {
+class FieldDataModel extends BaseModel
+{
 
     /**
      * 获取列表
      * @return array 列表
      */
-    public function loadList($where,$limit = 0,$order='data_id DESC'){
+    public function loadList($where, $limit = 0, $order='data_id DESC')
+    {
         return  $this->where($where)->limit($limit)->order($order)->select();
     }
 
@@ -18,7 +22,8 @@ class FieldDataModel extends BaseModel {
      * 获取数量
      * @return array 数量
      */
-    public function countList($where){
+    public function countList($where)
+    {
         return $this->where($where)->count();
     }
 
@@ -41,17 +46,18 @@ class FieldDataModel extends BaseModel {
      * @param bool $prefix POST前缀
      * @return bool 更新状态
      */
-    public function saveData($type = 'add' , $fieldsetInfo){
-        if(is_array($fieldsetInfo)){
+    public function saveData($type = 'add', $fieldsetInfo)
+    {
+        if (is_array($fieldsetInfo)) {
             $fieldsetId = $fieldsetInfo['fieldset_id'];
-        }else{
+        } else {
             $fieldsetId = $fieldsetInfo;
         }
         //获取字段列表
         $where = array();
         $where['fieldset_id'] = $fieldsetId;
         $fieldList=target('duxcms/Field')->loadList($where);
-        if(empty($fieldList)||!is_array($fieldList)){
+        if (empty($fieldList)||!is_array($fieldList)) {
             return;
         }
         //设置数据列表
@@ -61,9 +67,9 @@ class FieldDataModel extends BaseModel {
         foreach ($fieldList as $value) {
             $data[$value['field']] = request('post.Fieldset_'.$value['field']);
             $verify_data = base64_decode($value['verify_data']);
-            if($verify_data){
+            if ($verify_data) {
                 $errormsg = $value['errormsg'];
-                if(empty($errormsg)){
+                if (empty($errormsg)) {
                     $errormsg = $value['name'].'填写不正确！';
                 }
                 $valiRules[] = array($value['field'], $verify_data ,$errormsg,$value['verify_condition'],$value['verify_type'],3);
@@ -72,21 +78,21 @@ class FieldDataModel extends BaseModel {
         }
 
         $data = $this->auto($autoRules)->validate($valiRules)->create($data);
-        if(!$data){
+        if (!$data) {
             return false;
         }
         $data['data_id'] = request('post.data_id');
-        if($type == 'add'){
+        if ($type == 'add') {
             return $this->add($data);
         }
-        if($type == 'edit'){
-            if(empty($data['data_id'])){
+        if ($type == 'edit') {
+            if (empty($data['data_id'])) {
                 return false;
             }
             $where = array();
             $where['data_id'] = $data['data_id'];
             $status = $this->where($where)->save();
-            if($status === false){
+            if ($status === false) {
                 return false;
             }
             return true;
@@ -112,7 +118,7 @@ class FieldDataModel extends BaseModel {
      * @param int $type 字段类型
      * @return 格式化后数据
      */
-    public function formatField($field,$type)
+    public function formatField($field, $type)
     {
         $data = $_POST['Fieldset_'.$field];
         switch ($type) {
@@ -122,7 +128,7 @@ class FieldDataModel extends BaseModel {
                 break;
             case '6':
                 $fileData=array();
-                if(is_array($data)){
+                if (is_array($data)) {
                     foreach ($data['url'] as $key => $value) {
                         $fileData[$key]['url'] = $value;
                         $fileData[$key]['title'] = $data['title'][$key];
@@ -135,22 +141,21 @@ class FieldDataModel extends BaseModel {
                 return intval($data);
                 break;
             case '10':
-                if(!empty($data)){
+                if (!empty($data)) {
                     return strtotime($data);
-                }else{
+                } else {
                     return time();
                 }
                 break;
             case '9':
-                if(!empty($data)&&is_array($data)){
-                    return implode(',',$data);
+                if (!empty($data)&&is_array($data)) {
+                    return implode(',', $data);
                 }
                 break;
             default:
                 return request('post.Fieldset_'.$field);
                 break;
         }
-
     }
 
     /**
@@ -160,12 +165,12 @@ class FieldDataModel extends BaseModel {
      * @param int $type 字段配置信息
      * @return 还原后数据
      */
-    public function revertField($data,$type,$config)
+    public function revertField($data, $type, $config)
     {
         switch ($type) {
             case '6':
                 //文件列表
-                if(empty($data)){
+                if (empty($data)) {
                     return ;
                 }
                 $list=unserialize($data);
@@ -173,10 +178,10 @@ class FieldDataModel extends BaseModel {
                 break;
             case '7':
             case '8':
-                if(empty($config)){
+                if (empty($config)) {
                     return $data;
                 }
-                $list = explode(",",trim($config));
+                $list = explode(",", trim($config));
                 $listData = array();
                 $i = 0;
                 foreach ($list as $value) {
@@ -189,10 +194,10 @@ class FieldDataModel extends BaseModel {
                         );
                 break;
             case '9':
-                if(empty($config)){
+                if (empty($config)) {
                     return $data;
                 }
-                $list = explode(",",trim($config));
+                $list = explode(",", trim($config));
                 $listData = array();
                 $i = 0;
                 foreach ($list as $value) {
@@ -201,17 +206,16 @@ class FieldDataModel extends BaseModel {
                 }
                 return array(
                         'list' => $listData,
-                        'value' => explode(",",trim($data)),
+                        'value' => explode(",", trim($data)),
                         );
                 break;
             case '11':
-                return number_format($data,2);
+                return number_format($data, 2);
                 break;
             default:
                 return html_out($data);
                 break;
         }
-
     }
 
 
@@ -220,24 +224,24 @@ class FieldDataModel extends BaseModel {
      * @param int $type 字段类型
      * @return array 字段类型列表
      */
-    public function showListField($data,$type,$config)
+    public function showListField($data, $type, $config)
     {
         switch ($type) {
             case '5':
-                if($data){
+                if ($data) {
                     return '<img name="" src="'.$data.'" alt="" style="max-width:170px; max-height:90px;" />';
-                }else{
+                } else {
                     return '无';
                 }
                 break;
             case '6':
                 //文件列表
-                if(empty($data)){
+                if (empty($data)) {
                     return '无';
                 }
                 $list=unserialize($data);
                 $html='';
-                if(!empty($list)){
+                if (!empty($list)) {
                     foreach ($list as $key => $value) {
                         $html.=$value['url'].'<br>';
                     }
@@ -246,47 +250,43 @@ class FieldDataModel extends BaseModel {
                 break;
             case '7':
             case '8':
-                if(empty($config)){
+                if (empty($config)) {
                     return $data;
                 }
-                $list=explode(",",trim($config));
+                $list=explode(",", trim($config));
                 foreach ($list as $key => $vo) {
-                    if($data==intval($key)+1){
+                    if ($data==intval($key)+1) {
                         return $vo;
                     }
                 }
                 break;
             case '9':
-                if(empty($config)){
+                if (empty($config)) {
                     return $data;
                 }
-                $list = explode(",",trim($config));
+                $list = explode(",", trim($config));
                 $newList = array();
                 $i = 0;
                 foreach ($list as $value) {
                     $i++;
                     $newList[$i] =  $value;
                 }
-                $data = explode(",",trim($data));
+                $data = explode(",", trim($data));
                 $html='';
                 foreach ($data as $key => $vo) {
                     $html.=' '.$newList[$vo].' |';
-
                 }
-                return substr($html,0,-1);
+                return substr($html, 0, -1);
                 break;
             case '10':
-                return date('Y-m-d H:i:s',$data);
+                return date('Y-m-d H:i:s', $data);
                 break;
             case '11':
-                return number_format($data,2);
+                return number_format($data, 2);
                 break;
             default:
                 return $data;
                 break;
         }
     }
-
-    
-
 }

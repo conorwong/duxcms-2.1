@@ -1,11 +1,13 @@
 <?php
 namespace app\admin\controller;
+
 use app\base\controller\BaseController;
+
 /**
  * 后台公共类
  */
-class AdminController extends BaseController {
-
+class AdminController extends BaseController
+{
     public function __construct()
     {
         parent::__construct();
@@ -15,23 +17,24 @@ class AdminController extends BaseController {
     /**
      * 后台控制器初始化
      */
-    protected function init(){
+    protected function init()
+    {
         //强制后台入口登录
-        if (!defined('ADMIN_STATUS')) { 
+        if (!defined('ADMIN_STATUS')) {
             $this->error('请从后台入口重新登录！', false);
         }
         // 检测用户登录
-        define('ADMIN_ID',$this->isLogin());
-        if( !ADMIN_ID && ( APP_NAME <> 'admin' || CONTROLLER_NAME <> 'Login' )){
+        define('ADMIN_ID', $this->isLogin());
+        if (!ADMIN_ID && (APP_NAME <> 'admin' || CONTROLLER_NAME <> 'Login')) {
             $this->redirect(url('admin/Login/index'));
         }
-        if(!(APP_NAME == 'admin' && CONTROLLER_NAME == 'Login')){
+        if (!(APP_NAME == 'admin' && CONTROLLER_NAME == 'Login')) {
             //设置登录用户信息
             $this->loginUserInfo = target('admin/AdminUser')->getInfo(ADMIN_ID);
             //检测权限
             $this->checkPurview();
             //赋值当前菜单
-            if(method_exists($this,'_infoModule')){
+            if (method_exists($this, '_infoModule')) {
                 $this->infoModule = $this->_infoModule();
             }
         }
@@ -46,7 +49,7 @@ class AdminController extends BaseController {
             return true;
         }
         $basePurview = unserialize($this->loginUserInfo['base_purview']);
-        $purviewInfo = service(APP_NAME,'Purview','getAdminPurview');
+        $purviewInfo = service(APP_NAME, 'Purview', 'getAdminPurview');
         if (empty($purviewInfo)) {
             return true;
         }
@@ -73,7 +76,8 @@ class AdminController extends BaseController {
      * 检测用户是否登录
      * @return int 用户IP
      */
-    protected function isLogin(){
+    protected function isLogin()
+    {
         $user = session('admin_user');
         if (empty($user)) {
             return 0;
@@ -88,13 +92,14 @@ class AdminController extends BaseController {
      * @param string $tpl 指定要调用的模板文件
      * @return void
      */
-    protected function adminDisplay($tpl = '') {
+    protected function adminDisplay($tpl = '')
+    {
         //复制当前URL
-        $this->assign('self',__SELF__);
-        $common = $this->display('app/admin/view/common',true);
+        $this->assign('self', __SELF__);
+        $common = $this->display('app/admin/view/common', true);
         $tplArray = get_method_array($tpl);
         $tpl = 'app/'. strtolower($tplArray['app']) . '/view/' . strtolower($tplArray['controller']) . '/' . strtolower($tplArray['action']);
-        $html = $this->display($tpl,true);
+        $html = $this->display($tpl, true);
         echo str_replace('<!--common-->', $html, $common);
     }
 
@@ -104,23 +109,22 @@ class AdminController extends BaseController {
         $pageArray = $this->pager;
         $html = '
         <ul class="pagination pagination-small">
-          <li><a href="'.$this->createPageUrl($map,$mustParams,$pageArray['firstPage']).'">首页</a></li>
-          <li><a href="'.$this->createPageUrl($map,$mustParams,$pageArray['prevPage']).'">上一页</a></li> ';
-            foreach ($pageArray['allPages'] as $value) {
-                if($value == 0){
-                    continue;
-                }
-                if($value == $pageArray['page']){
-                    $html .= '<li class="active">';
-                }else{
-                    $html .= '<li>';
-                }
-                $html .= '<a href="'.$this->createPageUrl($map,$mustParams,$value).'">'.$value.'</a></li> ';
-           }
-         $html .= '<li><a href="'.$this->createPageUrl($map,$mustParams,$pageArray['nextPage']).'">下一页</a></li>
-          <li><a href="'.$this->createPageUrl($map,$mustParams,$pageArray['lastPage']).'">末页</a></li>
+          <li><a href="'.$this->createPageUrl($map, $mustParams, $pageArray['firstPage']).'">首页</a></li>
+          <li><a href="'.$this->createPageUrl($map, $mustParams, $pageArray['prevPage']).'">上一页</a></li> ';
+        foreach ($pageArray['allPages'] as $value) {
+            if ($value == 0) {
+                continue;
+            }
+            if ($value == $pageArray['page']) {
+                $html .= '<li class="active">';
+            } else {
+                $html .= '<li>';
+            }
+            $html .= '<a href="'.$this->createPageUrl($map, $mustParams, $value).'">'.$value.'</a></li> ';
+        }
+        $html .= '<li><a href="'.$this->createPageUrl($map, $mustParams, $pageArray['nextPage']).'">下一页</a></li>
+          <li><a href="'.$this->createPageUrl($map, $mustParams, $pageArray['lastPage']).'">末页</a></li>
         </ul>';
         return $html;
-
     }
 }

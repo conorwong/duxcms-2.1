@@ -1,10 +1,13 @@
 <?php
 namespace app\article\model;
+
 use app\base\model\BaseModel;
+
 /**
  * 栏目操作
  */
-class CategoryArticleModel extends BaseModel {
+class CategoryArticleModel extends BaseModel
+{
     //验证
     protected $_validate = array(
         array('content_tpl','1,200', '内容模板未选择', 0 ,'length',3),
@@ -14,8 +17,8 @@ class CategoryArticleModel extends BaseModel {
      * 获取列表
      * @return array 列表
      */
-    public function loadList($where = array(), $classId=0){
-        
+    public function loadList($where = array(), $classId=0)
+    {
         $data = $this->loadData($where);
         $cat = new \framework\ext\Category(array('class_id', 'parent_id', 'name', 'cname'));
         $data = $cat->getTree($data, intval($classId));
@@ -26,7 +29,8 @@ class CategoryArticleModel extends BaseModel {
      * 获取列表
      * @return array 列表
      */
-    public function loadData($where = array(), $limit = 0){
+    public function loadData($where = array(), $limit = 0)
+    {
         $pageList = $this->table("category as A")
                     ->join('{pre}category_article as B ON A.class_id = B.class_id')
                     ->field('B.*,A.*')
@@ -36,7 +40,7 @@ class CategoryArticleModel extends BaseModel {
                     ->select();
         //处理数据类型
         $list=array();
-        if(!empty($pageList)){
+        if (!empty($pageList)) {
             $i = 0;
             foreach ($pageList as $key=>$value) {
                 $list[$key]=$value;
@@ -72,7 +76,7 @@ class CategoryArticleModel extends BaseModel {
                     ->field('B.*,A.*')
                     ->where($where)
                     ->find();
-        if(!empty($info)){
+        if (!empty($info)) {
             $info['app'] = strtolower($info['app']);
         }
         return $info;
@@ -83,36 +87,37 @@ class CategoryArticleModel extends BaseModel {
      * @param string $type 更新类型
      * @return bool 更新状态
      */
-    public function saveData($type = 'add'){
+    public function saveData($type = 'add')
+    {
         //事务总表处理
         $this->beginTransaction();
         $classId = target('duxcms/Category')->saveData($type);
-        if(!$classId){
+        if (!$classId) {
             $this->error = target('duxcms/Category')->getError();
             $this->rollBack();
             return false;
         }
         //分表处理
         $data = $this->create();
-        if(!$data){
+        if (!$data) {
             $this->rollBack();
             return false;
         }
-        if($type == 'add'){
+        if ($type == 'add') {
             $data['class_id'] = $classId;
             $status = $this->add($data);
-            if($status){
+            if ($status) {
                 $this->commit();
-            }else{
+            } else {
                 $this->rollBack();
             }
             return $status;
         }
-        if($type == 'edit'){
+        if ($type == 'edit') {
             $where = array();
             $where['class_id'] = $data['class_id'];
             $status = $this->where($where)->save($data);
-            if($status === false){
+            if ($status === false) {
                 $this->rollBack();
                 return false;
             }
@@ -137,6 +142,4 @@ class CategoryArticleModel extends BaseModel {
         $map['class_id'] = $classId;
         return $this->where($map)->delete();
     }
-    
-
 }

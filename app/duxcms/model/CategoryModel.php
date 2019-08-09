@@ -1,12 +1,15 @@
 <?php
 namespace app\duxcms\model;
+
 use app\base\model\BaseModel;
+
 /**
  * 栏目操作
  */
-class CategoryModel extends BaseModel {
+class CategoryModel extends BaseModel
+{
     //完成
-    protected $_auto = array (
+    protected $_auto = array(
         array('show','intval',3,'function'),
         array('sequence','intval',3,'function'),
         array('name','htmlspecialchars',3,'function'),
@@ -25,13 +28,14 @@ class CategoryModel extends BaseModel {
      * 获取列表
      * @return array 列表
      */
-    public function loadList($where = array(), $classId=0){
+    public function loadList($where = array(), $classId=0)
+    {
         $data = $this->loadData($where);
         $cat = new \framework\ext\Category(array('class_id', 'parent_id', 'name', 'cname'));
         $data = $cat->getTree($data, intval($classId));
         //获取内容模型
-        $modelList = get_all_service('ContentModel','');
-        if(!empty($data)){
+        $modelList = get_all_service('ContentModel', '');
+        if (!empty($data)) {
             foreach ($data as $key => $value) {
                 $modelInfo = $modelList[$value['app']];
                 $data[$key]['model_name'] = $modelInfo['name'];
@@ -44,10 +48,11 @@ class CategoryModel extends BaseModel {
      * 获取列表(前台调用)
      * @return array 列表
      */
-    public function loadData($where = array(), $limit = 0){
+    public function loadData($where = array(), $limit = 0)
+    {
         $pageList = $this->where($where)->limit($limit)->order("sequence ASC , class_id ASC")->select();
         $list = array();
-        if(!empty($pageList)){
+        if (!empty($pageList)) {
             $i = 0;
             foreach ($pageList as $key=>$value) {
                 $list[$key]=$value;
@@ -63,7 +68,8 @@ class CategoryModel extends BaseModel {
      * 获取栏目数量
      * @return array 列表
      */
-    public function countList($where = array()){
+    public function countList($where = array())
+    {
         return $this->where($where)->count();
     }
 
@@ -87,7 +93,7 @@ class CategoryModel extends BaseModel {
     public function getWhereInfo($where)
     {
         $info = $this->where($where)->find();
-        if(!empty($info)){
+        if (!empty($info)) {
             $info['app'] = strtolower($info['app']);
         }
         return $info;
@@ -98,20 +104,21 @@ class CategoryModel extends BaseModel {
      * @param string $type 更新类型
      * @return bool 更新状态
      */
-    public function saveData($type = 'add'){
+    public function saveData($type = 'add')
+    {
         $data = $this->create();
-        if(!$data){
+        if (!$data) {
             return false;
         }
-        if($type == 'add'){
+        if ($type == 'add') {
             return $this->add($data);
         }
-        if($type == 'edit'){
-            if(empty($data['class_id'])){
+        if ($type == 'edit') {
+            if (empty($data['class_id'])) {
                 return false;
             }
             $status = $this->save();
-            if($status === false){
+            if ($status === false) {
                 return false;
             }
             return true;
@@ -142,30 +149,25 @@ class CategoryModel extends BaseModel {
         $urlName = request('post.urlname');
         $classId = request('post.class_id');
         //生成URL
-        if (empty($urlName))
-        {
+        if (empty($urlName)) {
             $pinyin = new \framework\ext\Pinyin();
             $name = preg_replace('/\s+/', '-', $name);
             $pattern = '/[^\x{4e00}-\x{9fa5}\d\w\-]+/u';
             $name = preg_replace($pattern, '', $name);
-            $urlName = substr($pinyin->output($name, true),0,30);
-            $urlName = trim($urlName,'-');
+            $urlName = substr($pinyin->output($name, true), 0, 30);
+            $urlName = trim($urlName, '-');
         }
         //返回数据
         $where = array();
-        if (!empty($classId))
-        {
+        if (!empty($classId)) {
             $where[] = 'class_id <> '.$classId;
         }
         $where['urlname'] = $urlName;
-        $info = $this->getWhereInfo($where); 
-        if (empty($info))
-        {
+        $info = $this->getWhereInfo($where);
+        if (empty($info)) {
             return $urlName;
-        }
-        else
-        {
-            return $urlName.substr(unique_number(),8);
+        } else {
+            return $urlName.substr(unique_number(), 8);
         }
     }
     /**
@@ -180,17 +182,17 @@ class CategoryModel extends BaseModel {
         $parentId = request('post.parent_id');
 
         //判断空上级
-        if(!$parentId){
+        if (!$parentId) {
             return true;
         }
         // 分类检测
-        if ($classId == $parentId){
+        if ($classId == $parentId) {
             $this->error = '不可以将当前栏目设置为上一级栏目';
             return false;
         }
 
-        $cat = $this->loadList(array(),$classId);
-        if(empty($cat)){
+        $cat = $this->loadList(array(), $classId);
+        if (empty($cat)) {
             return true;
         }
         foreach ($cat as $vo) {
@@ -200,7 +202,6 @@ class CategoryModel extends BaseModel {
             }
         }
         return true;
-
     }
 
     /**
@@ -213,7 +214,7 @@ class CategoryModel extends BaseModel {
         $data = $this->loadData();
         $cat = new \framework\ext\Category(array('class_id', 'parent_id', 'name', 'cname'));
         $data = $cat->getPath($data, $classId);
-        if(!empty($data)){
+        if (!empty($data)) {
             foreach ($data as $key => $value) {
                 $data[$key] = $value;
                 $data[$key]['url'] = $this->getUrl($value);
@@ -230,17 +231,16 @@ class CategoryModel extends BaseModel {
     public function getSubClassId($classId)
     {
         $data = $this->loadList(array(), $classId);
-        if(empty($data)){
+        if (empty($data)) {
             return;
         }
         $list = array();
         foreach ($data as $value) {
-            if($value['show']){
+            if ($value['show']) {
                 $list[]=$value['class_id'];
             }
         }
         return implode(',', $list);
-        
     }
 
     /**
@@ -250,7 +250,6 @@ class CategoryModel extends BaseModel {
      */
     public function getUrl($info)
     {
-        return match_url(strtolower($info['app']).'/Category/index',array('class_id'=>$info['class_id'],'urlname'=>$info['urlname']));
+        return match_url(strtolower($info['app']).'/Category/index', array('class_id'=>$info['class_id'],'urlname'=>$info['urlname']));
     }
-
 }

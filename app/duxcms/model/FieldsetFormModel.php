@@ -1,13 +1,16 @@
 <?php
 namespace app\duxcms\model;
+
 use app\base\model\BaseModel;
+
 /**
  * 表单操作
  */
-class FieldsetFormModel extends BaseModel {
+class FieldsetFormModel extends BaseModel
+{
 
     //完成
-    protected $_auto = array (
+    protected $_auto = array(
         array('show_list','intval',3,'function'),
         array('show_info','intval',3,'function'),
         array('list_page','intval',3,'function'),
@@ -24,7 +27,8 @@ class FieldsetFormModel extends BaseModel {
      * 获取列表
      * @return array 列表
      */
-    public function loadList($where = array()){
+    public function loadList($where = array())
+    {
         $data = $this->table("fieldset as A")
                     ->join('{pre}fieldset_form as B ON A.fieldset_id = B.fieldset_id')
                     ->field('B.*,A.*')
@@ -64,40 +68,41 @@ class FieldsetFormModel extends BaseModel {
      * @param string $type 更新类型
      * @return bool 更新状态
      */
-    public function saveData($type = 'add'){
+    public function saveData($type = 'add')
+    {
         
         //事务处理
         $this->beginTransaction();
         $model = target('duxcms/Fieldset');
-        $fieldsetId = $model->saveData($type,true);
-        if(!$fieldsetId){
+        $fieldsetId = $model->saveData($type, true);
+        if (!$fieldsetId) {
             $this->error = $model->getError();
             $this->rollBack();
             return false;
         }
         //分表处理
         $data = $this->create();
-        if(!$data){
+        if (!$data) {
             $this->rollBack();
             return false;
         }
-        if($type == 'add'){
+        if ($type == 'add') {
             //写入数据
             $data['fieldset_id'] = $fieldsetId;
             $status = $this->add($data);
-            if($status){
+            if ($status) {
                 $this->commit();
-            }else{
+            } else {
                 $this->rollBack();
             }
             return $status;
         }
-        if($type == 'edit'){
+        if ($type == 'edit') {
             //修改数据
             $where = array();
             $where['fieldset_id'] = $data['fieldset_id'];
             $status = $this->where($where)->save();
-            if($status === false){
+            if ($status === false) {
                 $this->rollBack();
                 return false;
             }
@@ -118,7 +123,7 @@ class FieldsetFormModel extends BaseModel {
         $this->beginTransaction();
         $model = target('duxcms/Fieldset');
         $status = $model->delData($fieldsetId);
-        if(!$status){
+        if (!$status) {
             $this->error = $model->getError();
             $this->rollBack();
             return false;
@@ -127,9 +132,9 @@ class FieldsetFormModel extends BaseModel {
         $map = array();
         $map['fieldset_id'] = $fieldsetId;
         $status = $this->where($map)->delete();
-        if($status){
+        if ($status) {
             $this->commit();
-        }else{
+        } else {
             $this->rollBack();
         }
         return $status;
@@ -144,14 +149,14 @@ class FieldsetFormModel extends BaseModel {
     public function validToken($table, $token)
     {
         $token = session('form_'.$table);
-        if(empty($token)){
+        if (empty($token)) {
             return false;
         }
         $formToken = trim($token);
-        if($token<>$formToken){
+        if ($token<>$formToken) {
             return false;
         }
-        session('form_'.$table,' ');
+        session('form_'.$table, ' ');
         return true;
     }
 
@@ -163,8 +168,7 @@ class FieldsetFormModel extends BaseModel {
     public function setToken($table)
     {
         $token = md5(microtime(true));
-        session('form_'.$table,$token);
+        session('form_'.$table, $token);
         return $token;
     }
-
 }
