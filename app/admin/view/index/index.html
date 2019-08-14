@@ -30,6 +30,16 @@
             <ul class="nav  nav-navicon nav-menu nav-inline admin-nav nav-tool">
                <li> <a href="__ROOT__/" target="_blank" class="icon-home"></a></li>
                 <li> <a href="{url('admin/AdminUser/edit',array('user_id'=>$loginUserInfo['user_id']))}" target="dux-iframe" class="icon-user"></a></li>
+
+                <!--多语言菜单-->
+                <!--if{defined('LANG_OPEN')}-->
+                    <!--loop{$lang_list as $key=>$vo}-->
+                        <li> <a href="admin.php?lang={$key}"  style="<!--if{APP_LANG == $key}-->background: #3190ee;<!--{/if}-->color:#fff">
+                            {$vo.label}
+                        </a></li>
+                    <!--{/loop}-->
+               <!--{/if}-->
+                
                 <li> <a href="{url('admin/Login/logout')}" class="dux-logout bg-red icon-power-off"></a></li>
             </ul>
         </div>
@@ -41,7 +51,7 @@
                 <li><a href="{$vo.url}" class="icon-{$vo.icon}"> {$vo.name}</a></li>
             </div>
         </ul>
-    </div>    
+    </div>
     <div class="dux-admin">
             <iframe id="dux-iframe" name="dux-iframe" class="dux-iframe" src="" frameborder="0"></iframe>
     </div>

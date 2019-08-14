@@ -17,6 +17,27 @@ class SiteController extends BaseController
         }
         //设置常量
         define('TPL_NAME', config('tpl_name'));
+
+        // 多语言
+        $lang_file = CONFIG_PATH . 'lang.php';
+        $lang_config = load_config($lang_file);
+
+        if ($lang_config['LANG_OPEN']) {
+            $lang = request('get.lang');
+            
+            if (!$lang) {
+                if (!session('APP_LANG')) {
+                    $lang = $lang_config['LANG_DEFAULT'];
+                } else {
+                    $lang = session('APP_LANG', $lang);
+                }
+            }
+
+            define('LANG_OPEN', true);
+            define('APP_LANG', $lang);
+            session('APP_LANG', $lang);
+        }
+
         //访问统计
         target('duxcms/TotalVisitor')->addData();
         target('duxcms/TotalSpider')->addData();
@@ -31,7 +52,13 @@ class SiteController extends BaseController
      */
     protected function siteDisplay($name='', $type = true)
     {
-        $tpl = THEME_NAME . '/' . TPL_NAME . '/' . $name;
+        // 多语言
+        if (defined('LANG_OPEN')) {
+            $tpl = THEME_NAME . '/' . TPL_NAME . '/' . APP_LANG . '/' . $name;
+        } else {
+            $tpl = THEME_NAME . '/' . TPL_NAME . '/' . $name;
+        }
+          
         if ($type) {
             $this->display($tpl);
         } else {

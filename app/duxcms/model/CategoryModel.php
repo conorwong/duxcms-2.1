@@ -50,6 +50,9 @@ class CategoryModel extends BaseModel
      */
     public function loadData($where = array(), $limit = 0)
     {
+        // 多语言
+        $where['lang'] = APP_LANG;
+        
         $pageList = $this->where($where)->limit($limit)->order("sequence ASC , class_id ASC")->select();
         $list = array();
         if (!empty($pageList)) {
@@ -111,6 +114,7 @@ class CategoryModel extends BaseModel
             return false;
         }
         if ($type == 'add') {
+            $data['lang'] = APP_LANG;
             return $this->add($data);
         }
         if ($type == 'edit') {

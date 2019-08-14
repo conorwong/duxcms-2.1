@@ -1,0 +1,57 @@
+<form method="post" class="form-x dux-form form-auto" id="form" action="{url('lang')}">
+    <div class="panel dux-box  active">
+        <div class="panel-head">
+            <strong>多语言设置</strong>
+        </div>
+        <div class="panel-body">
+            <div class="form-group">
+                <div class="label">
+                    <label for="sitename">开启多语言</label>
+                </div>
+                <div class="field">
+                        <div class="button-group button-group-small radio">
+                            <!--if{$info['LANG_OPEN']}-->
+                            <label class="button active"><input name="LANG_OPEN" value="1" checked="checked" type="radio">
+                            <!--{else}-->
+                            <label class="button"><input name="LANG_OPEN" value="1" type="radio">
+                            <!--{/if}-->
+                            <span class="icon icon-check"></span> 开启</label>
+                            <!--if{!$info['LANG_OPEN']}-->
+                            <label class="button active"><input name="LANG_OPEN" checked="checked" value="0" type="radio">
+                            <!--{else}-->
+                            <label class="button"><input name="LANG_OPEN" value="0" type="radio">
+                            <!--{/if}-->
+                            <span class="icon icon-times"></span> 关闭</label>
+                        </div>
+                    </div>
+            </div>
+            <div class="form-group">
+                <div class="label">
+                    <label for="sitename">默认语言</label>
+                </div>
+                <div class="field">
+                    <input type="text" class="input" id="lang" name="LANG_DEFAULT" size="40" value="{$info.LANG_DEFAULT}" readonly>
+                    <select class="input js-assign" target="#lang">
+                        <option value="">请选择</option>
+                        <!--loop{$info['LANG_LIST'] as $key=>$vo}-->
+                        <option value="{$key}">{$vo.label}</option>
+                        <!--{/loop}-->
+                    </select>
+                    <div class="input-note">当前站点所使用的主题</div>
+                </div>
+            </div>
+        </div>
+        <div class="panel-foot">
+            <div class="form-button">
+                <div id="tips"></div>
+                <button class="button bg-main" type="submit">保存</button>
+                <button class="button bg" type="reset">重置</button>
+            </div>
+        </div>
+    </div>
+</form>
+<script>
+    Do.ready('base', function () {
+        $('#form').duxForm();
+    });
+</script>

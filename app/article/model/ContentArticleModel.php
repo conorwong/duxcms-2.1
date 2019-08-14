@@ -21,6 +21,10 @@ class ContentArticleModel extends BaseModel
     {
         //基础条件
         $where['C.app'] = 'article';
+
+        // 多语言过滤
+        $where['C.lang'] = APP_LANG;
+        
         $model =  $this->table("content as A")
                     ->join('{pre}content_article as B ON A.content_id = B.content_id')
                     ->join('{pre}category as C ON A.class_id = C.class_id');

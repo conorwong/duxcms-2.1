@@ -32,6 +32,11 @@ class SettingController extends AdminController
                         'icon' => 'mobile',
                     ),
                     array(
+                        'name' => '多语言设置',
+                        'url' => url('Setting/lang'),
+                        'icon' => 'dashboard',
+                    ),
+                    array(
                         'name' => '模板设置',
                         'url' => url('Setting/tpl'),
                         'icon' => 'eye',
@@ -136,6 +141,27 @@ class SettingController extends AdminController
             $breadCrumb = array('上传设置'=>url());
             $this->assign('breadCrumb', $breadCrumb);
             $this->assign('info', load_config($file));
+            $this->adminDisplay();
+        } else {
+            if (save_config($file, $_POST)) {
+                $this->success('上传配置成功！');
+            } else {
+                $this->error('上传配置失败');
+            }
+        }
+    }
+
+    /**
+     * 多语言配置
+     *
+     * @return void
+     */
+    public function lang()
+    {
+        $file = CONFIG_PATH . 'lang.php';
+        if (!IS_POST) {
+            $this->assign('info', load_config($file));
+            $s = load_config($file);
             $this->adminDisplay();
         } else {
             if (save_config($file, $_POST)) {
