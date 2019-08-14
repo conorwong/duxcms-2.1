@@ -15,7 +15,7 @@ class TempalteHook
 
     public function templateParse($template)
     {
-       
+        
         //替换判断
         $this->_template_preg[] = '/' . $this->__ltag . "if\{(.*?)\}" . $this->__rtag . '/i';
         $this->_template_preg[] = '/' . $this->__ltag . '\{else\}' . $this->__rtag . '/i';
@@ -37,7 +37,13 @@ class TempalteHook
 
         //引入页面标签
         $this->_template_preg[] = '/<!--#include\s*file=[\"|\'](.*)\.(html|htm)[\"|\']-->/';
-        $this->_template_replace[] = "<?php \$__Template->display(\"".THEME_NAME.'/'.TPL_NAME."/$1\"); ?>";
+
+        // 多语言
+        if (LANG_OPEN) {
+            $this->_template_replace[] = "<?php \$__Template->display(\"".THEME_NAME.'/'. TPL_NAME . '/'. APP_LANG ."/$1\"); ?>";
+        } else {
+            $this->_template_replace[] = "<?php \$__Template->display(\"".THEME_NAME.'/'. TPL_NAME . "/$1\"); ?>";
+        }
 
         //替换图片CSS等路径
         $template = preg_replace_callback('/<(.*?)(src=|href=|value=|background=)[\"|\'](images\/|img\/|css\/|js\/|style\/)(.*?)[\"|\'](.*?)>/', array($this, 'parse_load'), $template);
@@ -127,6 +133,11 @@ class TempalteHook
     {
         $file = $var[3].$var[4];
         $url = THEME_NAME.'/'.TPL_NAME;
+
+        if (LANG_OPEN) {
+            $url = THEME_NAME . '/' . TPL_NAME . '/' . APP_LANG;
+        }
+        
         if (substr($url, 0, 1) == '.') {
             $url = substr($url, 1);
         }
