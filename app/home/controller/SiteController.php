@@ -18,24 +18,17 @@ class SiteController extends BaseController
         //设置常量
         define('TPL_NAME', config('tpl_name'));
 
-        // 多语言
-        $lang_file = CONFIG_PATH . 'lang.php';
-        $lang_config = load_config($lang_file);
-
-        if ($lang_config['LANG_OPEN']) {
-            $lang = request('get.lang');
-            
+        // 多语言设置
+        if (LANG_OPEN) {
+            $lang = request('get.lang') ?? session('APP_LANG');
             if (!$lang) {
-                if (!session('APP_LANG')) {
-                    $lang = $lang_config['LANG_DEFAULT'];
-                } else {
-                    $lang = session('APP_LANG', $lang);
-                }
+                $lang = $lang_config['LANG_DEFAULT'];
+            } else {
+                session('APP_LANG', $lang);
             }
 
-            define('LANG_OPEN', true);
-            define('APP_LANG', $lang);
-            session('APP_LANG', $lang);
+            define('APP_LANG', session('APP_LANG'));
+            define('LANG_TPL_PATH', '/' . APP_LANG);
         }
 
         //访问统计
