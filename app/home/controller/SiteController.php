@@ -17,7 +17,7 @@ class SiteController extends BaseController
         }
         //设置常量
         define('TPL_NAME', config('tpl_name'));
-
+        
         // 多语言设置
         if (LANG_OPEN) {
             $lang = request('get.lang') ?? session('APP_LANG');
@@ -28,7 +28,6 @@ class SiteController extends BaseController
             }
 
             define('APP_LANG', session('APP_LANG'));
-            define('LANG_TPL_PATH', '/' . APP_LANG);
         }
 
         //访问统计
@@ -46,7 +45,7 @@ class SiteController extends BaseController
     protected function siteDisplay($name='', $type = true)
     {
         // 多语言
-        if (defined('LANG_OPEN')) {
+        if (LANG_OPEN) {
             $tpl = THEME_NAME . '/' . TPL_NAME . '/' . APP_LANG . '/' . $name;
         } else {
             $tpl = THEME_NAME . '/' . TPL_NAME . '/' . $name;
