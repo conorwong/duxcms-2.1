@@ -33,4 +33,7 @@ http://www.domain.com/index.php?lang=zh
 </ul>
 ```
 
+## 百度推送
+模板使用 `<!--#pushBaidu-->`
+
 
