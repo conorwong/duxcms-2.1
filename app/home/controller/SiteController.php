@@ -17,17 +17,17 @@ class SiteController extends BaseController
         }
         //设置常量
         define('TPL_NAME', config('tpl_name'));
-        
+
         // 多语言设置
         if (LANG_OPEN) {
-            $lang = request('get.lang') ?? session('APP_LANG');
+            $lang = request('get.lang') ? request('get.lang') : cookie('APP_LANG');
             $lang_config = LANG_CONFIG;
             if (!$lang) {
                 $lang = $lang_config['LANG_DEFAULT'];
             }
             
-            session('APP_LANG', $lang);
-            define('APP_LANG', session('APP_LANG'));
+            cookie('APP_LANG', $lang, 24 * 3);
+            define('APP_LANG', $lang);
         }
 
         //访问统计
