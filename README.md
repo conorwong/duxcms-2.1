@@ -8,3 +8,29 @@
 ### 开启语言
 1. 后台设置->多语言设置->开启
 2. 选择默认语言
+
+### 切换语言
+#### 前台切换
+```php
+// 切换英文
+http://www.domain.com/index.php?lang=en
+// 切换中文
+http://www.domain.com/index.php?lang=zh
+```
+#### 前台获取语言配置
+模板调用 `$lang_list` 获取列表
+
+```php
+<?php var_dump($lang_list);?>
+```
+
+具体用法
+```html
+<ul>
+<!--foreach{$lang_list as $key=>$vo}-->
+  <li><a href="/index.php?lang={$key}">{$vo.label}</a></li>
+<!--{/foreach}-->
+</ul>
+```
+
+
