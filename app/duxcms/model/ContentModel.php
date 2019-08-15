@@ -41,6 +41,10 @@ class ContentModel extends BaseModel
      */
     public function loadList($where = array(), $limit = 50, $order = 'A.time desc,A.content_id desc')
     {
+        if (LANG_OPEN) {
+            $where['B.lang'] = APP_LANG; 
+        }
+        
         $pageList = $this->table("content as A")
                     ->join('{pre}category as B ON A.class_id = B.class_id')
                     ->field('A.*,B.name as class_name,B.app,B.urlname as class_urlname,B.image as class_image,B.parent_id')
