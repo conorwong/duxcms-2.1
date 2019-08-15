@@ -24,6 +24,12 @@ class SiteController extends BaseController
             $lang_config = LANG_CONFIG;
             if (!$lang) {
                 $lang = $lang_config['LANG_DEFAULT'];
+            } else {
+                if (false === array_key_exists($lang, $lang_config['LANG_LIST']))
+                {
+                    $this->redirect('/');
+                    exit;
+                }
             }
             
             cookie('APP_LANG', $lang, 24 * 3);
