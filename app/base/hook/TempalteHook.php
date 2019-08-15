@@ -39,7 +39,7 @@ class TempalteHook
         $this->_template_preg[] = '/<!--#include\s*file=[\"|\'](.*)\.(html|htm)[\"|\']-->/';
 
         // 多语言
-        if (LANG_OPEN) {
+        if (defined('LANG_OPEN') && LANG_OPEN) {
             $this->_template_replace[] = "<?php \$__Template->display(\"".THEME_NAME.'/'. TPL_NAME . '/'. APP_LANG ."/$1\"); ?>";
         } else {
             $this->_template_replace[] = "<?php \$__Template->display(\"".THEME_NAME.'/'. TPL_NAME . "/$1\"); ?>";
@@ -134,7 +134,7 @@ class TempalteHook
         $file = $var[3].$var[4];
         $url = THEME_NAME.'/'.TPL_NAME;
 
-        if (LANG_OPEN) {
+        if (defined('LANG_OPEN') && LANG_OPEN) {
             $url = THEME_NAME . '/' . TPL_NAME . '/' . APP_LANG;
         }
         
