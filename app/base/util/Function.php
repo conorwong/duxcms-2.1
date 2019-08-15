@@ -34,7 +34,7 @@ function pushBaidu()
  */
 function articleSumByCid(int $cid, $positionId = '', $isShow = true)
 {
-    $model = target('CategoryArticle');
+    $model = target('article/CategoryArticle');
     $categoryInfo=$model->getInfo($cid);
 
     // 频道页(统计频道页下所有分类)
