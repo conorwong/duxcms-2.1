@@ -8,3 +8,12 @@
 ### 开启语言
 1. 后台设置->多语言设置->开启
 2. 选择默认语言
+
+### 切换语言
+#### 前台
+```php
+// 切换英文
+http://www.domain.com/index.php?lang=en
+// 切换中文
+http://www.domain.com/index.php?lang=zh
+```
