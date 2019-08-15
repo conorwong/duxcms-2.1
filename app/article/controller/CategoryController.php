@@ -78,6 +78,10 @@ class CategoryController extends SiteController
         $topCategoryInfo = target('duxcms/Category')->getInfo($crumb[0]['class_id']);
         //MEDIA信息
         $media = $this->getMedia($categoryInfo['name'], $categoryInfo['keywords'], $categoryInfo['description']);
+
+        // 统计分类下的文章数
+        $categoryInfo['article_count'] = articleSumByCid($categoryInfo['class_id']);
+
         //模板赋值
         $this->assign('categoryInfo', $categoryInfo);
         $this->assign('parentCategoryInfo', $parentCategoryInfo);

@@ -25,6 +25,48 @@ function pushBaidu()
 }
 
 /**
+ * 统计分类下的所有文章数
+ *
+ * @param integer $cid 分类id
+ * @param [type] $positionId 推荐位id
+ * @param [type] $positionId 统计已发布的文章
+ * @return void
+ */
+function articleSumByCid(int $cid, $positionId = '', $isShow = true)
+{
+    $model = target('CategoryArticle');
+    $categoryInfo=$model->getInfo($cid);
+
+    // 频道页(统计频道页下所有分类)
+    if ($categoryInfo['type'] == 0) {
+        $classIds = target('duxcms/Category')->getSubClassId($categoryInfo['class_id']);
+    }
+
+    if ($classIds) {
+        $classIds = $classIds;
+    } else {
+        $classIds = $categoryInfo['class_id'];
+    }
+
+    $where = [];
+    $where[] = 'C.class_id in ('.$classIds.')';
+
+    if (!empty($positionId)) {
+        $where[] = 'find_in_set('.$positionId.',position) ';
+    }
+
+    if ($isShow) {
+        $where['A.status'] = 1;
+    } else {
+        $where['A.status'] = 0;
+    }
+
+    $data = target('article/ContentArticle')->loadList($where, $limit);
+
+    return count($data);
+}
+
+/**
  * 获取request请求方法
  */
 function request($str, $default = null, $function = null)
