@@ -62,13 +62,29 @@ class SettingController extends AdminController
         if (!IS_POST) {
             $breadCrumb = array('站点信息'=>url());
             $this->assign('breadCrumb', $breadCrumb);
-            $this->assign('info', target('Config')->getInfo());
+            if (LANG_OPEN) {
+                $file = CONFIG_PATH . '/lang/'. APP_LANG .'.php';
+                $config = load_config($file);
+            } else {
+                $config = target('Config')->getInfo();
+            }
+            $this->assign('info', $config);
             $this->adminDisplay();
         } else {
-            if (target('Config')->saveData()) {
-                $this->success('站点配置成功！');
+            if (LANG_OPEN) {
+                $file = CONFIG_PATH . '/lang/'. APP_LANG .'.php';
+
+                if (save_config($file, $_POST)) {
+                    $this->success('站点配置成功！');
+                } else {
+                    $this->error('站点配置失败');
+                }
             } else {
-                $this->error('站点配置失败');
+                if (target('Config')->saveData()) {
+                    $this->success('站点配置成功！');
+                } else {
+                    $this->error('站点配置失败');
+                }
             }
         }
     }
@@ -161,7 +177,6 @@ class SettingController extends AdminController
         $file = CONFIG_PATH . 'lang.php';
         if (!IS_POST) {
             $this->assign('info', load_config($file));
-            $s = load_config($file);
             $this->adminDisplay();
         } else {
             if (save_config($file, $_POST)) {

@@ -10,6 +10,5 @@ return array(
     'zh' => [
       'label' => '中文'
     ]
-  ],
-  // 'LANG_PACK_PATH' => './lang/',
+  ]
 );
