@@ -49,13 +49,13 @@ class TotalSpiderModel extends BaseModel
     public function addData()
     {
         $agent = $_SERVER['HTTP_USER_AGENT'];
-        if (strpos($tmp, 'Googlebot') !== false) {
+        if (strpos($agent, 'Googlebot') !== false) {
             $boot = 'google';
         }
-        if (strpos($tmp, 'Baiduspider') !== false) {
+        if (strpos($agent, 'Baiduspider') !== false) {
             $boot = 'baidu';
         }
-        if (strpos($tmp, 'Sosospider') !== false) {
+        if (strpos($agent, 'Sosospider') !== false) {
             $boot = 'soso';
         }
         if (empty($boot)) {
