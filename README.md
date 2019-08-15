@@ -36,4 +36,12 @@ http://www.domain.com/index.php?lang=zh
 ## 百度推送
 模板使用 `<!--#pushBaidu-->`
 
+## 小功能
+### 栏目页
+* 添加分类文章统计（支持频道、列表） `$categoryInfo['article_count']`
+
+## 助手函数
+* `hasSub($cid)` 是否有下级分类
+* `articleSumByCid(int $cid, $positionId = '', $isShow = true)` 获取分类文章统计
+
 
