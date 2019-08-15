@@ -1,4 +1,29 @@
 <?php
+
+/**
+ * 判断是否有子栏目
+ */
+function hasSub($cid)
+{
+    $sub = target('duxcms/Category')->getSubClassId($cid);
+    if (empty($sub)) {
+        return false;
+    }else{
+        return true;
+    }
+}
+
+/**
+ * 推送当前链接到百度收录
+ *
+ * @return void
+ */
+function pushBaidu()
+{
+    $script = '(function(){var bp=document.createElement("script");var curProtocol=window.location.protocol.split(":")[0];if(curProtocol==="https"){bp.src="https://zz.bdstatic.com/linksubmit/push.js"}else{bp.src="http://push.zhanzhang.baidu.com/push.js"}var s=document.getElementsByTagName("script")[0];s.parentNode.insertBefore(bp,s)})();';
+    echo '<script>' . $script . '</script>';
+}
+
 /**
  * 获取request请求方法
  */
@@ -33,6 +58,7 @@ function request($str, $default = null, $function = null)
         } else {
             $request = $type[$name];
         }
+
         $request = filter_string($request);
         //设置默认值
         if ($default) {

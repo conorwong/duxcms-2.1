@@ -45,6 +45,10 @@ class TempalteHook
             $this->_template_replace[] = "<?php \$__Template->display(\"".THEME_NAME.'/'. TPL_NAME . "/$1\"); ?>";
         }
 
+        // 百度链接推送
+        $this->_template_preg[] = '/<!--#pushBaidu-->/';
+        $this->_template_replace[] = "<?php pushBaidu(); ?>";
+
         //替换图片CSS等路径
         $template = preg_replace_callback('/<(.*?)(src=|href=|value=|background=)[\"|\'](images\/|img\/|css\/|js\/|style\/)(.*?)[\"|\'](.*?)>/', array($this, 'parse_load'), $template);
 
