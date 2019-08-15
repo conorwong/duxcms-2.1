@@ -21,12 +21,12 @@ class SiteController extends BaseController
         // 多语言设置
         if (LANG_OPEN) {
             $lang = request('get.lang') ?? session('APP_LANG');
+            $lang_config = LANG_CONFIG;
             if (!$lang) {
                 $lang = $lang_config['LANG_DEFAULT'];
-            } else {
-                session('APP_LANG', $lang);
             }
-
+            
+            session('APP_LANG', $lang);
             define('APP_LANG', session('APP_LANG'));
         }
 

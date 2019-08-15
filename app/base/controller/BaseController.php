@@ -52,6 +52,7 @@ class BaseController extends \framework\base\Controller
         $lang_config = load_config($lang_file);
 
         define('LANG_OPEN', $lang_config['LANG_OPEN']);
+        define('LANG_CONFIG', $lang_config);
         
         // 赋值到模板(菜单)
         $this->assign('lang_list', $lang_config['LANG_LIST']);
