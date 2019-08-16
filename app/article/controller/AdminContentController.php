@@ -84,6 +84,12 @@ class AdminContentController extends AdminController
         $this->assign('categoryList', target('duxcms/Category')->loadList());
         $this->assign('positionList', target('duxcms/Position')->loadList());
         $this->assign('pageMaps', $pageMaps);
+
+        // 获取百度链接提交配置
+        $file = CONFIG_PATH . 'push.php';
+        $pushConfig = load_config($file);
+        $this->assign('push_open', $pushConfig['push_open']);
+
         $this->adminDisplay();
     }
 
@@ -214,5 +220,55 @@ class AdminContentController extends AdminController
             }
         }
         $this->success('批量操作执行完毕！');
+    }
+
+    /**
+     * 实时推送文章链接到百度
+     *
+     * @return void
+     */
+    public function pushArticle()
+    {
+        $aid = request('post.data', 0, 'intval');
+        
+        if (!$aid) {
+            $this->error('参数异常');
+        }
+
+        $file = CONFIG_PATH . 'performance.php';
+        $config = load_config($file);
+
+        // 伪静态
+        if ($config['REWRITE_ON']) {
+            \framework\base\Route::parseUrl( config('REWRITE_RULE'), true );
+
+            $app = 'article/Content/index';
+            $url = url($app, ['content_id'=>$aid]);
+
+            $res = push($url);
+            $res = json_decode($res);
+
+            if ($res->error) {
+                $this->error('推送失败：' . $res->message);
+            }
+
+            // 由于不是本站url而未处理的url列表
+            $not_same_site = '';
+            if ($res->not_same_site) {
+                $sites = implode(',', $res->not_same_site);
+                $not_same_site = '<br/>未处理(不是本站url)的url<br/>' . $sites;
+            }
+
+            // 不合法的url列表
+            $not_valid = '';
+            if ($res->not_valid) {
+                $site = implode(',', $res->not_valid);
+                $not_valid = '<br/>不合法的url列表:<br/>' . $sites;
+            }
+
+            $this->success("推送成功！<br/>成功: {$res->success}条，剩余: {$res->remain}条" . $not_same_site . $not_valid);
+        } else {
+            $this->error('检测发现，未开启伪静态模式！');
+        }
     }
 }

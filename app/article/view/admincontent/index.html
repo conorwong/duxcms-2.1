@@ -82,6 +82,9 @@
                     <th width="*">栏目</th>
                     <th width="*">状态</th>
                     <th width="160">更新时间</th>
+                    <!--if{$push_open}-->
+                    <th width="80">百度推送</th>
+                    <!--{/if}-->
                     <th width="100">操作</th>
                 </tr>
                 <!--loop{$list as $vo}-->
@@ -100,6 +103,12 @@
                        <!--{/if}-->
                     </td>
                     <td>{date('Y-m-d H:i:s',$vo['time'])}</td>
+                    <!--if{$push_open}-->
+                    <td>
+                        <a class="button bg-blue button-small baidu-push" href="javascript:;" data="{$vo.content_id}" title="推送">推送</a>
+                    </td>
+                    <!--{/if}-->
+                   
                     <td>
                         <a class="button bg-blue button-small icon-pencil" href="{url('edit',array('content_id'=>$vo['content_id']))}" title="修改"></a>
                         <a class="button bg-red button-small icon-trash-o js-del" href="javascript:;" data="{$vo.content_id}" title="删除"></a>
@@ -150,7 +159,8 @@
 		//表格处理
 		$('#table').duxTable({
 			actionUrl : "{url('batchAction')}",
-			deleteUrl: "{url('del')}",
+            deleteUrl: "{url('del')}",
+    		pushBaidu: "{url('pushArticle')}",
 			actionParameter : function(){
 				return {'class_id' : $('#selectAction').next('#class_id').val()};
 			}

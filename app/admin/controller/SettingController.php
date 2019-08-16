@@ -50,6 +50,11 @@ class SettingController extends AdminController
                         'name' => '上传设置',
                         'url' => url('Setting/upload'),
                         'icon' => 'upload',
+                    ),
+                    array(
+                        'name' => '百度链接提交',
+                        'url' => url('Setting/push'),
+                        'icon' => 'upload',
                     )
                 )
         );
@@ -175,6 +180,26 @@ class SettingController extends AdminController
     public function lang()
     {
         $file = CONFIG_PATH . 'lang.php';
+        if (!IS_POST) {
+            $this->assign('info', load_config($file));
+            $this->adminDisplay();
+        } else {
+            if (save_config($file, $_POST)) {
+                $this->success('上传配置成功！');
+            } else {
+                $this->error('上传配置失败');
+            }
+        }
+    }
+
+    /**
+     * 百度推送
+     *
+     * @return void
+     */
+    public function push()
+    {
+        $file = CONFIG_PATH . 'push.php';
         if (!IS_POST) {
             $this->assign('info', load_config($file));
             $this->adminDisplay();

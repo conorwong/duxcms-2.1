@@ -10,6 +10,7 @@ $.ajaxSetup({
             selectAction: '#selectAction',
             deleteUrl: '',
             actionUrl: '',
+            pushBaidu: '',
             actionParameter: function(){}
         }
         var options = $.extend(defaults, options);
@@ -79,6 +80,17 @@ $.ajaxSetup({
                     url,
                     function () {
                         div.remove();
+                    },
+                    function () {});
+            });
+            // 文章百度推送
+            $(table).find('.baidu-push').click(function () {
+                var obj = this;
+                var div = $(obj).parent().parent();
+                operat(
+                    obj,
+                    options.pushBaidu,
+                    function () {
                     },
                     function () {});
             });

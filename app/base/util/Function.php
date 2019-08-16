@@ -79,8 +79,43 @@ function is_https() {
     } elseif ( !empty($_SERVER['HTTP_FRONT_END_HTTPS']) && strtolower($_SERVER['HTTP_FRONT_END_HTTPS']) !== 'off') {
         return true;
     }
-    
+
     return false;
+}
+
+
+/**
+ * (实时)推送链接到百度
+ *
+ * @param [type] $urls
+ * @return void
+ */
+function push($urls)
+{
+    $file = CONFIG_PATH . 'push.php';
+    $config = load_config($file);
+
+    $token = $config['push_token'];
+    $site = $_SERVER['HTTP_HOST'];
+    $url = "http://data.zz.baidu.com/urls?site={$site}&token={$token}";
+
+    if (is_array($urls)) {
+        $urls = implode("\n", $urls);
+    }
+
+    $ch = curl_init();
+    $options =  array(
+        CURLOPT_URL => $url,
+        CURLOPT_POST => true,
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_POSTFIELDS => $urls,
+        CURLOPT_HTTPHEADER => array('Content-Type: text/plain'),
+    );
+
+    curl_setopt_array($ch, $options);
+    $result = curl_exec($ch);
+
+    return $result;
 }
 
 /**
