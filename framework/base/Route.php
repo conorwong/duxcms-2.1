@@ -109,10 +109,11 @@ class Route
                             }
                         }
 
-                        if (false === stripos($urlArray[$url], 'http://')) {
-                            $urlArray[$url] = 'http://'.$_SERVER['HTTP_HOST'].rtrim(dirname($_SERVER["SCRIPT_NAME"]), "./\\") .'/'.ltrim($urlArray[$url], "./\\");
+                        $protocol = is_https() ? 'https' : 'http';
+                        if (false === stripos($urlArray[$url], $protocol)) {
+                            $urlArray[$url] =  $protocol. '://' . $_SERVER['HTTP_HOST'].rtrim(dirname($_SERVER["SCRIPT_NAME"]), "./\\") .'/'.ltrim($urlArray[$url], "./\\");
                         }
-                        
+                     
                         $rule = str_ireplace(array('<app>', '<c>', '<a>'), '', $rule);
                         if (count($params) == preg_match_all('/<\w+>/is', $rule, $_match)) {
                             return $urlArray[$url];
