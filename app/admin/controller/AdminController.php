@@ -43,11 +43,10 @@ class AdminController extends BaseController
         if (LANG_OPEN) {
             $lang = request('get.lang') ?? session('ADMIN_LANG');
             if (!$lang) {
-                $lang = $lang_config['LANG_DEFAULT'];
-            } else {
-                session('ADMIN_LANG', $lang);
+                $lang = LANG_CONFIG['LANG_DEFAULT'];
             }
 
+            session('ADMIN_LANG', $lang);
             define('APP_LANG', session('ADMIN_LANG'));
         }
 
