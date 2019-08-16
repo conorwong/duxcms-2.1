@@ -41,7 +41,7 @@ class AdminController extends BaseController
 
         // 多语言设置
         if (LANG_OPEN) {
-            $lang = request('get.lang') ?? session('ADMIN_LANG');
+            $lang = request('get.lang') ? request('get.lang') : session('ADMIN_LANG');
             if (!$lang) {
                 $lang = LANG_CONFIG['LANG_DEFAULT'];
             }
