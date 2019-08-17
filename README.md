@@ -55,5 +55,9 @@ http://www.domain.com/index.php?lang=zh
 | nodefined | 常量未定义时 | name | `{nodefined name="APP_NAME"}{/nodefined}`
 | isset | 变量定义时 | name | `{isset name="$test"}{/isset}`
 | noset | 变量未定义时 | name | `{noset name="$test"}{/noset}`
+| between | 变量存在某个区间时 | name, value | `{between name="$test" value="1,2"}{/between}`
+| nobetween | 变量不存在某个区间时 | name, value | `{nobetween name="$test" value="1,2"}{/nobetween}`
+| in | 变量存在数组时 | name, value | `{in name="$test" value="1,2"}{/in}`
+| noin | 变量不存在数组时 | name, value | `{noin name="$test" value="1,2"}{/noin}`
 
 
