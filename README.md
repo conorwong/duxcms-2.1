@@ -34,7 +34,9 @@ http://www.domain.com/index.php?lang=zh
 ```
 
 ## 百度推送
-模板使用 `<!--#pushBaidu-->`
+* 模板使用 `<!--#pushBaidu-->`
+* 后台实时提交 系统设置->百度链接提交->开启
+
 
 ## 小功能
 ### 栏目页
