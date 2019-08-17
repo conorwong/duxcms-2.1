@@ -61,6 +61,30 @@ class TempalteHook
         $this->_template_replace[] = '<?php if (false === isset(\\1)) { ?>';
         $this->_template_replace[] = '<?php }; ?>';
 
+        // between 区间判断
+        $this->_template_preg[] = '/{between name=\"(.*?)\" value="(.*?),(.*?)"}/i';
+        $this->_template_preg[] = '/{\/between}/i';
+        $this->_template_replace[] = '<?php if (\\1 >= \\2 && \\1 < \\3) { ?>';
+        $this->_template_replace[] = '<?php }; ?>';
+
+        // nobetween 区间判断
+        $this->_template_preg[] = '/{nobetween name=\"(.*?)\" value="(.*?),(.*?)"}/i';
+        $this->_template_preg[] = '/{\/nobetween}/i';
+        $this->_template_replace[] = '<?php if (\\1 < \\2 || \\1 > \\3) { ?>';
+        $this->_template_replace[] = '<?php }; ?>';
+
+        // in 是否存在数组
+        $this->_template_preg[] = '/{in name=\"(.*?)\" value="(.*?)"}/i';
+        $this->_template_preg[] = '/{\/in}/i';
+        $this->_template_replace[] = '<?php if (in_array(\\1, [\\2])) { ?>';
+        $this->_template_replace[] = '<?php }; ?>';
+
+        // noin 不存在数组
+        $this->_template_preg[] = '/{noin name=\"(.*?)\" value="(.*?)"}/i';
+        $this->_template_preg[] = '/{\/noin}/i';
+        $this->_template_replace[] = '<?php if (false === in_array(\\1, [\\2])) { ?>';
+        $this->_template_replace[] = '<?php }; ?>';
+
         //替换循环
         $this->_template_preg[] = '/' . $this->__ltag . '(loop|foreach)\{(.*?)\}' . $this->__rtag . '/i';
         $this->_template_replace[] = '<?php foreach (\\2) { ?>';
