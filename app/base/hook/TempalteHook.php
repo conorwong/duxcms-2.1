@@ -25,6 +25,42 @@ class TempalteHook
         $this->_template_replace[] = '<?php }else{ ?>';
         $this->_template_replace[] = '<?php }else if (\\2){ ?>';
 
+        // empty标签 判断是否为空数组
+        $this->_template_preg[] = '/{empty name=\"(.*?)\"}/i';
+        $this->_template_preg[] = '/{\/empty}/i';
+        $this->_template_replace[] = '<?php if (true === empty(\\1)) { ?>';
+        $this->_template_replace[] = '<?php }; ?>';
+
+        // noempty 判断是否不为空数组
+        $this->_template_preg[] = '/{noempty name=\"(.*?)\"}/i';
+        $this->_template_preg[] = '/{\/noempty}/i';
+        $this->_template_replace[] = '<?php if (false === empty(\\1)) { ?>';
+        $this->_template_replace[] = '<?php }; ?>';
+
+        // defined 判断是否已定义常量
+        $this->_template_preg[] = '/{defined name=\"(.*?)\"}/i';
+        $this->_template_preg[] = '/{\/defined}/i';
+        $this->_template_replace[] = '<?php if (defined(\'\\1\')) { ?>';
+        $this->_template_replace[] = '<?php }; ?>';
+
+        // nodefined 判断是否未定义常量
+        $this->_template_preg[] = '/{nodefined name=\"(.*?)\"}/i';
+        $this->_template_preg[] = '/{\/nodefined}/i';
+        $this->_template_replace[] = '<?php if (false === defined(\'\\1\')) { ?>';
+        $this->_template_replace[] = '<?php }; ?>';
+
+        // isset 判断是否已定义变量
+        $this->_template_preg[] = '/{isset name=\"(.*?)\"}/i';
+        $this->_template_preg[] = '/{\/isset}/i';
+        $this->_template_replace[] = '<?php if (isset(\\1)) { ?>';
+        $this->_template_replace[] = '<?php }; ?>';
+
+        // notset 判断是否未定义变量
+        $this->_template_preg[] = '/{noset name=\"(.*?)\"}/i';
+        $this->_template_preg[] = '/{\/noset}/i';
+        $this->_template_replace[] = '<?php if (false === isset(\\1)) { ?>';
+        $this->_template_replace[] = '<?php }; ?>';
+
         //替换循环
         $this->_template_preg[] = '/' . $this->__ltag . '(loop|foreach)\{(.*?)\}' . $this->__rtag . '/i';
         $this->_template_replace[] = '<?php foreach (\\2) { ?>';
