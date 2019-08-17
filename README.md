@@ -46,4 +46,14 @@ http://www.domain.com/index.php?lang=zh
 * `hasSub($cid)` 是否有下级分类
 * `articleSumByCid(int $cid, $positionId = '', $isShow = true)` 获取分类文章统计
 
+## 标签
+| 标签 | 说明| 参数 | 例子
+| ----|----|----|----
+| empty | 数组为空时| name | `{empty name="$list"}{/empty}`
+| noempty | 数组不为空时 | name | `{noempty name="$list"}{/noempty}`
+| defined | 常量已定义时 | name | `{defined name="APP_NAME"}{/defined}`
+| nodefined | 常量未定义时 | name | `{nodefined name="APP_NAME"}{/nodefined}`
+| isset | 变量定义时 | name | `{isset name="$test"}{/isset}`
+| noset | 变量未定义时 | name | `{noset name="$test"}{/noset}`
+
 
