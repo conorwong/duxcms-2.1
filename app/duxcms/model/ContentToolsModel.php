@@ -27,22 +27,23 @@ class ContentToolsModel
     /**
      * 获取关键词
      * @param string $title 标题
-     * @param string $content 内容
-     * @return string 图片URL
+     * @return string keywords
+     * 群众们应该感谢厂长的分词服务 weibo @梁斌penny https://weibo.com/pennyliang
      */
-    public function getKerword($title, $content = '')
+    public function getKerword($title)
     {
-        $data= \framework\ext\Http::doGet('http://keyword.discuz.com/related_kw.html?ics=utf-8&ocs=utf-8&title='.urlencode($title).'&content='.urlencode($content), 10);
+        $word = urlencode($title);
+        $url = "http://api.pullword.com/get.php?source={$word}&param1=0&param2=1&json=1";
+
+        $data= \framework\ext\Http::doGet($url, 5);
+        $list = json_decode($data, true);
         if (empty($data)) {
             return;
         }
-        preg_match_all("/<kw>(.*)A\[(.*)\]\](.*)><\/kw>/", $data, $list, PREG_SET_ORDER);
-        if (empty($list)) {
-            return;
-        }
+
         $keywords = array();
         foreach ($list as $value) {
-            $keywords[] = $value[2];
+            $keywords[] = $value['t'];
         }
         return implode(',', $keywords);
     }
