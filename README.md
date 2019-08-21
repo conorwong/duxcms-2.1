@@ -69,7 +69,7 @@ http://www.domain.com/index.php?lang=zh
 | nobetween | 变量不存在某个区间时 | name, value | `{nobetween name="$test" value="1,2"}{/nobetween}`
 | in | 变量存在数组时 | name, value | `{in name="$test" value="1,2"}{/in}`
 | noin | 变量不存在数组时 | name, value | `{noin name="$test" value="1,2"}{/noin}`
-| progress | 获取文章阅读进度 | container, parent, child, class | 
+| progress | 获取文章阅读进度 | container, parent, child, class | [详细说明](https://github.com/xiaodit/duxcms-2.1/blob/master/README.md#%E6%96%87%E7%AB%A0%E9%98%85%E8%AF%BB%E8%BF%9B%E5%BA%A6)
 
 ### 文章阅读进度
 参数
