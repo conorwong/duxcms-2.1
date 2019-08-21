@@ -53,27 +53,17 @@ class BaseController extends \framework\base\Controller
      */
     protected function setCont()
     {
-        // 多语言设置
-        $lang_file = CONFIG_PATH . 'lang.php';
-        $lang_config = load_config($lang_file);
-
-        define('LANG_OPEN', $lang_config['LANG_OPEN']);
-        define('LANG_CONFIG', $lang_config);
-
-        // 赋值到模板
-        $this->assign('lang_list', $lang_config['LANG_LIST']);
-
         // 读取站点配置
         $siteConfig = target('admin/Config')->getInfo();
 
-        if (LANG_OPEN) {
-            $lang = request('get.lang') ? request('get.lang') : cookie('APP_LANG');
-            if ($lang && array_key_exists($lang, $lang_config['LANG_LIST'])) {
-                $site_lang_file = CONFIG_PATH . 'lang/' . $lang . '.php';
-                $lang_config = load_config($site_lang_file);
-                $siteConfig = array_merge($siteConfig, $lang_config);
-            }
-        } 
+        // 多语言
+        if (defined('LANG_OPEN')) {
+            // 赋值到模板
+            $this->assign('lang_list', LANG_CONFIG['LANG_LIST']);
+            $site_lang_file = CONFIG_PATH . 'lang/' . APP_LANG . '.php';
+            $lang_config = load_config($site_lang_file);
+            $siteConfig = array_merge($siteConfig, $lang_config);
+        }
 
         $this->sys = $siteConfig;
         foreach ($siteConfig as $key => $value) {

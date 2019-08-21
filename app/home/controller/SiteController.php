@@ -19,13 +19,6 @@ class SiteController extends BaseController
         //设置常量
         define('TPL_NAME', config('tpl_name'));
 
-        // 多语言设置
-        if (LANG_OPEN) {
-            $lang_config = LANG_CONFIG;
-            $lang = cookie('APP_LANG') ? cookie('APP_LANG') : $lang_config['LANG_DEFAULT'];
-            define('APP_LANG', $lang);
-        }
-
         //访问统计
         target('duxcms/TotalVisitor')->addData();
         target('duxcms/TotalSpider')->addData();
@@ -41,7 +34,7 @@ class SiteController extends BaseController
     protected function siteDisplay($name='', $type = true)
     {
         // 多语言
-        if (LANG_OPEN) {
+        if (defined('LANG_OPEN')) {
             $tpl = THEME_NAME . '/' . TPL_NAME . '/' . APP_LANG . '/' . $name;
         } else {
             $tpl = THEME_NAME . '/' . TPL_NAME . '/' . $name;

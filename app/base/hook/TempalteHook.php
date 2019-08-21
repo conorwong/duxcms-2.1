@@ -99,7 +99,7 @@ class TempalteHook
         $this->_template_preg[] = '/<!--#include\s*file=[\"|\'](.*)\.(html|htm)[\"|\']-->/';
 
         // 多语言
-        if (defined('LANG_OPEN') && LANG_OPEN) {
+        if (defined('LANG_OPEN')) {
             $this->_template_replace[] = "<?php \$__Template->display(\"".THEME_NAME.'/'. TPL_NAME . '/'. APP_LANG ."/$1\"); ?>";
         } else {
             $this->_template_replace[] = "<?php \$__Template->display(\"".THEME_NAME.'/'. TPL_NAME . "/$1\"); ?>";

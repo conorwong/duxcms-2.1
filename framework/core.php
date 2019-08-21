@@ -19,6 +19,8 @@ use framework\base\Config;
 use framework\base\Route;
 use framework\base\App;
 
+include 'app/base/util/Function.php';
+
 function config($key=null, $value=null)
 {
     if (func_num_args() <= 1) {

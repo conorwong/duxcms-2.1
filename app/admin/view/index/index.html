@@ -32,7 +32,7 @@
                 <li> <a href="{url('admin/AdminUser/edit',array('user_id'=>$loginUserInfo['user_id']))}" target="dux-iframe" class="icon-user"></a></li>
 
                 <!--多语言菜单-->
-                <!--if{LANG_OPEN}-->
+                <!--if{defined('LANG_OPEN')}-->
                     <!--loop{$lang_list as $key=>$vo}-->
                         <li> <a href="admin.php?lang={$key}" style="<!--if{APP_LANG == $key}-->background: #3190ee;<!--{/if}-->color:#fff">
                             {$vo.label}

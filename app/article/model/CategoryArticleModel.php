@@ -32,7 +32,7 @@ class CategoryArticleModel extends BaseModel
     public function loadData($where = array(), $limit = 0)
     {
         // 多语言
-        if (LANG_OPEN) {
+        if (defined('LANG_OPEN')) {
             $where['A.lang'] = APP_LANG;
         }
         

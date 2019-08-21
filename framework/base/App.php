@@ -36,6 +36,9 @@ class App
                 Route::parseUrl(Config::get('REWRITE_RULE'), Config::get('REWRITE_ON'));
             }
             
+            // 检查是否开启多语言
+            Hook::listen('CheckLang');
+            
             //execute action
             $controller = '\app\\'. APP_NAME .'\controller\\'. CONTROLLER_NAME .'Controller';
             $action = ACTION_NAME;
@@ -47,7 +50,7 @@ class App
             if (!method_exists($obj, $action)) {
                 throw new \Exception("Action '{$controller}::{$action}()' not found", 404);
             }
-            
+
             Hook::listen('actionBefore', array($obj, $action));
             $obj ->$action();
             Hook::listen('actionAfter', array($obj, $action));

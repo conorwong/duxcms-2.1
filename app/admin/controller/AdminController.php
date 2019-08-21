@@ -38,24 +38,6 @@ class AdminController extends BaseController
                 $this->infoModule = $this->_infoModule();
             }
         }
-
-        // 多语言设置
-        if (LANG_OPEN) {
-            $lang = request('get.lang', '') ? request('get.lang') : session('ADMIN_LANG');
-            if (!$lang) {
-                $lang = LANG_CONFIG['LANG_DEFAULT'];
-            }
-
-            if (false === array_key_exists($lang, LANG_CONFIG['LANG_LIST'])) 
-            {
-                $this->redirect(url('admin/Index/index'));
-                exit();
-            }
-
-            session('ADMIN_LANG', $lang);
-            define('APP_LANG', session('ADMIN_LANG'));
-        }
-
     }
 
     /**
