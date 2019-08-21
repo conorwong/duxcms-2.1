@@ -3,7 +3,7 @@ namespace framework\base\db;
 
 use framework\base\Hook;
 
-class MysqlDriver implements DbInterface
+class MysqliDriver implements DbInterface
 {
     protected $config =array();
     protected $writeLink = null;
@@ -27,37 +27,42 @@ class MysqlDriver implements DbInterface
     
     public function query($sql, array $params = array())
     {
-        $this->_bindParams($sql, $params, $this->_getReadLink());
+        $con = $this->_getReadLink();
+        $this->_bindParams($sql, $params, $con);
         
         Hook::listen('dbQueryBegin', array($sql, $params));
-        $query = mysql_query($this->getSql(), $this->_getReadLink());
+        $s = $this->getSql();
+        $query = mysqli_query($con, $this->getSql());
         if ($query) {
             $data = array();
-            while ($row = mysql_fetch_array($query, MYSQL_ASSOC)) {
+            while ($row = mysqli_fetch_array($query, MYSQLI_ASSOC)) {
                 $data[] = $row;
             }
             Hook::listen('dbQueryEnd', array($this->getSql(), $data));
+
+
             return $data;
         }
 
-        $err = mysql_error();
+        $err = mysqli_error($con);
         Hook::listen('dbException', array($this->getSql(), $err));
         throw new \Exception('Database SQL: "' . $this->getSql(). '". ErrorInfo: '. $err, 500);
     }
     
     public function execute($sql, array $params = array())
     {
-        $this->_bindParams($sql, $params, $this->_getWriteLink());
+        $con = $this->_getWriteLink();
+        $this->_bindParams($sql, $params, $con);
         
         Hook::listen('dbExecuteBegin', array($sql, $params));
-        $query = mysql_query($this->getSql(), $this->_getWriteLink());
+        $query = mysqli_query($con, $this->getSql());
         if ($query) {
-            $affectedRows = mysql_affected_rows($this->_getWriteLink());
+            $affectedRows = mysqli_affected_rows($con);
             Hook::listen('dbExecuteEnd', array($this->getSql(), $affectedRows));
             return $affectedRows;
         }
         
-        $err = mysql_error();
+        $err = mysqli_error($con);
         Hook::listen('dbException', array($this->getSql(), $err));
         throw new \Exception('Database SQL: "' . $this->getSql(). '". ErrorInfo: '. $err, 500);
     }
@@ -72,7 +77,7 @@ class MysqlDriver implements DbInterface
         }
         $table = $this->_table($table);
         $status = $this->execute("INSERT INTO {$table} (".implode(', ', $keys).") VALUES (".implode(', ', $marks).")", $values);
-        $id = mysql_insert_id($this->_getWriteLink());
+        $id = mysqli_insert_id($this->_getWriteLink());
         if ($id) {
             return $id;
         } else {
@@ -127,7 +132,7 @@ class MysqlDriver implements DbInterface
             return strlen($b)-strlen($a);
         });
         foreach ($arr as $k=>$v) {
-            $sql = str_replace($k, "'" . mysql_real_escape_string($v, $this->sqlMeta['link']) . "'", $sql);
+            $sql = str_replace($k, "'" . mysqli_real_escape_string($this->_getReadLink(), $v) . "'", $sql);
         }
         return $sql;
     }
@@ -206,24 +211,24 @@ class MysqlDriver implements DbInterface
         
         $link =null;
         foreach ($dbArr as $db) {
-            if ($link = @mysql_connect($db['DB_HOST'] . ':' . $db['DB_PORT'], $db['DB_USER'], $db['DB_PWD'])) {
+            if ($link = @mysqli_connect($db['DB_HOST'] . ':' . $db['DB_PORT'], $db['DB_USER'], $db['DB_PWD'])) {
                 break;
             }
         }
         
         if (!$link) {
-            throw new \Exception('connect database error :'.mysql_error(), 500);
+            throw new \Exception('connect database error :'.mysqli_error($link), 500);
         }
 
-        $version = mysql_get_server_info($link);
+        $version = mysqli_get_server_info($link);
         if ($version > '4.1') {
-            mysql_query("SET character_set_connection = " . $db['DB_CHARSET'] . ", character_set_results = " . $db['DB_CHARSET'] . ", character_set_client = binary", $link);
+            mysqli_query($link, "SET character_set_connection = " . $db['DB_CHARSET'] . ", character_set_results = " . $db['DB_CHARSET'] . ", character_set_client = binary", $link);
                 
             if ($version > '5.0.1') {
-                mysql_query("SET sql_mode = ''", $link);
+                mysqli_query($link, "SET sql_mode = ''");
             }
         }
-        mysql_select_db($db['DB_NAME'], $link);
+        mysqli_select_db($link, $db['DB_NAME']);
         return $link;
     }
 
@@ -250,10 +255,10 @@ class MysqlDriver implements DbInterface
     public function __destruct()
     {
         if ($this->_writeLink) {
-            @mysql_close($this->_writeLink);
+            @mysqli_close($this->_writeLink);
         }
         if ($this->_readLink) {
-            @mysql_close($this->_readLink);
+            @mysqli_close($this->_readLink);
         }
     }
 }

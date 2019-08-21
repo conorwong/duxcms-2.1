@@ -32,7 +32,7 @@ function pushBaidu()
  * @param [type] $positionId 统计已发布的文章
  * @return void
  */
-function articleSumByCid(int $cid, $positionId = '', $isShow = true)
+function articleSumByCid($cid, $positionId = '', $isShow = true)
 {
     $model = target('article/CategoryArticle');
     $categoryInfo=$model->getInfo($cid);
