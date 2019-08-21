@@ -69,7 +69,21 @@ http://www.domain.com/index.php?lang=zh
 | nobetween | 变量不存在某个区间时 | name, value | `{nobetween name="$test" value="1,2"}{/nobetween}`
 | in | 变量存在数组时 | name, value | `{in name="$test" value="1,2"}{/in}`
 | noin | 变量不存在数组时 | name, value | `{noin name="$test" value="1,2"}{/noin}`
+| progress | 获取文章阅读进度 | container, parent, child, class | [详细说明](https://github.com/xiaodit/duxcms-2.1/blob/master/README.md#%E6%96%87%E7%AB%A0%E9%98%85%E8%AF%BB%E8%BF%9B%E5%BA%A6)
 
+### 文章阅读进度
+参数
+* `container` 包着文章内容的根 （id, class） 例如 .back-to-top
+* `parent` 包着百分比的根（id, class） 例如 .back-to-top
+* `child` 包着百分比的标签 例如 span
+* `class` 当页面浏览到文章内容内，加的类名 例如 on
+```
+  {progress container=".g-bd" parent=".back-to-top" child="span" class="on"}
+    <div class="back-to-top" style="position: fixed;top:50">
+      <span></span>
+    </div>
+  {/progress}
+```
 ## 分词功能
 由于http://keyword.discuz.com 出现403(应该关服务了)
 
