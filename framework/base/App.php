@@ -31,13 +31,13 @@ class App
 
             Hook::listen('routeParseUrl', array( Config::get('REWRITE_RULE'), Config::get('REWRITE_ON')));
             
+            // 检查是否开启多语言
+            Hook::listen('CheckLang');
+
             //default route
             if (!defined('APP_NAME') || !defined('CONTROLLER_NAME') || !defined('ACTION_NAME')) {
                 Route::parseUrl(Config::get('REWRITE_RULE'), Config::get('REWRITE_ON'));
             }
-            
-            // 检查是否开启多语言
-            Hook::listen('CheckLang');
             
             //execute action
             $controller = '\app\\'. APP_NAME .'\controller\\'. CONTROLLER_NAME .'Controller';

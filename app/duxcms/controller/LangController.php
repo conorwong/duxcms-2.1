@@ -17,10 +17,19 @@ class LangController extends SiteController
         }
 
         $lang_config = LANG_CONFIG;
-        $lang = request('get.lang');
+        $langs = $lang_config['LANG_LIST'];
+        $lang = request('get.s', null, function($request) use ($langs) {
+            $lang = end(explode('/', $request));
+            $langs = array_keys($langs);
+            if (in_array($lang, $langs)) {
+                return $lang;
+            } else {
+                return false;
+            }
+        });
 
         // 多语言设置
-        if (false === array_key_exists($lang, $lang_config['LANG_LIST'])) {
+        if (false === $lang) {
             $this->redirect('/');
             exit;
         }
