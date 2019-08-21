@@ -184,6 +184,11 @@ class SettingController extends AdminController
             $this->assign('info', load_config($file));
             $this->adminDisplay();
         } else {
+            $performance = CONFIG_PATH . 'performance.php';
+            $performanceConfig = load_config($performance);
+            if (!$performanceConfig['REWRITE_ON']) {
+                $this->error('请先开启伪静态！');
+            }
             if (save_config($file, $_POST)) {
                 $this->success('上传配置成功！');
             } else {
