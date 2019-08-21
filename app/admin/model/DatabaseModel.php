@@ -124,7 +124,7 @@ class DatabaseModel extends BaseModel
         }
         //检查目录
         if (!is_dir($path)) {
-            if (!mkdir($path, true)) {
+            if (!mkdir($path, 0777)) {
                 $this->error = '无法创建备份目录，请手动根目录创建Backup文件夹！';
                 return false;
             }
