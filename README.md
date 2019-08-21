@@ -24,9 +24,9 @@
 #### 前台切换
 ```php
 // 切换英文
-http://www.domain.com/en
+http://www.domain.com?lang=en
 // 切换中文
-http://www.domain.com/zh
+http://www.domain.com?lang=en
 ```
 #### 前台获取语言配置
 模板调用 `$lang_list` 获取列表
