@@ -60,4 +60,9 @@ http://www.domain.com/index.php?lang=zh
 | in | 变量存在数组时 | name, value | `{in name="$test" value="1,2"}{/in}`
 | noin | 变量不存在数组时 | name, value | `{noin name="$test" value="1,2"}{/noin}`
 
+## 分词功能
+由于http://keyword.discuz.com 出现403(应该关服务了)
+
+使用[@梁斌penny](https://weibo.com/pennyliang)的分词服务, 使用此项目的'模板工'们，你们应该感谢梁厂长！
+
 
