@@ -15,24 +15,14 @@ class SiteController extends BaseController
         if (isset($_GET['mobile']) || MOBILE) {
             config('tpl_name', config('mobile_tpl'));
         }
+        
         //设置常量
         define('TPL_NAME', config('tpl_name'));
 
         // 多语言设置
         if (LANG_OPEN) {
-            $lang = request('get.lang') ? request('get.lang') : cookie('APP_LANG');
             $lang_config = LANG_CONFIG;
-            if (!$lang) {
-                $lang = $lang_config['LANG_DEFAULT'];
-            } else {
-                if (false === array_key_exists($lang, $lang_config['LANG_LIST']))
-                {
-                    $this->redirect('/');
-                    exit;
-                }
-            }
-            
-            cookie('APP_LANG', $lang, 24 * 3);
+            $lang = cookie('APP_LANG') ? cookie('APP_LANG') : $lang_config['LANG_DEFAULT'];
             define('APP_LANG', $lang);
         }
 

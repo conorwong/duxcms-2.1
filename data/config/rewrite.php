@@ -9,5 +9,6 @@ return array(
         'form-<name>.html' => 'duxcms/Form/index',
         'tags-list/<name>.html' => 'duxcms/Tags/index',
         'tags/<name>.html' => 'duxcms/TagsContent/index',
+        '<lang>' => 'duxcms/Lang/index',
     ),
 );
