@@ -26,61 +26,61 @@ class TempalteHook
         $this->_template_replace[] = '<?php }else if (\\2){ ?>';
 
         // empty标签 判断是否为空数组
-        $this->_template_preg[] = '/{empty name=\"(.*?)\"}/i';
+        $this->_template_preg[] = '/{empty\s+name=\"(.*?)\"}/i';
         $this->_template_preg[] = '/{\/empty}/i';
         $this->_template_replace[] = '<?php if (true === empty(\\1)) { ?>';
         $this->_template_replace[] = '<?php }; ?>';
 
         // noempty 判断是否不为空数组
-        $this->_template_preg[] = '/{noempty name=\"(.*?)\"}/i';
+        $this->_template_preg[] = '/{noempty\s+name=\"(.*?)\"}/i';
         $this->_template_preg[] = '/{\/noempty}/i';
         $this->_template_replace[] = '<?php if (false === empty(\\1)) { ?>';
         $this->_template_replace[] = '<?php }; ?>';
 
         // defined 判断是否已定义常量
-        $this->_template_preg[] = '/{defined name=\"(.*?)\"}/i';
+        $this->_template_preg[] = '/{defined\s+name=\"(.*?)\"}/i';
         $this->_template_preg[] = '/{\/defined}/i';
         $this->_template_replace[] = '<?php if (defined(\'\\1\')) { ?>';
         $this->_template_replace[] = '<?php }; ?>';
 
         // nodefined 判断是否未定义常量
-        $this->_template_preg[] = '/{nodefined name=\"(.*?)\"}/i';
+        $this->_template_preg[] = '/{nodefined\s+name=\"(.*?)\"}/i';
         $this->_template_preg[] = '/{\/nodefined}/i';
         $this->_template_replace[] = '<?php if (false === defined(\'\\1\')) { ?>';
         $this->_template_replace[] = '<?php }; ?>';
 
         // isset 判断是否已定义变量
-        $this->_template_preg[] = '/{isset name=\"(.*?)\"}/i';
+        $this->_template_preg[] = '/{isset\s+name=\"(.*?)\"}/i';
         $this->_template_preg[] = '/{\/isset}/i';
         $this->_template_replace[] = '<?php if (isset(\\1)) { ?>';
         $this->_template_replace[] = '<?php }; ?>';
 
         // notset 判断是否未定义变量
-        $this->_template_preg[] = '/{noset name=\"(.*?)\"}/i';
+        $this->_template_preg[] = '/{noset\s+name=\"(.*?)\"}/i';
         $this->_template_preg[] = '/{\/noset}/i';
         $this->_template_replace[] = '<?php if (false === isset(\\1)) { ?>';
         $this->_template_replace[] = '<?php }; ?>';
 
         // between 区间判断
-        $this->_template_preg[] = '/{between name=\"(.*?)\" value="(.*?),(.*?)"}/i';
+        $this->_template_preg[] = '/{between\s+name=\"(.*?)\"\s+value="(.*?),(.*?)"}/i';
         $this->_template_preg[] = '/{\/between}/i';
         $this->_template_replace[] = '<?php if (\\1 >= \\2 && \\1 < \\3) { ?>';
         $this->_template_replace[] = '<?php }; ?>';
 
         // nobetween 区间判断
-        $this->_template_preg[] = '/{nobetween name=\"(.*?)\" value="(.*?),(.*?)"}/i';
+        $this->_template_preg[] = '/{nobetween\s+name=\"(.*?)\"\s+value="(.*?),(.*?)"}/i';
         $this->_template_preg[] = '/{\/nobetween}/i';
         $this->_template_replace[] = '<?php if (\\1 < \\2 || \\1 > \\3) { ?>';
         $this->_template_replace[] = '<?php }; ?>';
 
         // in 是否存在数组
-        $this->_template_preg[] = '/{in name=\"(.*?)\" value="(.*?)"}/i';
+        $this->_template_preg[] = '/{in\s+name=\"(.*?)\"\s+value="(.*?)"}/i';
         $this->_template_preg[] = '/{\/in}/i';
         $this->_template_replace[] = '<?php if (in_array(\\1, [\\2])) { ?>';
         $this->_template_replace[] = '<?php }; ?>';
 
         // noin 不存在数组
-        $this->_template_preg[] = '/{noin name=\"(.*?)\" value="(.*?)"}/i';
+        $this->_template_preg[] = '/{noin\s+name=\"(.*?)\"\s+value="(.*?)"}/i';
         $this->_template_preg[] = '/{\/noin}/i';
         $this->_template_replace[] = '<?php if (false === in_array(\\1, [\\2])) { ?>';
         $this->_template_replace[] = '<?php }; ?>';
@@ -114,7 +114,7 @@ class TempalteHook
         $this->_template_replace[] = "<?php echo tongji(); ?>";
 
         // 文章进度
-        $this->_template_preg[] = '/{progress container=\"(.*?)\" parent="(.*?)" child="(.*?)" class="(.*?)"}/i';
+        $this->_template_preg[] = '/{progress\s*container=\"(.*?)\"\s*parent="(.*?)"\s*child="(.*?)"\s*class="(.*?)"}/i';
         $this->_template_preg[] = '/{\/progress}/i';
         $this->_template_replace[] = '<?php $container = "\\1"; $parent="\\2"; $child="\\3"; $class="\\4" ?>';
         $this->_template_replace[] = '<?php echo showArticleProgress($container, $parent, $child, $class);?>';
