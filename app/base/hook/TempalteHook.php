@@ -109,6 +109,10 @@ class TempalteHook
         $this->_template_preg[] = '/<!--#pushBaidu-->/';
         $this->_template_replace[] = "<?php pushBaidu(); ?>";
 
+        // 网站统计
+        $this->_template_preg[] = '/<!--#tongji-->/';
+        $this->_template_replace[] = "<?php echo tongji(); ?>";
+
         // 文章进度
         $this->_template_preg[] = '/{progress container=\"(.*?)\" parent="(.*?)" child="(.*?)" class="(.*?)"}/i';
         $this->_template_preg[] = '/{\/progress}/i';

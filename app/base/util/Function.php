@@ -206,6 +206,33 @@ function showArticleProgress($container, $parent, $child, $class)
 }
 
 /**
+ * 百度统计
+ *
+ * @return void
+ */
+function tongji()
+{
+    $file = CONFIG_PATH . 'tongji.php';
+    $file = load_config($file);
+
+    if (!$file['tongji_open']) {
+        return;
+    }
+    
+    $type = $file['default'];
+    $config = $file['store'][$type];
+
+    if (!$config['token']) {
+        return;
+    }
+    
+    $script = 'var _hmt=_hmt||[];(function(){var hm=document.createElement("script");hm.src="https://hm.baidu.com/hm.js?{TOKEN}";var s=document.getElementsByTagName("script")[0];s.parentNode.insertBefore(hm,s)})();';
+    $script = str_replace('{TOKEN}', $config['token'], $script);
+
+    return '<script>' . $script . '</script>';
+}
+
+/**
  * 数据签名认证
  * @param  array  $data 被认证的数据
  * @return string       签名
