@@ -1,7 +1,7 @@
 <?php
 return array(
-    /* 数据库配置 */
-	'DB_TYPE' => 'mysqlpdo',
+	/* 数据库配置 */
+	'DB_TYPE' => 'mysqli',
 	'DB_HOST'=>'127.0.0.1',
 	'DB_USER'=>'root',
 	'DB_PWD'=>'root',
