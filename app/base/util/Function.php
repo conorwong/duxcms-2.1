@@ -185,6 +185,26 @@ function filter_string($data)
         return htmlspecialchars($data, ENT_QUOTES, 'UTF-8');
     }
 }
+
+/**
+ * 显示文章阅读进度
+ *
+ * @param [type] $container 文章容器
+ * @param [type] $parent 包着百分百的
+ * @param string $child 进度div显示百分比的标签
+ * @return void
+ */
+function showArticleProgress($container, $parent, $child, $class)
+{
+    $script = 'function scrollFunc(){var THRESHOLD=50;var DOC="{CONTAINER}";var PARENT="{PARENT}";var CHILD="{CHILD}";var CLASS="{CLASS}";var parentElement=document.querySelector(PARENT);if(parentElement){var docHeight=document.querySelector(DOC).offsetHeight;var winHeight=window.innerHeight;var contentVisibilityHeight=docHeight>winHeight?docHeight-winHeight:document.body.scrollHeight-winHeight;var scrollPercentRounded=Math.round(100*window.scrollY/contentVisibilityHeight);scrollPercent=Math.min(scrollPercentRounded,100)+"%"}if(parentElement){window.scrollY>THRESHOLD?parentElement.classList.add(CLASS):parentElement.classList.remove(CLASS);parentElement.querySelector(CHILD).innerText=scrollPercent;parentElement.addEventListener("click",function(){document.body.scrollTop=0;document.documentElement.scrollTop=0})}}if(document.addEventListener){document.addEventListener("DOMMouseScroll",scrollFunc,false);document.addEventListener("DOMContentLoaded",scrollFunc,false)}window.onmousewheel=document.onmousewheel=scrollFunc;';
+    $script = str_replace('{CONTAINER}', $container, $script);
+    $script = str_replace('{PARENT}', $parent, $script);
+    $script = str_replace('{CHILD}', $child, $script);
+    $script = str_replace('{CLASS}', $class, $script);
+
+    return '<script>' . $script . '</script>';
+}
+
 /**
  * 数据签名认证
  * @param  array  $data 被认证的数据

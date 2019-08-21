@@ -109,6 +109,12 @@ class TempalteHook
         $this->_template_preg[] = '/<!--#pushBaidu-->/';
         $this->_template_replace[] = "<?php pushBaidu(); ?>";
 
+        // 文章进度
+        $this->_template_preg[] = '/{progress container=\"(.*?)\" parent="(.*?)" child="(.*?)" class="(.*?)"}/i';
+        $this->_template_preg[] = '/{\/progress}/i';
+        $this->_template_replace[] = '<?php $container = "\\1"; $parent="\\2"; $child="\\3"; $class="\\4" ?>';
+        $this->_template_replace[] = '<?php echo showArticleProgress($container, $parent, $child, $class);?>';
+
         //替换图片CSS等路径
         $template = preg_replace_callback('/<(.*?)(src=|href=|value=|background=)[\"|\'](images\/|img\/|css\/|js\/|style\/)(.*?)[\"|\'](.*?)>/', array($this, 'parse_load'), $template);
 
