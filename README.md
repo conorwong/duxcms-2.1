@@ -79,6 +79,9 @@ http://www.domain.com?lang=en
 * `child` 包着百分比的标签 例如 span
 * `class` 当页面浏览到文章内容内，加的类名 例如 on
 ```
+  <div class="g-bd">
+    文章内容
+  </div>
   {progress container=".g-bd" parent=".back-to-top" child="span" class="on"}
     <div class="back-to-top" style="position: fixed;top:50">
       <span></span>
