@@ -1,11 +1,20 @@
 <?php
 namespace app\base\hook;
 
+use Whoops\Run;
+use Whoops\Handler\PrettyPageHandler;
+
 class AppHook
 {
     public $startTime = 0;
+
     public function appBegin()
     {
+        // 注册异常接管
+        $whoops = new Run();
+        $whoops->prependHandler(new PrettyPageHandler);
+        $whoops->register();
+
         $this->startTime = microtime(true);
     }
     
