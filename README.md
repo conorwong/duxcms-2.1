@@ -25,6 +25,10 @@
 ```php
 // 切换英文
 http://www.domain.com?lang=en
+
+// 伪静态
+http://www.domain.com/en
+
 // 切换中文
 http://www.domain.com?lang=en
 ```
