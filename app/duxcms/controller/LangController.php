@@ -11,12 +11,13 @@ class LangController extends SiteController
 {
     public function index()
     {
-        if (!LANG_OPEN) {
+        
+        if (defined('LANG_OPEN')) {
             $this->redirect('/');
             exit;
         }
 
-        $lang_config = LANG_CONFIG;
+        $lang_config = unserialize(LANG_CONFIG);
         $langs = $lang_config['LANG_LIST'];
         $lang = request('get.s', null, function($request) use ($langs) {
             $lang = end(explode('/', $request));
