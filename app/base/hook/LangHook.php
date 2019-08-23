@@ -9,7 +9,7 @@ class LangHook
         
         if ($config['LANG_OPEN']) {
             define('LANG_OPEN', true);
-            define('LANG_CONFIG', $config);
+            define('LANG_CONFIG', serialize($config));
 
             $name = config('COOKIE_PREFIX') . 'APP_LANG';
             $clang = $_COOKIE[$name] ? $_COOKIE[$name] : $config['LANG_DEFAULT'];

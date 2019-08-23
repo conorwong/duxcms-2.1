@@ -67,7 +67,7 @@ class SettingController extends AdminController
         if (!IS_POST) {
             $breadCrumb = array('站点信息'=>url());
             $this->assign('breadCrumb', $breadCrumb);
-            if (LANG_OPEN) {
+            if (defined('LANG_OPEN')) {
                 $file = CONFIG_PATH . '/lang/'. APP_LANG .'.php';
                 $config = load_config($file);
             } else {
@@ -76,7 +76,7 @@ class SettingController extends AdminController
             $this->assign('info', $config);
             $this->adminDisplay();
         } else {
-            if (LANG_OPEN) {
+            if (defined('LANG_OPEN')) {
                 $file = CONFIG_PATH . '/lang/'. APP_LANG .'.php';
 
                 if (save_config($file, $_POST)) {
