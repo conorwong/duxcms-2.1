@@ -54,7 +54,13 @@ class ConfigModel extends BaseModel
     public function tplList()
     {
         $config = $this->getInfo();
-        $tplDir = ROOT_PATH . THEME_NAME . '/' . $config['tpl_name'];
+        // 多语言
+        if (defined('LANG_OPEN')) {
+            $tplDir = ROOT_PATH . THEME_NAME . '/' . $config['tpl_name'] .  '/' . APP_LANG;
+        } else {
+            $tplDir = ROOT_PATH . THEME_NAME . '/' . $config['tpl_name'];
+        }
+
         if (!is_dir($tplDir)) {
             return false;
         }
@@ -62,7 +68,7 @@ class ConfigModel extends BaseModel
         if (is_array($listFile)) {
             $list=array();
             foreach ($listFile as $key => $value) {
-                if ($value != "." && $value != "..") {
+                if ($value != "." && $value != ".." && !is_dir($tplDir . DIRECTORY_SEPARATOR . $value)) {
                     $list[$key]['file']=$value;
                     $list[$key]['name']=substr($value, 0, -5);
                 }
