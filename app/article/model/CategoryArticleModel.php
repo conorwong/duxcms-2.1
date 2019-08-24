@@ -147,4 +147,21 @@ class CategoryArticleModel extends BaseModel
         $map['class_id'] = $classId;
         return $this->where($map)->delete();
     }
+
+    public function loadAllCategory()
+    {
+        $where = ["A.lang <> '" .APP_LANG ."'"];
+        $pageList = $this->table("category as A")
+            ->join('{pre}category_article as B ON A.class_id = B.class_id')
+            ->where($where)
+            ->field('B.*,A.*')
+            ->order("A.sequence ASC , A.class_id ASC")
+            ->select();
+        
+            $temp = [];
+            foreach($pageList as $page) {
+                $temp[$page['lang']][] = $page;
+            }
+        return $temp;
+    }
 }

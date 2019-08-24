@@ -34,6 +34,7 @@
                             </select>
                         </div>
                     </div>
+
                     <div class="form-group">
                         <div class="field">
                             <select class="input" name="position_id">
@@ -129,6 +130,7 @@
                             <option value="2">草稿</option>
                             <option value="3">移动</option>
                             <option value="4">删除</option>
+                            <option value="6">复制</option>
                         </select>
                     </div>
                 </div>
@@ -152,7 +154,30 @@
 			var type = $(this).val();
 			if(type == 3){
 				$(this).after($('#class_id').clone());
-			}else{
+			} else if (type == 6) {
+                parentHtml = "<select class='input' id='lang_id'> \
+                <option value='0'>选择语言</option>\
+                <!--loop{$lang_list as $key=>$vo}-->\
+                    <!--if{$key !== APP_LANG}-->\
+                    <option value='{$key}'>{$vo.label}</option>\
+                    <!--{/if}-->\
+                <!--{/loop}-->\
+                </select><select class='input' id='lang_class'></select>";
+                
+				$(this).after(parentHtml);
+
+                jsonData = {$category_json};
+                $("#lang_id").change(function(){
+                    lang = $(this).val()
+                    if (lang != 0) {
+                        html = "<option value='0'>选择栏目</option>"
+                        for (var key in jsonData[lang]) {
+                            html += "<option value="+ jsonData[lang][key].class_id +">"+ jsonData[lang][key].name +"1</option>"
+                        }
+                        $("#lang_class").html(html)
+                    }
+                })
+            } else {
 				$(this).nextAll('select').remove();
 			}
 		});

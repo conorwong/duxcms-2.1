@@ -2,6 +2,7 @@
 namespace app\article\model;
 
 use app\base\model\BaseModel;
+use app\duxcms\model\ContentModel;
 
 /**
  * 内容操作
@@ -192,5 +193,71 @@ class ContentArticleModel extends BaseModel
             $this->rollBack();
         }
         return $status;
+    }
+
+    public function copyData($contentId, $classId)
+    {
+        $contentInfo=$this->getInfo($contentId);
+        $modelCategory = target('CategoryArticle');
+        $categoryInfo=$modelCategory->getInfo($contentInfo['class_id']);
+
+        $format = ['class_id', 'font_bold', 'font_em', 'time', 'sequence', 'status', 'views', 'taglink'];
+        $model = new ContentModel();
+
+        $data = [
+            'class_id'=> $classId,
+            'title'=> $contentInfo['title'],
+            'font_color' => $contentInfo['font_color'],
+            'font_bold' => $contentInfo['font_bold'],
+            'font_em' => $contentInfo['font_em'],
+            'keywords' => $contentInfo['keywords'],
+            'description' => $contentInfo['description'],
+            'time' => time(),
+            'image' => $contentInfo['image'],
+            'status' => (int)$contentInfo['status'],
+            'views' => 0,
+            'tpl' => $contentInfo['tpl']
+        ];
+
+        $this->beginTransaction();
+
+        $id = $model->add($data);
+
+        $status = $this->add([
+            'content_id' => $id,
+            'content' => $contentInfo['content'] 
+        ]);
+
+        if (!$status) {
+            $this->rollBack();
+        }
+
+        //扩展模型
+        if ($categoryInfo['fieldset_id']) {
+            $oldFieldsetInfo = target('duxcms/Fieldset')->getInfoClassId($categoryInfo['class_id']);
+            $newFieldsetInfo = target('duxcms/Fieldset')->getInfoClassId($classId);
+
+            if ($oldFieldsetInfo['fieldset_id'] !== $newFieldsetInfo['fieldset_id']) {
+                $this->rollBack();
+                return ['error' => 1, 'msg' => '编号:' . $contentInfo['content_id'] . ', 当前文章的扩展模型与目标不一致'];
+            }
+
+            $extInfo = target('duxcms/FieldsetExpand')->getDataInfo($oldFieldsetInfo['fieldset_id'], $contentId);
+            $extInfo = (array)$extInfo;
+            $extInfo['data_id'] = $id;
+
+            $expandModel = target('duxcms/FieldData');
+            $expandModel->setTable('ext_'.$newFieldsetInfo['table']);
+            if (!$expandModel->add($extInfo)) {
+                $this->rollBack();
+                return ['error' => 1, 'msg' => '编号:' . $contentInfo['content_id'] . ', 保存扩展模型数据时出错'];
+            }
+
+            $this->commit();
+        } else {
+            $this->commit();
+        }
+
+        return ['error' => 0];
     }
 }

@@ -90,6 +90,8 @@ class AdminContentController extends AdminController
         $pushConfig = load_config($file);
         $this->assign('push_open', $pushConfig['push_open']);
 
+        $category_json = json_encode(target('CategoryArticle')->loadAllCategory());
+        $this->assign('category_json', $category_json);
         $this->adminDisplay();
     }
 
@@ -217,6 +219,14 @@ class AdminContentController extends AdminController
                     //删除
                     target('ContentArticle')->delData($id);
                     break;
+                case 6:
+                    // 复制
+                    $res = target('ContentArticle')->copyData($id, $classId);
+                    if ($res['error']) {
+                        $this->error($res['msg']);
+                        return;
+                    }
+                    break;
             }
         }
         $this->success('批量操作执行完毕！');
@@ -240,7 +250,7 @@ class AdminContentController extends AdminController
 
         // 伪静态
         if ($config['REWRITE_ON']) {
-            \framework\base\Route::parseUrl( config('REWRITE_RULE'), true );
+            \framework\base\Route::parseUrl(config('REWRITE_RULE'), true);
 
             $app = 'article/Content/index';
             $url = url($app, ['content_id'=>$aid]);
