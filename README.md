@@ -25,13 +25,10 @@
 #### 前台切换
 ```php
 // 切换英文
-http://www.domain.com?lang=en
-
-// 伪静态
-http://www.domain.com/en
+http://www.domain.com?l=en-us
 
 // 切换中文
-http://www.domain.com?lang=en
+http://www.domain.com?l=zh-cn
 ```
 #### 前台获取语言配置
 模板调用 `$lang_list` 获取列表
@@ -44,7 +41,7 @@ http://www.domain.com?lang=en
 ```html
 <ul>
 <!--foreach{$lang_list as $key=>$vo}-->
-  <li><a href="/index.php?lang={$key}">{$vo.label}</a></li>
+  <li><a href="/index.php?l={$key}">{$vo.label}</a></li>
 <!--{/foreach}-->
 </ul>
 ```
