@@ -36,6 +36,13 @@ class CategoryController extends SiteController
         if (!is_array($categoryInfo)) {
             $this->error404();
         }
+
+        // 多语言
+        if (defined('LANG_OPEN') && $categoryInfo['lang'] !== APP_LANG) {
+            cookie('APP_LANG', $categoryInfo['lang'], 3);
+            $this->redirect($_REQUEST['s']);
+        }
+
         if (strtolower($categoryInfo['app'])<>APP_NAME) {
             $this->error404();
         }

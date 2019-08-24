@@ -45,6 +45,13 @@ class ContentController extends SiteController
         if (!is_array($categoryInfo)) {
             $this->error404();
         }
+        
+        // 多语言
+        if (defined('LANG_OPEN') && $categoryInfo['lang'] !== APP_LANG) {
+            cookie('APP_LANG', $categoryInfo['lang'], 3);
+            $this->redirect($_REQUEST['s']);
+        }
+
         if ($categoryInfo['app']<>APP_NAME) {
             $this->error404();
         };
@@ -103,10 +110,16 @@ class ContentController extends SiteController
         $this->assign('media', $media);
         $this->assign('prevInfo', $prevInfo);
         $this->assign('nextInfo', $nextInfo);
+
+        $pageLang = '';
+        if (defined('LANG_OPEN')) {
+            $pageLang = $categoryInfo['lang'];
+        }
+
         if ($contentInfo['tpl']) {
-            $this->siteDisplay($contentInfo['tpl']);
+            $this->siteDisplay($contentInfo['tpl'], true, $pageLang);
         } else {
-            $this->siteDisplay($categoryInfo['content_tpl']);
+            $this->siteDisplay($categoryInfo['content_tpl'], true, $pageLang);
         }
     }
 }
