@@ -8,7 +8,7 @@ function hasSub($cid)
     $sub = target('duxcms/Category')->getSubClassId($cid);
     if (empty($sub)) {
         return false;
-    }else{
+    } else {
         return true;
     }
 }
@@ -71,12 +71,13 @@ function articleSumByCid($cid, $positionId = '', $isShow = true)
  *
  * @return boolean
  */
-function is_https() {
-    if ( !empty($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) !== 'off') {
+function is_https()
+{
+    if (!empty($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) !== 'off') {
         return true;
-    } elseif ( isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https' ) {
+    } elseif (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https') {
         return true;
-    } elseif ( !empty($_SERVER['HTTP_FRONT_END_HTTPS']) && strtolower($_SERVER['HTTP_FRONT_END_HTTPS']) !== 'off') {
+    } elseif (!empty($_SERVER['HTTP_FRONT_END_HTTPS']) && strtolower($_SERVER['HTTP_FRONT_END_HTTPS']) !== 'off') {
         return true;
     }
 
@@ -116,6 +117,20 @@ function push($urls)
     $result = curl_exec($ch);
 
     return $result;
+}
+
+/**
+ * 切换语言
+ *
+ * @param [type] $lang
+ * @param [type] $uri
+ * @return void
+ */
+function changeLang($lang, $uri)
+{
+    $hook = new \app\base\hook\LangHook();
+    $hook->setCookie($lang);
+    redirect($uri);
 }
 
 /**
@@ -212,9 +227,8 @@ function showArticleProgress($container, $parent, $child, $class)
  */
 function tongji()
 {
-    $file = CONFIG_PATH . 'tongji.php';
+    $file = CONFIG_PATH . 'statistics.php';
     $file = load_config($file);
-
     if (!$file['tongji_open']) {
         return;
     }
@@ -225,11 +239,14 @@ function tongji()
     if (!$config['token']) {
         return;
     }
-    
-    $script = 'var _hmt=_hmt||[];(function(){var hm=document.createElement("script");hm.src="https://hm.baidu.com/hm.js?{TOKEN}";var s=document.getElementsByTagName("script")[0];s.parentNode.insertBefore(hm,s)})();';
-    $script = str_replace('{TOKEN}', $config['token'], $script);
 
-    return '<script>' . $script . '</script>';
+    $scripts = [
+        'baidu' => '<script type="text/javascript">var _hmt=_hmt||[];(function(){var hm=document.createElement("script");hm.src="https://hm.baidu.com/hm.js?{TOKEN}";var s=document.getElementsByTagName("script")[0];s.parentNode.insertBefore(hm,s)})();</script>',
+        'cznn' => '<script type="text/javascript" src="https://v1.cnzz.com/z_stat.php?id={TOKEN}&web_id={TOKEN}"></script>'
+    ];
+
+    $script = $scripts[$type];
+    return str_replace('{TOKEN}', $config['token'], $script);
 }
 
 /**

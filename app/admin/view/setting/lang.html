@@ -25,6 +25,30 @@
                         </div>
                     </div>
             </div>
+
+            <div class="form-group">
+                <div class="label">
+                    <label for="sitename">自动侦测语言</label>
+                </div>
+                <div class="field">
+                    <div class="button-group button-group-small radio">
+                        <!--if{$info['LANG_AUTO_DETEC']}-->
+                        <label class="button active"><input name="LANG_AUTO_DETEC" value="1" checked="checked" type="radio">
+                        <!--{else}-->
+                        <label class="button"><input name="LANG_AUTO_DETEC" value="1" type="radio">
+                        <!--{/if}-->
+                        <span class="icon icon-check"></span> 开启</label>
+                        <!--if{!$info['LANG_AUTO_DETEC']}-->
+                        <label class="button active"><input name="LANG_AUTO_DETEC" checked="checked" value="0" type="radio">
+                        <!--{else}-->
+                        <label class="button"><input name="LANG_AUTO_DETEC" value="0" type="radio">
+                        <!--{/if}-->
+                        <span class="icon icon-times"></span> 关闭</label>
+                    </div>
+                    <div class="input-note">首次浏览网站时，程序自动获取浏览器当前是哪个国家语言；如果当前国家语言不支持，会调用默认语言</div>
+                </div>
+            </div>
+
             <div class="form-group">
                 <div class="label">
                     <label for="sitename">默认语言</label>

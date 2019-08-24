@@ -39,8 +39,7 @@ class CategoryController extends SiteController
 
         // 多语言
         if (defined('LANG_OPEN') && $categoryInfo['lang'] !== APP_LANG) {
-            cookie('APP_LANG', $categoryInfo['lang'], 3);
-            $this->redirect($_REQUEST['s']);
+            changeLang($categoryInfo['lang'], $_REQUEST['s']);
         }
 
         if (strtolower($categoryInfo['app'])<>APP_NAME) {

@@ -34,7 +34,7 @@
                 <!--多语言菜单-->
                 <!--if{defined('LANG_OPEN')}-->
                     <!--loop{$lang_list as $key=>$vo}-->
-                        <li> <a href="admin.php?lang={$key}" style="<!--if{APP_LANG == $key}-->background: #3190ee;<!--{/if}-->color:#fff">
+                        <li> <a href="admin.php?l={$key}" style="<!--if{APP_LANG == $key}-->background: #3190ee;<!--{/if}-->color:#fff">
                             {$vo.label}
                         </a></li>
                     <!--{/loop}-->
