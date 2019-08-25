@@ -7,6 +7,7 @@
 * 提供更稳定的分词服务
 * 提供文章推送百度收录
 * 提供更好的异常接管
+* 提供多条件筛选
 
 ## 数据库驱动
 * mysqli
@@ -94,5 +95,41 @@ http://www.domain.com?l=zh-cn
 由于http://keyword.discuz.com 出现403(应该关服务了)
 
 使用[@梁斌penny](https://weibo.com/pennyliang)的分词服务, 使用此项目的'模板工'们，你们应该感谢梁厂长！
+
+## 多条件筛选
+1. 后台创建扩展模型 
+2. 添加【下拉菜单】类型的字段， 【字段配置】用逗号分隔 例如创建一个码数的字段 字段配置：m,xl,xxl
+
+### 前台list.html模板
+`$duowei`数组  
+`$v['selected']`当前属性是否已选择  
+`$v['url']` 当前属性的url 相当于 使用当前属性进行筛选  
+`$v['durl']` 当前属性的url 相当于 不使用当前属性进行筛选  
+```
+<!--foreach{$duowei as $vo}-->
+  <ul>
+    <li>
+      <a href="#">{$vo.name}</a>
+      {noempty name="$vo['child']"}
+      <ul>
+        <!--foreach{$vo['child'] as $v}-->
+          <!--if{$v['selected']==true}-->
+            <a href="{$v.durl}" <!--if{$v['selected']==true}--> class="on" <!--{/if}-->>
+              {$v.name}
+            </a>
+          <!--{/if}-->
+
+          <!--if{$v['selected']==false}-->
+            <a href="{$v.url}">
+              {$v.name}
+            </a>
+          <!--{/if}-->
+        <!--{/foreach}--> 
+      </ul>
+      {/noempty}
+    </li>
+  </ul>
+  <!--{/foreach}--> 
+```
 
 
