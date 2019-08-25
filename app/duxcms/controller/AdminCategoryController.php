@@ -36,6 +36,7 @@ class AdminCategoryController extends AdminController
         }
         return $data;
     }
+    
     /**
      * 列表
      */
@@ -43,7 +44,15 @@ class AdminCategoryController extends AdminController
     {
         $breadCrumb = array('栏目列表' => url());
         $this->assign('breadCrumb', $breadCrumb);
-        $this->assign('list', target('Category')->loadList());
+
+        // 多语言
+        if (defined('LANG_OPEN')) {
+            $where['lang'] = APP_LANG;
+        } else {
+            $where['lang'] = '';
+        }
+
+        $this->assign('list', target('Category')->loadList($where));
         $this->adminDisplay();
     }
 }

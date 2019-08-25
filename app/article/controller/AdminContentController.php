@@ -91,7 +91,12 @@ class AdminContentController extends AdminController
         $pushConfig = load_config($file);
         $this->assign('push_open', $pushConfig['push_open']);
 
-        $category_json = json_encode(target('CategoryArticle')->loadAllCategory());
+        // 多语言文章复制
+        $category_json = [];
+        if (defined('LANG_OPEN')) {
+            $category_json = json_encode(target('CategoryArticle')->loadAllCategory());
+        }
+
         $this->assign('category_json', $category_json);
         $this->adminDisplay();
     }

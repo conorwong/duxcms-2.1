@@ -152,18 +152,19 @@ class CategoryArticleModel extends BaseModel
 
     public function loadAllCategory()
     {
-        $where = ["A.lang <> '" .APP_LANG ."'"];
-        $pageList = $this->table("category as A")
-            ->join('{pre}category_article as B ON A.class_id = B.class_id')
-            ->where($where)
-            ->field('B.*,A.*')
-            ->order("A.sequence ASC , A.class_id ASC")
-            ->select();
+        $data = target('duxcms/Category')->where([
+            "lang <> ''",
+            "lang <> '" . APP_LANG . "'"
+        ])->select();
+
+        $cat = new \framework\ext\Category(array('class_id', 'parent_id', 'name', 'cname'));
+        $cat = new \framework\ext\Category(array('class_id', 'parent_id', 'name', 'cname'));
+        $tree = $cat->getTree($data);
         
-            $temp = [];
-            foreach($pageList as $page) {
-                $temp[$page['lang']][] = $page;
-            }
+        $temp = [];
+        foreach($tree as $page) {
+            $temp[$page['lang']][] = $page;
+        }
         return $temp;
     }
 }
