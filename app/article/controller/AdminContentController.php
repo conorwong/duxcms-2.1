@@ -72,6 +72,12 @@ class AdminContentController extends AdminController
         $pageMaps['status'] = $status;
         $pageMaps['class_id'] = $classId;
         $pageMaps['position_id'] = $positionId;
+
+        // 单语言下筛选
+        if (!defined('LANG_OPEN')) {
+            $where['C.lang'] = '';
+        }
+
         //查询数据
         $list = target('ContentArticle')->page(30)->loadList($where, $limit);
         $this->pager = target('ContentArticle')->pager;
