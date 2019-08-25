@@ -4,15 +4,14 @@ namespace app\duxcms\controller;
 use app\admin\controller\AdminController;
 use GuzzleHttp\Client;
 require BASE_PATH . '/vendor/autoload.php';
+
 /**
  * 更新管理
  */
 
 class AdminUpdateController extends AdminController
 {
-    public $domain = 'https://raw.githubusercontent.com/xiaodit/duxcms-update/master';
-    
-    public $download = 'https://github.com/xiaodit/duxcms-2.1/archive/v';
+    public $domain = 'https://www.xiaodim.com/duxcms';
 
     /**
      * 当前模块参数
@@ -63,9 +62,10 @@ class AdminUpdateController extends AdminController
      */
     public function dowload()
     {
-        $version = request('post.version');
-        if (empty($version)) {
-            $this->error('没有发现更新地址，请稍后重试！');
+        $url = request('post.url');
+        $fileName = end(explode('/', $url));
+        if (!$fileName) {
+            $this->error($fileName . '没有发现更新地址，请稍后重试！');
         }
         $updateDir = DATA_PATH.'update/';
         if (!file_exists($updateDir)) {
@@ -74,10 +74,8 @@ class AdminUpdateController extends AdminController
             }
         }
 
-        $fileName = $version;
         //开始下载文件
         $fileName = $updateDir.$fileName;
-        $url = $this->download . $version . '.zip';
 
         $client = new Client([
             'timeout' => 0
@@ -96,9 +94,13 @@ class AdminUpdateController extends AdminController
      */
     public function unzip()
     {
+        $url = request('post.url');
         $version = request('post.version');
+
+        $fileName = end(explode('/', $url));
+
         $updateDir = DATA_PATH.'update/';
-        $file = $updateDir.$version;
+        $file = $updateDir.$fileName;
         if (!is_file($file)) {
             $this->error('没有发现更新文件，请稍后重试！');
         }

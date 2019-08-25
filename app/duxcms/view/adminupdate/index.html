@@ -25,6 +25,7 @@
             </div>
         </div>
         <input type="hidden" id="url_fix" name="url_fix" value="">
+        <input type="hidden" id="version" name="version" value="">
 
     </div>
 </div>
@@ -46,7 +47,8 @@
             onUpdateBtn();
             if(data.status){
                 var info = data.info;
-                $('#url_fix').val(info.version);
+                $('#url_fix').val(info.url);
+                $('#version').val(info.version);
                 var html = '\
                 <p>'+ info.msg +'</p>\
                 <p>更新简要：'+ info.remark +'</p>\
@@ -74,7 +76,7 @@
     $('body').on('click','#update', function () { 
         offUpdateBtn();
         $('#updateMsg').html('下载更新中，请稍等...');
-        $.post("{url('duxcms/AdminUpdate/dowload')}",{version:$('#url_fix').val()},function(data){
+        $.post("{url('duxcms/AdminUpdate/dowload')}",{url:$('#url_fix').val(), version:$("#version").val()},function(data){
             $('#updateMsg').html(data.info);
             if(data.status){
                 unzip();
@@ -85,7 +87,7 @@
      });
     //解压更新
     function unzip(){
-        $.post("{url('duxcms/AdminUpdate/unzip')}",{version:$('#url_fix').val()},function(data){
+        $.post("{url('duxcms/AdminUpdate/unzip')}",{url:$('#url_fix').val(), version:$("#version").val()},function(data){
             $('#updateMsg').html(data.info);
             if(data.status){
                 upfile();
@@ -96,7 +98,7 @@
     }
     //更新文件
     function upfile(){
-        $.post("{url('duxcms/AdminUpdate/upfile')}",{version:$('#url_fix').val()},function(data){
+        $.post("{url('duxcms/AdminUpdate/upfile')}",{url:$('#url_fix').val(), version:$("#version").val()},function(data){
             $('#updateMsg').html(data.info);
             if(data.status){
                 window.setTimeout("window.location.reload();",3000);
