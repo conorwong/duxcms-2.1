@@ -250,6 +250,42 @@ function tongji()
 }
 
 /**
+ * 生成筛选url
+ *
+ * @param [type] $flag
+ * @param [type] $fields
+ * @param [type] $field
+ * @param [type] $classId
+ * @param [type] $id
+ * @return void
+ */
+function buildScreenUri($flag, $fields, $field, $classId, $id = '')
+{
+    $params = [];
+    foreach($fields as $item){
+        if ($field != $item) {
+            $value = request('get.' . $item, 0, 'intval');
+            if ($value) {
+                $params[$item] =$value;
+            }
+        }
+    }
+
+    $page = request('get.page', 0, 'intval');
+    if ($page) {
+        $params['page'] = $page;
+    }
+
+    if ($flag) {
+        $params[$field] = $id;
+    }
+
+    $paramer['class_id'] = $classId; 
+    $dir = APP_NAME.'/'.CONTROLLER_NAME.'/'.ACTION_NAME;
+    return match_url($dir, $paramer, $params);
+}
+
+/**
  * 数据签名认证
  * @param  array  $data 被认证的数据
  * @return string       签名
