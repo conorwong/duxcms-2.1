@@ -124,7 +124,10 @@ class CategoryModel extends BaseModel
             return false;
         }
         if ($type == 'add') {
-            $data['lang'] = APP_LANG;
+            // 多语言
+            if (defined('LANG_OPEN')) {
+                $data['lang'] = APP_LANG;
+            }
             return $this->add($data);
         }
         if ($type == 'edit') {
