@@ -43,13 +43,7 @@ class AdminCategoryController extends AdminController
     {
         $breadCrumb = array('栏目列表' => url());
         $this->assign('breadCrumb', $breadCrumb);
-        $where = [];
-        if (!defined('LANG_OPEN')) {
-            $where['lang'] = '';
-        }
-
-
-        $this->assign('list', target('Category')->loadList($where));
+        $this->assign('list', target('Category')->loadList());
         $this->adminDisplay();
     }
 }

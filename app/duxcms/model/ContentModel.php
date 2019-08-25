@@ -41,8 +41,11 @@ class ContentModel extends BaseModel
      */
     public function loadList($where = array(), $limit = 50, $order = 'A.time desc,A.content_id desc')
     {
+        // 多语言
         if (LANG_OPEN) {
-            $where['B.lang'] = APP_LANG; 
+            $where['B.lang'] = APP_LANG;
+        } else {
+            $where['B.lang'] = '';
         }
         
         $pageList = $this->table("content as A")

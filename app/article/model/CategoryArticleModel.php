@@ -34,6 +34,8 @@ class CategoryArticleModel extends BaseModel
         // 多语言
         if (defined('LANG_OPEN')) {
             $where['A.lang'] = APP_LANG;
+        } else {
+            $where['A.lang'] = '';
         }
         
         $pageList = $this->table("category as A")

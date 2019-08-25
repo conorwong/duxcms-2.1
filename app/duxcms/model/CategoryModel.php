@@ -30,6 +30,12 @@ class CategoryModel extends BaseModel
      */
     public function loadList($where = array(), $classId=0)
     {
+        // 多语言
+        if (defined('LANG_OPEN')) {
+            $where['lang'] = APP_LANG;
+        } else {
+            $where['lang'] ='';
+        }
         $data = $this->loadData($where);
         $cat = new \framework\ext\Category(array('class_id', 'parent_id', 'name', 'cname'));
         $data = $cat->getTree($data, intval($classId));
@@ -53,6 +59,8 @@ class CategoryModel extends BaseModel
         // 多语言
         if (defined('LANG_OPEN')) {
             $where['lang'] = APP_LANG;
+        } else {
+            $where['lang'] = '';
         }
         
         $pageList = $this->where($where)->limit($limit)->order("sequence ASC , class_id ASC")->select();
