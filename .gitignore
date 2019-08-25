@@ -1,4 +1,6 @@
 .DS_Store
 .idea
 /data/cache
+/upload
 install.lock
+/data/update
