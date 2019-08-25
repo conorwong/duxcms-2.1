@@ -96,21 +96,23 @@ class AdminUpdateController extends AdminController
      */
     public function unzip()
     {
-        $url = request('post.url');
-        $fileName = explode('/', $url);
-        $fileName = end($fileName);
+        $version = request('post.version');
         $updateDir = DATA_PATH.'update/';
-        $file = $updateDir.$fileName;
+        $file = $updateDir.$version;
         if (!is_file($file)) {
             $this->error('没有发现更新文件，请稍后重试！');
         }
-        $dir = $updateDir.'tmp_'.config('DUX_TIME');
-        $zip = new \framework\ext\Zip();
-        if ($zip->decompress($file, $dir)) {
+
+        $dir = $updateDir.'tmp_' . $version;
+        $zip = new ZipArchive; 
+        $res = $zip->open($file); 
+        if ($res === TRUE) { 
+            $zip->extractTo($dir); 
+            $zip->close(); 
             $this->success('文件解压成功，等待更新操作！');
-        } else {
+        } else { 
             $this->error('解压文件失败请检查目录【'.$dir.'】是否有写入权限！');
-        }
+        } 
     }
 
     /**

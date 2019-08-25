@@ -85,7 +85,7 @@
      });
     //解压更新
     function unzip(){
-        $.post(appUrl +'duxcms/AdminUpdate/unzip',{url:$('#url_fix').val()},function(data){
+        $.post("{url('duxcms/AdminUpdate/unzip')}",{version:$('#url_fix').val()},function(data){
             $('#updateMsg').html(data.info);
             if(data.status){
                 upfile();
@@ -96,7 +96,7 @@
     }
     //更新文件
     function upfile(){
-        $.post(appUrl +'duxcms/AdminUpdate/upfile',{url:$('#url_fix').val()},function(data){
+        $.post("{url('duxcms/AdminUpdate/upfile')}",{version:$('#url_fix').val()},function(data){
             $('#updateMsg').html(data.info);
             if(data.status){
                 window.setTimeout("window.location.reload();",3000);
