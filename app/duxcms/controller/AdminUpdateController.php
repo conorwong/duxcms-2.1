@@ -2,14 +2,18 @@
 namespace app\duxcms\controller;
 
 use app\admin\controller\AdminController;
-
+use GuzzleHttp\Client;
+require BASE_PATH . '/vendor/autoload.php';
 /**
  * 更新管理
  */
 
 class AdminUpdateController extends AdminController
 {
-    public $domain = 'http://www.duxcms.com/index.php?r=/';
+    public $domain = 'https://raw.githubusercontent.com/xiaodit/duxcms-update/master';
+    
+    public $download = 'https://github.com/xiaodit/duxcms-2.1/archive/v';
+
     /**
      * 当前模块参数
      */
@@ -41,10 +45,8 @@ class AdminUpdateController extends AdminController
         if (empty($verTime)) {
             $this->error('没有发现版本号！');
         }
-        $url = $this->domain . 'service/Update/index';
-        $data = array();
-        $data['ver_time'] = $verTime;
-        $info = \framework\ext\Http::doGet($url, $data, 10);
+        $url = $this->domain . '/ver.json';
+        $info = \framework\ext\Http::doGet($url);
         $info = json_decode($info, true);
         if (empty($info)) {
             $this->error('无法获取版本信息，请稍后再试！');
@@ -61,8 +63,8 @@ class AdminUpdateController extends AdminController
      */
     public function dowload()
     {
-        $url = request('post.url');
-        if (empty($url)) {
+        $version = request('post.version');
+        if (empty($version)) {
             $this->error('没有发现更新地址，请稍后重试！');
         }
         $updateDir = DATA_PATH.'update/';
@@ -71,14 +73,21 @@ class AdminUpdateController extends AdminController
                 $this->error('抱歉，无法为您创建更新文件夹，请手动创建目录【'.$updateDir.'】');
             }
         }
-        $fileName = explode('/', $url);
-        $fileName = end($fileName);
+
+        $fileName = $version;
         //开始下载文件
         $fileName = $updateDir.$fileName;
-        $file = \framework\ext\Http::doGet($url, 30);
-        if (!file_put_contents($fileName, $file)) {
+        $url = $this->download . $version . '.zip';
+
+        $client = new Client([
+            'timeout' => 0
+        ]);
+
+        $response = $client->get($url);
+        if (!file_put_contents($fileName, $response->getBody())) {
             $this->error('无法保存更新文件请检查目录【'.$updateDir.'】是否有写入权限！');
-        }
+        };
+
         $this->success('文件下载成功，正在执行解压操作！');
     }
 
