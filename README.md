@@ -114,7 +114,7 @@ http://www.domain.com?l=zh-cn
       <ul>
         <!--foreach{$vo['child'] as $v}-->
           <!--if{$v['selected']==true}-->
-            <a href="{$v.durl}" <!--if{$v['selected']==true}--> class="on" <!--{/if}-->>
+            <a href="{$v.durl}" class="on">
               {$v.name}
             </a>
           <!--{/if}-->
