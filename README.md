@@ -97,10 +97,12 @@ http://www.domain.com?l=zh-cn
 使用[@梁斌penny](https://weibo.com/pennyliang)的分词服务, 使用此项目的'模板工'们，你们应该感谢梁厂长！
 
 ## 多条件筛选
+
+### 后台
 1. 后台创建扩展模型 
 2. 添加【下拉菜单】类型的字段， 【字段配置】用逗号分隔 例如创建一个码数的字段 字段配置：m,xl,xxl
 
-### 前台list.html模板
+### 前台
 `$duowei`数组  
 `$v['selected']`当前属性是否已选择  
 `$v['url']` 当前属性的url 相当于 使用当前属性进行筛选  
