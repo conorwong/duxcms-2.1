@@ -172,7 +172,7 @@
                     if (lang != 0) {
                         html = "<option value='0'>选择栏目</option>"
                         for (var key in jsonData[lang]) {
-                            html += "<option value="+ jsonData[lang][key].class_id +">"+ jsonData[lang][key].name +"1</option>"
+                            html += "<option value="+ jsonData[lang][key].class_id +">"+ jsonData[lang][key].name +"</option>"
                         }
                         $("#lang_class").html(html)
                     }
