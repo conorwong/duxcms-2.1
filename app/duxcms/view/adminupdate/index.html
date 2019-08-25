@@ -42,11 +42,11 @@
     //检测更新
     $('#check').click(function(){
         offUpdateBtn();
-        $.post(appUrl +'duxcms/AdminUpdate/getVer',{},function(data){
+        $.post("{url('duxcms/AdminUpdate/getVer')}",function(data){
             onUpdateBtn();
             if(data.status){
                 var info = data.info;
-                $('#url_fix').val(info.url_fix);
+                $('#url_fix').val(info.version);
                 var html = '\
                 <p>'+ info.msg +'</p>\
                 <p>更新简要：'+ info.remark +'</p>\
@@ -74,7 +74,7 @@
     $('body').on('click','#update', function () { 
         offUpdateBtn();
         $('#updateMsg').html('下载更新中，请稍等...');
-        $.post(appUrl +'duxcms/AdminUpdate/dowload',{url:$('#url_fix').val()},function(data){
+        $.post("{url('duxcms/AdminUpdate/dowload')}",{version:$('#url_fix').val()},function(data){
             $('#updateMsg').html(data.info);
             if(data.status){
                 unzip();
