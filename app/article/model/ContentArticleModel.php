@@ -26,6 +26,8 @@ class ContentArticleModel extends BaseModel
         // 多语言过滤
         if (defined('LANG_OPEN')) {
             $where['C.lang'] = APP_LANG;
+        } else {
+            $where['C.lang'] = '';
         }
         
         $model =  $this->table("content as A")
