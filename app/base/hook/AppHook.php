@@ -3,6 +3,7 @@ namespace app\base\hook;
 
 use Whoops\Run;
 use Whoops\Handler\PrettyPageHandler;
+require BASE_PATH . '/vendor/autoload.php';
 
 class AppHook
 {
