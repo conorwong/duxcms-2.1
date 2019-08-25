@@ -104,7 +104,7 @@ class AdminUpdateController extends AdminController
         }
 
         $dir = $updateDir.'tmp_' . $version;
-        $zip = new ZipArchive; 
+        $zip = new \ZipArchive; 
         $res = $zip->open($file); 
         if ($res === TRUE) { 
             $zip->extractTo($dir); 
@@ -120,8 +120,9 @@ class AdminUpdateController extends AdminController
      */
     public function upfile()
     {
+        $version = request('post.version');
         $updateDir = DATA_PATH.'update/';
-        $dir = $updateDir.'tmp_'.config('DUX_TIME');
+        $dir = $updateDir.'tmp_'.$version. '/duxcms-2.1-'. $version;
         if (!copy_dir($dir, ROOT_PATH)) {
             $this->error('无法复制更新文件，请检查网站是否有写入权限！');
         }
