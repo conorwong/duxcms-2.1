@@ -743,7 +743,7 @@ function copy_dir($sourceDir, $aimDir, $diss = [])
                     break;
                 }
             } else {
-                copy_dir("$sourceDir/$fileName", "$aimDir/$fileName");
+                copy_dir("$sourceDir/$fileName", "$aimDir/$fileName", $diss);
             }
         }
     }

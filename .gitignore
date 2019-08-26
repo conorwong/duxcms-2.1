@@ -1,6 +1,9 @@
 .DS_Store
 .idea
+.vscode
+.php_cs.cache
 /data/cache
 /upload
 install.lock
+composer.lock
 /data/update

@@ -73,7 +73,11 @@
     }
     
     //更新版本
-    $('body').on('click','#update', function () { 
+    $('body').on('click','#update', function () {
+        var r=confirm("更新版本，会覆盖本地所有文件，请你做好备份！ 是否已备份？")
+        if (!r) {
+            return
+        }
         offUpdateBtn();
         $('#updateMsg').html('下载更新中，请稍等...');
         $.post("{url('duxcms/AdminUpdate/dowload')}",{url:$('#url_fix').val(), version:$("#version").val()},function(data){

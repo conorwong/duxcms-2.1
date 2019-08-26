@@ -44,7 +44,7 @@ class AdminUpdateController extends AdminController
         if (empty($verTime)) {
             $this->error('没有发现版本号！');
         }
-        $url = $this->domain . '/ver.json';
+        $url = $this->domain . '/ver.txt';
         $info = \framework\ext\Http::doGet($url);
         $info = json_decode($info, true);
         if (empty($info)) {
@@ -133,16 +133,16 @@ class AdminUpdateController extends AdminController
 
         // 不用覆盖文件与文件夹
         $diss = [
-            'data/config/lang',
-            'data/config/admin.php',
-            'data/config/db.php',
-            'data/config/development.php',
-            'data/config/global.php',
-            'data/config/lang.php',
-            'data/config/performance.php',
-            'data/config/push.php',
-            'data/config/tongji.php',
-            'data/config/upload.php'
+            'lang',
+            'admin.php',
+            'db.php',
+            'development.php',
+            'global.php',
+            'lang.php',
+            'performance.php',
+            'push.php',
+            'tongji.php',
+            'upload.php'
         ];
 
         if (!copy_dir($dir, ROOT_PATH, $diss)) {
