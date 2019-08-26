@@ -11,7 +11,7 @@ require BASE_PATH . '/vendor/autoload.php';
 
 class AdminUpdateController extends AdminController
 {
-    public $domain = 'https://www.xiaodim.com/duxcms';
+    public $domain = 'https://raw.githubusercontent.com/xiaodit/duxcms-update/master';
 
     /**
      * 当前模块参数
