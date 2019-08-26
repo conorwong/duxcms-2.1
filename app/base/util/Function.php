@@ -734,16 +734,15 @@ function copy_dir($sourceDir, $aimDir, $diss = [])
     $objDir = opendir($sourceDir);
     while (false !== ($fileName = readdir($objDir))) {
         if (($fileName != ".") && ($fileName != "..")) {
-            if (in_array($fileName, $diss)) {
-                break;
-            }
-            if (!is_dir("$sourceDir/$fileName")) {
-                if (!copy("$sourceDir/$fileName", "$aimDir/$fileName")) {
-                    $succeed = false;
-                    break;
+            if (!in_array("$sourceDir/$fileName", $diss)) {
+                if (!is_dir("$sourceDir/$fileName")) {
+                    if (!copy("$sourceDir/$fileName", "$aimDir/$fileName")) {
+                        $succeed = false;
+                        break;
+                    }
+                } else {
+                    copy_dir("$sourceDir/$fileName", "$aimDir/$fileName", $diss);
                 }
-            } else {
-                copy_dir("$sourceDir/$fileName", "$aimDir/$fileName", $diss);
             }
         }
     }
