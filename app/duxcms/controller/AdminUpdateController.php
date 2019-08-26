@@ -51,7 +51,7 @@ class AdminUpdateController extends AdminController
             $this->error('无法获取版本信息，请稍后再试！');
         }
 
-        if ($verTime === $info['data']['version']) {
+        if ($verTime === 'v'.$info['data']['version']) {
             $this->error('已经是最新版本了！');
         }
 
