@@ -125,9 +125,21 @@ class AdminUpdateController extends AdminController
         $version = request('post.version');
         $updateDir = DATA_PATH.'update/';
         $dir = $updateDir.'tmp_'.$version. '/duxcms-2.1-'. $version;
+
+        // 备份配置文件
+        if (!copy_dir(CONFIG_PATH, $updateDir . 'tmp_config')) {
+            $this->error('无法复制更新文件，请检查网站是否有写入权限！');
+        }
+
         if (!copy_dir($dir, ROOT_PATH)) {
             $this->error('无法复制更新文件，请检查网站是否有写入权限！');
         }
+
+        // 恢复配置文件
+        if (!copy_dir($updateDir . 'tmp_config', CONFIG_PATH)) {
+            $this->error('无法复制更新文件，请检查网站是否有写入权限！');
+        }
+
         //更新SQL文件
         $file = ROOT_PATH.'update/'.config('DUX_TIME').'.sql';
         if (is_file($file)) {
@@ -140,8 +152,7 @@ class AdminUpdateController extends AdminController
             }
         }
         //清理更新文件
-        del_dir(ROOT_PATH.'update');
-        del_dir(ROOT_PATH.$dir);
+        del_dir(DATA_PATH.'update');
         $this->success('更新成功，稍后为您刷新！');
     }
 
