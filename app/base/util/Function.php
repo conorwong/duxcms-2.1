@@ -715,8 +715,15 @@ function dir_size($directoty)
     return ($dir_size);
 }
 
-//复制目录
-function copy_dir($sourceDir, $aimDir)
+/**
+ * 复制目录
+ *
+ * @param [type] $sourceDir
+ * @param [type] $aimDir
+ * @param array $diss 忽略覆盖
+ * @return void
+ */
+function copy_dir($sourceDir, $aimDir, $diss = [])
 {
     $succeed = true;
     if (!file_exists($aimDir)) {
@@ -727,6 +734,9 @@ function copy_dir($sourceDir, $aimDir)
     $objDir = opendir($sourceDir);
     while (false !== ($fileName = readdir($objDir))) {
         if (($fileName != ".") && ($fileName != "..")) {
+            if (in_array($fileName, $diss)) {
+                break;
+            }
             if (!is_dir("$sourceDir/$fileName")) {
                 if (!copy("$sourceDir/$fileName", "$aimDir/$fileName")) {
                     $succeed = false;

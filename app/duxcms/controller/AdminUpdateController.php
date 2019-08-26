@@ -131,17 +131,21 @@ class AdminUpdateController extends AdminController
         $updateDir = DATA_PATH.'update/';
         $dir = $updateDir.'tmp_'.$version. '/duxcms-2.1-'. $version;
 
-        // 备份配置文件
-        if (!copy_dir(CONFIG_PATH, $updateDir . 'tmp_config')) {
-            $this->error('无法复制更新文件，请检查网站是否有写入权限！');
-        }
+        // 不用覆盖文件与文件夹
+        $diss = [
+            'data/config/lang',
+            'data/config/admin.php',
+            'data/config/db.php',
+            'data/config/development.php',
+            'data/config/global.php',
+            'data/config/lang.php',
+            'data/config/performance.php',
+            'data/config/push.php',
+            'data/config/tongji.php',
+            'data/config/upload.php'
+        ];
 
-        if (!copy_dir($dir, ROOT_PATH)) {
-            $this->error('无法复制更新文件，请检查网站是否有写入权限！');
-        }
-
-        // 恢复配置文件
-        if (!copy_dir($updateDir . 'tmp_config', CONFIG_PATH)) {
+        if (!copy_dir($dir, ROOT_PATH, $diss)) {
             $this->error('无法复制更新文件，请检查网站是否有写入权限！');
         }
 
