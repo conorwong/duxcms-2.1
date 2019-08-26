@@ -133,16 +133,16 @@ class AdminUpdateController extends AdminController
 
         // 不用覆盖文件与文件夹
         $diss = [
-            $dir . '/lang',
-            $dir . '/admin.php',
-            $dir . '/db.php',
-            $dir . '/development.php',
-            $dir . '/global.php',
-            $dir . '/lang.php',
-            $dir . '/performance.php',
-            $dir . '/push.php',
-            $dir . '/tongji.php',
-            $dir . '/upload.php'
+            $dir . '/data/config/lang',
+            $dir . '/data/config/admin.php',
+            $dir . '/data/config/db.php',
+            $dir . '/data/config/development.php',
+            $dir . '/data/config/global.php',
+            $dir . '/data/config/lang.php',
+            $dir . '/data/config/performance.php',
+            $dir . '/data/config/push.php',
+            $dir . '/data/config/tongji.php',
+            $dir . '/data/config/upload.php'
         ];
 
         if (!copy_dir($dir, ROOT_PATH, $diss)) {
