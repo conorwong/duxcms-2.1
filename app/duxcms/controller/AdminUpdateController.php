@@ -40,7 +40,7 @@ class AdminUpdateController extends AdminController
      */
     public function getVer()
     {
-        $verTime = config('DUX_TIME');
+        $verTime = config('DUX_VER');
         if (empty($verTime)) {
             $this->error('没有发现版本号！');
         }
@@ -50,6 +50,11 @@ class AdminUpdateController extends AdminController
         if (empty($info)) {
             $this->error('无法获取版本信息，请稍后再试！');
         }
+
+        if ($verTime === $info['data']['version']) {
+            $this->error('已经是最新版本了！');
+        }
+
         if ($info['status']) {
             $this->success($info['data']);
         } else {
