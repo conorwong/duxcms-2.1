@@ -134,6 +134,7 @@ class AdminUpdateController extends AdminController
         // 不用覆盖文件与文件夹
         $diss = [
             $dir . '/data/config/lang',
+            $dir . '/app/install',
             $dir . '/data/config/admin.php',
             $dir . '/data/config/db.php',
             $dir . '/data/config/development.php',
