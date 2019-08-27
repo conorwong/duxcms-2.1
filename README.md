@@ -2,7 +2,9 @@
 [![LICENSE](https://img.shields.io/badge/license-Anti%20996-blue.svg)](https://github.com/996icu/996.ICU/blob/master/LICENSE)
 [![Build Status](https://travis-ci.org/xiaodit/duxcms-2.1.svg?branch=master)](https://travis-ci.org/xiaodit/duxcms-2.1)
 
-[最新版本](https://github.com/xiaodit/duxcms-2.1/releases/latest)
+[最新版本](https://github.com/xiaodit/duxcms-2.1/releases/latest)  
+没安装Composer？ 请在最新版本链接下找`DuxCMS2.1_Full.zip`下载
+
 ## 特征
 * 支持php 5.6+
 * [支持多语言](#多语言)
@@ -12,6 +14,11 @@
 * 提供更好的异常接管
 * [提供多条件筛选](#多条件筛选)
 * 提供在线更新服务
+
+## 安装
+```sh
+$ composer install
+```
 
 ## 数据库驱动
 * mysqli
