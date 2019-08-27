@@ -11,17 +11,17 @@ cache:
   directories:
     - "$HOME/.composer/cache"
 
-script:
-  - php -v
-  - ls
-  - pwd
-
 before_deploy:
   - echo 'start'
   - composer self-update
   - composer install --no-dev --no-interaction --ignore-platform-reqs
   - zip -r --exclude='*.git*' --exclude='*.zip' --exclude='*.travis.yml' DuxCMS2.1_Full.zip .
-
+  - ls
+  - git config --local user.name "xiaodi"
+  - git config --local user.email "758861884@qq.com"
+  - export TRAVIS_TAG=${TRAVIS_TAG:-$(date +'%Y%m%d%H%M%S')-$(git log --format=%h -1)}
+  - git tag $TRAVIS_TAG
+  
 deploy:
   provider: releases
   api_key:
