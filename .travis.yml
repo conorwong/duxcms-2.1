@@ -21,7 +21,7 @@ install:
 script:
   - php -v
   - ls
-  
+
 deploy:
   provider: releases
   api_key:
@@ -31,4 +31,6 @@ deploy:
     - DuxCMS2.1_Full.zip
   on:
     tags: true
+    branch: master
+  tag: latest
 
