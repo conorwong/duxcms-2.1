@@ -137,7 +137,3 @@ http://www.domain.com?l=zh-cn
   </ul>
   <!--{/foreach}--> 
 ```
-
-#t
-
-
