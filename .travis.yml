@@ -1,4 +1,6 @@
-sudo: false
+skip_cleanup: true
+  on:
+    tags: truesudo: false
 language: php
 branches:
   only:
@@ -15,7 +17,7 @@ install:
 - zip -r --exclude='*.git*' --exclude='*.zip' --exclude='*.travis.yml' DuxCMS_Full.zip
   .
 script:
-- php -v
+  - php -v
 deploy:
   provider: releases
   api_key:
@@ -23,5 +25,6 @@ deploy:
   file: 
     - DuxCMS_Core.zip
     - DuxCMS_Full.zip
+  skip_cleanup: true
   on:
-    repo: xiaodit/duxcms-2.1
+    tags: true
