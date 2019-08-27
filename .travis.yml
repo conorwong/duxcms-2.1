@@ -21,8 +21,7 @@ script:
   - php -v
   - ls
 
-before_deploy:
-  - echo 'before_deploy'
+before_deploy: "echo 'ready?'"
 
 deploy:
   provider: releases
