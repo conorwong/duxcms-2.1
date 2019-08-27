@@ -21,10 +21,8 @@ install:
 script:
   - php -v
   - ls
-
-before_deploy:
   - pwd
-  
+
 deploy:
   provider: releases
   api_key:
