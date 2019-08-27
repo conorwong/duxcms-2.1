@@ -4,7 +4,7 @@ language: php
 
 branches:
   only:
-    - stable
+    - master
 
 cache:
   directories:
