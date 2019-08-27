@@ -14,7 +14,6 @@ before_install:
   - composer self-update
   
 install:
-  - zip -r --exclude='*.git*' --exclude='*.zip' --exclude='*.travis.yml' DuxCMS2.1_Core.zip .
   - composer install --no-dev --no-interaction --ignore-platform-reqs
   - zip -r --exclude='*.git*' --exclude='*.zip' --exclude='*.travis.yml' DuxCMS2.1_Full.zip .
 
@@ -22,15 +21,13 @@ script:
   - php -v
   - ls
 
+before_deploy:
+  - echo 'before_deploy'
+  
 deploy:
   provider: releases
   api_key:
-    secure: hfRdpLtw1jwbMsVr+SGfF2hhGluhcX7paaZOvkwB1S2kNBuN4gHum3X5U7P0KzKDo7lHG0y0hI+MPUa8qsWu3j2px8CZVRkutwIp4FPetORT6uI8/YPJhyz2wIoXVbjF1BjvTmZFUufnSZUzYWaVnxVRsuhr+ewAsFnuSpE+wb9Ckp+s7mlKvWea/OR8CVO/BlF1ACR3hBNPvBu869JOWWoLWvojnktriPJYMUCzDUL+WZtYdKPogCye+v9tb0eFFn8+IEfM0s4S139enNh3M8RXrlcBGlZj5QEwyvmijXYPT4WpU/dO1V0mgzL9+ms7XZWE8u0E/K/5qbGs3poFZiPcf4IQMLD5kvBbht8yfqRum8krC6NpNpSDSqcKwaPXhzy0VkDFHXaRSAYwqYNtx8bOkWEYyFs6OnLl7HoWzrJyVNPbMMunB5IAidiC4dldaf3I3OOE9GPqQxRHIC/FyU8/tkpnI/5Fhx1BPIokYWO2yRdE0TMg59imVsh9pM5qDaMT0bIxunFjeeh6dsCuDODSkWfmylgeAOoykD9YT2aysOYePs+/JMCAoSwdy9bTgLoqSq4duiYJCsL+rzmwhZ/PF5DNVknEMvqGUrBsQaf2lCIfzgmD6ZLgr6wwnlnF9qixAWcoww665XoxfDa22Uylv+Xne6FcaNIiflhtFQ8=
-  file: 
-    - DuxCMS2.1_Core.zip
-    - DuxCMS2.1_Full.zip
+    secure: mbuwYyAZYz4Hu/6KD8soB5nKaU8Q2H0wuiRY6Y9GzPy1cMsYd/BJVwb7o4SsVHiizR2qt10Ejb0N1qBwFSEfgTkwfoVib2mZaQEvtACATHtpsprbK4i/MwczWzLoJQfWtGWRaCdOdVijZuVE0JXNGl039bCMRUs3lKvZohc3PlXRXJs++GhXGXBdagqG8joU7vEVQTKp4j4KBwArT9+4/dJiSgSiZv0x17Lt1JhASr3etdyh8Tw99YSCXgMIfmUS/LNtdo3IsOQOOAeLwMFUtwgxEHdjD/bjMlD0JHWUoltoXMidNO8eDiyjd4Y8IQ0u1oqJj8prZsPHlfZoHN36rkkRTTXJ6xp9/FtEkWGC2b9Zmhc6OSB+WYP3hOUGVf/Rd8GXjWaPlyID84pLG6WL0bQhbPRA4tJhY1THTKmPjPLZRfnPvHKM0/tBP4ecay0vCxcy1pOtN386a+bkt1k1P+9zTzJ/y9XAeb3qYxo6I3wYAsIHLeuk8Z9gAsG1LHQaeSanFhocaaW1K67hRmhSKAMjgnRD97YJH+e4m3HSEFMQY+JXrsOYVJImBah2sS6ftvzUTD0adD4ggfpq8/z5cCileV8C0/+/HWRz3Dn7Xjb35QYxaTa6tN3nP23JXdd3zv0s8bv83CaAHFIsZw50wsQcuphU4nHwxOYxkY5yUY0=
+  file: DuxCMS2.1_Full.zip
   on:
-    tags: true
-    branch: master
-  tag: latest
-
+    tag: true
