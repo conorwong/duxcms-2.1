@@ -14,10 +14,22 @@ before_install:
   - composer self-update
   
 install:
-  - zip -r --exclude='*.git*' --exclude='*.zip' --exclude='*.travis.yml' DuxCMS_Core.zip .
+  - zip -r --exclude='*.git*' --exclude='*.zip' --exclude='*.travis.yml' DuxCMS2.1_Core.zip .
   - composer install --no-dev --no-interaction --ignore-platform-reqs
-  - zip -r --exclude='*.git*' --exclude='*.zip' --exclude='*.travis.yml' DuxCMS_Full.zip .
+  - zip -r --exclude='*.git*' --exclude='*.zip' --exclude='*.travis.yml' DuxCMS2.1_Full.zip .
 
 script:
   - php -v
   - ls
+  
+deploy:
+  provider: releases
+  api_key:
+    secure: 1jzG6Vk7hjfxbhlMnwUt3LFQ/dnSw5YuzqS/+BCyytPrm7hFhAtut87eQY19/qxT2bMNrODHuPfqJKJfXxU0cMEWpLJlT+LquFZdMG3GcqgANX4WR7ieMUsJQSw/SMyYqTOsj0ai725p3NgsAwVnUeNS/HJLUQ+Gs2jk8s2o08C1apDxTVkSjm7PXXv6QHoYxmA2f4ORxRjIoVk6d/xiikkqaN0p0CGzXxJSvqzzoLkSJVOJpUMsYoINv/FCrLsTHdAfnNKRH+nVk1EI5gRvwFZROIdi5I9N/m9z+dvl6eIDBRWnXtjTrMu1XK9K16OGQCGiSnC1bxbS4z26+HrkXp35/iOVZTHkSjR1aO453MaRhyKDh/O/JMl2FafmDx1+qjiEObtGke7CSWO7ytquZsAWui9aoGJ9hwA59jYQ2Ff3zPk0muWl2jKkiroC4KgPMD6xDgDKvBYt2DBNzhdk5TJgh+9Z00GqfXEejpG/5H7RWbqcti1ir3lTW/liojHLbRNzzzJe/XaoPC+oO3PJ9UQJUcUI+HdUfP99k2dNwKLzfx3ke4bY79KT+lMyy+gEyhVS9gw2iXC2uNj1ZW8HYWGJiBbYS03iugSedaY819FleRk60kto/kABb/az/DWmUHbi19VUmqIAiJ1FyWBUSz8/NCz1t9HkoO4/bvdJuNA=
+  file: 
+    - DuxCMS2.1_Core.zip
+    - DuxCMS2.1_Full.zip
+  skip_cleanup: true
+  on:
+    tags: true
+
