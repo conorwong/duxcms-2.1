@@ -7,6 +7,9 @@ branches:
   only:
     - master
     
+script:
+  - php -v
+
 cache:
   directories:
     - "$HOME/.composer/cache"
@@ -21,7 +24,7 @@ before_deploy:
   - git config --local user.email "758861884@qq.com"
   - export TRAVIS_TAG=${TRAVIS_TAG:-$(date +'%Y%m%d%H%M%S')-$(git log --format=%h -1)}
   - git tag $TRAVIS_TAG
-  
+
 deploy:
   provider: releases
   api_key:
