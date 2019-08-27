@@ -27,7 +27,6 @@ deploy:
   provider: releases
   api_key:
     secure: mbuwYyAZYz4Hu/6KD8soB5nKaU8Q2H0wuiRY6Y9GzPy1cMsYd/BJVwb7o4SsVHiizR2qt10Ejb0N1qBwFSEfgTkwfoVib2mZaQEvtACATHtpsprbK4i/MwczWzLoJQfWtGWRaCdOdVijZuVE0JXNGl039bCMRUs3lKvZohc3PlXRXJs++GhXGXBdagqG8joU7vEVQTKp4j4KBwArT9+4/dJiSgSiZv0x17Lt1JhASr3etdyh8Tw99YSCXgMIfmUS/LNtdo3IsOQOOAeLwMFUtwgxEHdjD/bjMlD0JHWUoltoXMidNO8eDiyjd4Y8IQ0u1oqJj8prZsPHlfZoHN36rkkRTTXJ6xp9/FtEkWGC2b9Zmhc6OSB+WYP3hOUGVf/Rd8GXjWaPlyID84pLG6WL0bQhbPRA4tJhY1THTKmPjPLZRfnPvHKM0/tBP4ecay0vCxcy1pOtN386a+bkt1k1P+9zTzJ/y9XAeb3qYxo6I3wYAsIHLeuk8Z9gAsG1LHQaeSanFhocaaW1K67hRmhSKAMjgnRD97YJH+e4m3HSEFMQY+JXrsOYVJImBah2sS6ftvzUTD0adD4ggfpq8/z5cCileV8C0/+/HWRz3Dn7Xjb35QYxaTa6tN3nP23JXdd3zv0s8bv83CaAHFIsZw50wsQcuphU4nHwxOYxkY5yUY0=
-  file: *.tar.gz
-  file_glob: true
+  file: /home/travis/build/xiaodit/duxcms-2.1/DuxCMS2.1_Full.zip
   on:
     tag: true
