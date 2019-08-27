@@ -17,6 +17,7 @@ script:
   - pwd
 
 before_deploy:
+  - echo 'start'
   - composer self-update
   - composer install --no-dev --no-interaction --ignore-platform-reqs
   - zip -r --exclude='*.git*' --exclude='*.zip' --exclude='*.travis.yml' DuxCMS2.1_Full.zip .
