@@ -23,7 +23,7 @@ script:
   - ls
 
 before_deploy:
-  - echo 'before_deploy'
+  - pwd
   
 deploy:
   provider: releases
