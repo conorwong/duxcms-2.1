@@ -27,4 +27,4 @@ deploy:
   file: /home/travis/build/xiaodit/duxcms-2.1/DuxCMS2.1_Full.zip
   skip_cleanup: true
   on:
-    tag: true
+    tags: true
