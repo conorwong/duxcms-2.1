@@ -2,7 +2,11 @@
 sudo: false
 
 language: php
- 
+
+branches:
+  only:
+    - master
+    
 cache:
   directories:
     - "$HOME/.composer/cache"
@@ -26,3 +30,4 @@ deploy:
   file: /home/travis/build/xiaodit/duxcms-2.1/DuxCMS2.1_Full.zip
   on:
     tag: true
+    repo: xiaodit/duxcms-2.1
