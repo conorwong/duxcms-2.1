@@ -11,17 +11,15 @@ cache:
   directories:
     - "$HOME/.composer/cache"
 
-before_install:
-  - composer self-update
-  
-install:
-  - composer install --no-dev --no-interaction --ignore-platform-reqs
-  - zip -r --exclude='*.git*' --exclude='*.zip' --exclude='*.travis.yml' DuxCMS2.1_Full.zip .
-
 script:
   - php -v
   - ls
   - pwd
+
+before_deploy:
+  - composer self-update
+  - composer install --no-dev --no-interaction --ignore-platform-reqs
+  - zip -r --exclude='*.git*' --exclude='*.zip' --exclude='*.travis.yml' DuxCMS2.1_Full.zip .
 
 deploy:
   provider: releases
